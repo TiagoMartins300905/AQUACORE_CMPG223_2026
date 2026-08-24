@@ -44,6 +44,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.8.0.0, Culture=neutral, PublicKeyToken=c4ed5b9ae8358a28, processorArchitecture=MSIL">
+      <HintPath>packages\QRCoder.1.8.0\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -60,6 +65,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -67,7 +73,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Visitors.mdf" />
+    <Content Include="App_Data\Visitors_log.ldf">
+      <DependentUpon>Visitors.mdf</DependentUpon>
+    </Content>
     <Content Include="LandingPage.aspx" />
+    <Content Include="MainScreen.aspx" />
+    <Content Include="VisitorDashboard.aspx" />
+    <Content Include="VisitorForgotPassword.aspx" />
+    <Content Include="VisitorLogin.aspx" />
+    <Content Include="VisitorMyReservations.aspx" />
+    <Content Include="VisitorReservations.aspx" />
+    <Content Include="VisitorResetPassword.aspx" />
+    <Content Include="VisitorSignUp.aspx" />
+    <Content Include="VisitorTicket.aspx" />
+    <Content Include="VisitorWelcomePage.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -78,7 +98,77 @@
     <Compile Include="LandingPage.aspx.designer.cs">
       <DependentUpon>LandingPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MainScreen.aspx.cs">
+      <DependentUpon>MainScreen.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MainScreen.aspx.designer.cs">
+      <DependentUpon>MainScreen.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VisitorDashboard.aspx.cs">
+      <DependentUpon>VisitorDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VisitorDashboard.aspx.designer.cs">
+      <DependentUpon>VisitorDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VisitorForgotPassword.aspx.cs">
+      <DependentUpon>VisitorForgotPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VisitorForgotPassword.aspx.designer.cs">
+      <DependentUpon>VisitorForgotPassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VisitorLogin.aspx.cs">
+      <DependentUpon>VisitorLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VisitorLogin.aspx.designer.cs">
+      <DependentUpon>VisitorLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VisitorMyReservations.aspx.cs">
+      <DependentUpon>VisitorMyReservations.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VisitorMyReservations.aspx.designer.cs">
+      <DependentUpon>VisitorMyReservations.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VisitorReservations.aspx.cs">
+      <DependentUpon>VisitorReservations.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VisitorReservations.aspx.designer.cs">
+      <DependentUpon>VisitorReservations.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VisitorResetPassword.aspx.cs">
+      <DependentUpon>VisitorResetPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VisitorResetPassword.aspx.designer.cs">
+      <DependentUpon>VisitorResetPassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VisitorSignUp.aspx.cs">
+      <DependentUpon>VisitorSignUp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VisitorSignUp.aspx.designer.cs">
+      <DependentUpon>VisitorSignUp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VisitorTicket.aspx.cs">
+      <DependentUpon>VisitorTicket.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VisitorTicket.aspx.designer.cs">
+      <DependentUpon>VisitorTicket.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VisitorWelcomePage.aspx.cs">
+      <DependentUpon>VisitorWelcomePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VisitorWelcomePage.aspx.designer.cs">
+      <DependentUpon>VisitorWelcomePage.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

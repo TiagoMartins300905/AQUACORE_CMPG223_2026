@@ -28,7 +28,7 @@
     <form id="form1" runat="server">
         <header>
             <img src="BRZLogo.png" alt="Zoo Logo" style="height:60px;" />
-            <h2 class="auto-style4">Welcome to Blue River Zoo</h2>
+            <h2 class="auto-style4">Welcome to AQUACORE AQUARIUM</h2>
         </header>
 
         <nav class="auto-style1">

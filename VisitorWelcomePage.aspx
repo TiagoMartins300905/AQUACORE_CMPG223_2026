@@ -1,9 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="VisitorWelcomePagePage.aspx.cs" Inherits="AQUACORE_CMPG223.VisitorWelcomePage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="VisitorWelcomePage.aspx.cs" Inherits="AQUACORE_CMPG223.VisitorWelcomePage" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Blue River Zoo</title>
+    <title>AQUACORE AQUARIUM</title>
     <link rel="website icon" type="png" href="BRZLogo.png" />
     <style>
         body {

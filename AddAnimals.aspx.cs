@@ -26,7 +26,12 @@ namespace AQUACORE_CMPG223
 
         protected void rdbMale_CheckedChanged1(object sender, EventArgs e)
         {
+            
+        }
 
+        protected void btnMenu_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Animals_Dashboard.aspx");
         }
     }
 }

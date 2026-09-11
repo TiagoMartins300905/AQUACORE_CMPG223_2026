@@ -57,7 +57,7 @@
             <br />
             <asp:Label ID="Label6" runat="server" Text="Habitat Location:"></asp:Label>
 &nbsp;&nbsp;&nbsp;
-            <asp:DropDownList ID="DropDownList1" runat="server">
+            <asp:DropDownList ID="ddHabitat" runat="server">
                 <asp:ListItem>---Choose Habitat----</asp:ListItem>
                 <asp:ListItem>Open Ocean Tank</asp:ListItem>
                 <asp:ListItem>Coral Reef Display</asp:ListItem>

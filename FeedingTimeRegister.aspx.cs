@@ -13,5 +13,18 @@ namespace AQUACORE_CMPG223
         {
 
         }
+
+        protected System.Void btnClear_Click(System.Object sender, System.EventArgs e)
+        {
+            ddlAnimal.SelectedIndex = 0;
+            ddlFoodType.SelectedIndex = 0;
+            ddlKeeper.SelectedIndex = 0;
+            ddlTime.SelectedIndex = 0;
+        }
+
+        protected System.Void btnBack_Click(System.Object sender, System.EventArgs e)
+        {
+            Response.Redirect();
+        }
     }
 }

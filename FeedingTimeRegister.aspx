@@ -46,17 +46,28 @@
         .auto-style17 {}
         .auto-style18 {}
         .auto-style19 {}
+        .auto-style20 {
+            text-align: center;
+        }
+        .auto-style21 {
+            width: 585px;
+        }
+        .auto-style22 {
+            height: 87px;
+            width: 585px;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div class="auto-style2"><h1 class="auto-style3">AquaCore-Feeding Schedule</h1>
+            <p class="auto-style3">&nbsp;</p>
         </div>
         <div class="auto-style1">
             <table style="width:100%;">
                 <tr>
                     <td class="auto-style5">&nbsp;</td>
-                    <td>&nbsp;</td>
+                    <td class="auto-style21">&nbsp;</td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
@@ -105,17 +116,19 @@
                 </tr>
                 <tr>
                     <td class="auto-style11">&nbsp;</td>
-                    <td class="auto-style12">&nbsp;</td>
+                    <td class="auto-style22">
+                        <asp:Label ID="lblMessage" runat="server" CssClass="auto-style20"></asp:Label>
+                    </td>
                     <td class="auto-style12">&nbsp;</td>
                 </tr>
                 <tr>
                     <td class="auto-style11">&nbsp;</td>
-                    <td class="auto-style12">
+                    <td class="auto-style22">
                         <asp:Button ID="btnAdd" runat="server" CssClass="auto-style17" Height="41px" Text="Add Schedule" Width="117px" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <asp:Button ID="btnClear" runat="server" CssClass="auto-style18" Height="41px" Text="Clear" Width="117px" />
+                        <asp:Button ID="btnClear" runat="server" CssClass="auto-style18" Height="41px" Text="Clear" Width="117px" OnClick="btnClear_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <asp:Button ID="btnBack" runat="server" CssClass="auto-style19" Height="41px" Text="Go Back" Width="117px" />
+                        <asp:Button ID="btnBack" runat="server" CssClass="auto-style19" Height="41px" Text="Go Back" Width="117px" OnClick="btnBack_Click" />
                     </td>
                     <td class="auto-style12">&nbsp;</td>
                 </tr>

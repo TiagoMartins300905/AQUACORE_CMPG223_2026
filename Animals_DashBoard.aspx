@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Animals_Intro.aspx.cs" Inherits="AQUACORE_CMPG223.Animals_Intro" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Animals_DashBoard.aspx.cs" Inherits="AQUACORE_CMPG223.Animals_Intro" %>
 
 <!DOCTYPE html>
 

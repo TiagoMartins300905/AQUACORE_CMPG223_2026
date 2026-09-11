@@ -74,7 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AddAnimals.aspx" />
-    <Content Include="Animals_Intro.aspx" />
+    <Content Include="Animals_DashBoard.aspx" />
     <Content Include="App_Data\Visitors.mdf" />
     <Content Include="App_Data\Visitors_log.ldf">
       <DependentUpon>Visitors.mdf</DependentUpon>
@@ -83,6 +83,7 @@
     <Content Include="Display_Animals.aspx" />
     <Content Include="LandingPage.aspx" />
     <Content Include="MainScreen.aspx" />
+    <Content Include="Update_Animal.aspx" />
     <Content Include="VisitorDashboard.aspx" />
     <Content Include="VisitorForgotPassword.aspx" />
     <Content Include="VisitorLogin.aspx" />
@@ -102,12 +103,12 @@
     <Compile Include="AddAnimals.aspx.designer.cs">
       <DependentUpon>AddAnimals.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Animals_Intro.aspx.cs">
-      <DependentUpon>Animals_Intro.aspx</DependentUpon>
+    <Compile Include="Animals_DashBoard.aspx.cs">
+      <DependentUpon>Animals_DashBoard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Animals_Intro.aspx.designer.cs">
-      <DependentUpon>Animals_Intro.aspx</DependentUpon>
+    <Compile Include="Animals_DashBoard.aspx.designer.cs">
+      <DependentUpon>Animals_DashBoard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Delete_Animal.aspx.cs">
       <DependentUpon>Delete_Animal.aspx</DependentUpon>
@@ -138,6 +139,13 @@
       <DependentUpon>MainScreen.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Update_Animal.aspx.cs">
+      <DependentUpon>Update_Animal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Update_Animal.aspx.designer.cs">
+      <DependentUpon>Update_Animal.aspx</DependentUpon>
+    </Compile>
     <Compile Include="VisitorDashboard.aspx.cs">
       <DependentUpon>VisitorDashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

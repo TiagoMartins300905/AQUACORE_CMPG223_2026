@@ -8,11 +8,11 @@
     
 </head>
 <body>
-    <h2 style="text-align: center"> Add Animals </h2>
+    <h2 style="text-align: center"> Update&nbsp; Animals </h2>
 
     <form id="form1" runat="server">
         <div style="text-align: center">
-            Specify Animal Details to Add Animals To Database
+            Specify Animal Details to Update an Existing animal
         </div>
 
         <div>
@@ -22,42 +22,42 @@
             <asp:Label ID="Label1" runat="server" Text="Animal ID:"></asp:Label>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:TextBox ID="txtID" runat="server"></asp:TextBox>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;
             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtID" ErrorMessage="Animal ID cannot be empty!" ForeColor="Red"></asp:RequiredFieldValidator>
             <br />
             <br />
             <asp:Label ID="Label2" runat="server" Text="Name:"></asp:Label>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:TextBox ID="txtName" runat="server"></asp:TextBox>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;
             <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtName" ErrorMessage="Name cannot be empty!" ForeColor="Red"></asp:RequiredFieldValidator>
             <br />
             <br />
             <asp:Label ID="Label3" runat="server" Text="Species:"></asp:Label>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
             <asp:TextBox ID="txtSpecies" runat="server"></asp:TextBox>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;
             <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtSpecies" ErrorMessage="Animal species is required!" ForeColor="Red"></asp:RequiredFieldValidator>
             <br />
             <br />
             <asp:Label ID="Label4" runat="server" Text="Date Of Birth:"></asp:Label>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:TextBox ID="txtDOB" runat="server"></asp:TextBox>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;
             <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="txtSpecies" ErrorMessage="Enter animal's DOB!" ForeColor="Red"></asp:RequiredFieldValidator>
             <br />
             <br />
             <asp:Label ID="Label5" runat="server" Text="Gender:"></asp:Label>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:RadioButton ID="rdbMale" runat="server" GroupName="Gender" OnCheckedChanged="rdbMale_CheckedChanged1" Text="Male" />
-&nbsp;<asp:RadioButton ID="rdbFemale" runat="server" GroupName="Gender" OnCheckedChanged="rdbMale_CheckedChanged1" Text="Female" />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:RadioButton ID="rdbMale" runat="server" GroupName="Gender" OnCheckedChanged="rdbMale_CheckedChanged1" Text="Male" AutoPostBack="True" />
+&nbsp;<asp:RadioButton ID="rdbFemale" runat="server" GroupName="Gender" OnCheckedChanged="rdbMale_CheckedChanged1" Text="Female" AutoPostBack="True" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:Label ID="lblGender" runat="server" ForeColor="Red" Text="Animal Gender cannot be left out!"></asp:Label>
             <br />
             <br />
             <asp:Label ID="Label6" runat="server" Text="Habitat Location:"></asp:Label>
 &nbsp;&nbsp;&nbsp;
-            <asp:DropDownList ID="DropDownList1" runat="server">
+            <asp:DropDownList ID="ddHabitat" runat="server">
                 <asp:ListItem>---Choose Habitat----</asp:ListItem>
                 <asp:ListItem>Open Ocean Tank</asp:ListItem>
                 <asp:ListItem>Coral Reef Display</asp:ListItem>
@@ -66,12 +66,12 @@
                 <asp:ListItem>Mangrove Estuary</asp:ListItem>
             </asp:DropDownList>
 
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;
             <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="ddHabitat" ErrorMessage="Animal Habitat is required!" ForeColor="Red" InitialValue="---Choose Habitat----"></asp:RequiredFieldValidator>
             <br />
             <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Button ID="btnAdd" runat="server" Text="Add Animal" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Button ID="btnUpdate" runat="server" Text="Update Animal" />
 
             <br />
 

@@ -11,7 +11,7 @@ namespace AQUACORE_CMPG223
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            lblGender.Visible = false;
         }
 
         protected void rdbFemale_CheckedChanged(object sender, EventArgs e)

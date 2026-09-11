@@ -14,11 +14,16 @@
             text-align: center;
         }
         .auto-style3 {}
+        .auto-style5 {
+            text-align: center;
+            font-size: x-large;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div><h1 class="auto-style2">AquaCore-Feeding Schedule</h1>
+            <p class="auto-style5">Delete Feeding Schedule:</p>
         </div>
         <div class="auto-style1">
             <br />
@@ -34,7 +39,7 @@
             <br />
             <br />
             <br />
-            <asp:Button ID="btnDelete" runat="server" Text="Delete" />
+            <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:Button ID="btnBack" runat="server" Text="GoBack" OnClick="btnBack_Click" />
         </div>

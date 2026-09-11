@@ -33,13 +33,13 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.Label lblAdd;
 
         /// <summary>
-        /// Button1 control.
+        /// btnAdd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btnAdd;
 
         /// <summary>
         /// lblAddDes control.

@@ -82,6 +82,7 @@
     <Content Include="MainScreen.aspx" />
     <Content Include="RemoveFeeding.aspx" />
     <Content Include="UpdateFeeding.aspx" />
+    <Content Include="ViewFeedings.aspx" />
     <Content Include="VisitorDashboard.aspx" />
     <Content Include="VisitorForgotPassword.aspx" />
     <Content Include="VisitorLogin.aspx" />
@@ -130,6 +131,13 @@
     </Compile>
     <Compile Include="UpdateFeeding.aspx.designer.cs">
       <DependentUpon>UpdateFeeding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewFeedings.aspx.cs">
+      <DependentUpon>ViewFeedings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewFeedings.aspx.designer.cs">
+      <DependentUpon>ViewFeedings.aspx</DependentUpon>
     </Compile>
     <Compile Include="VisitorDashboard.aspx.cs">
       <DependentUpon>VisitorDashboard.aspx</DependentUpon>

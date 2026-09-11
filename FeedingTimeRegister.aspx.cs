@@ -14,7 +14,7 @@ namespace AQUACORE_CMPG223
 
         }
 
-        protected System.Void btnClear_Click(System.Object sender, System.EventArgs e)
+        protected void btnClear_Click(System.Object sender, System.EventArgs e)
         {
             ddlAnimal.SelectedIndex = 0;
             ddlFoodType.SelectedIndex = 0;
@@ -22,7 +22,7 @@ namespace AQUACORE_CMPG223
             ddlTime.SelectedIndex = 0;
         }
 
-        protected System.Void btnBack_Click(System.Object sender, System.EventArgs e)
+        protected void btnBack_Click(System.Object sender, System.EventArgs e)
         {
             Response.Redirect("FeedingMenu.aspx");
         }

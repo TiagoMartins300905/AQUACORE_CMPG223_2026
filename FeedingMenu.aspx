@@ -45,7 +45,7 @@
                     <td class="auto-style5">
                         <asp:Label ID="lblAdd" runat="server" Text="Add Schedule:"></asp:Label>
                         <br />
-                        <asp:Button ID="Button1" runat="server" Text="Add Feeding" />
+                        <asp:Button ID="btnAdd" runat="server" Text="Add Feeding" OnClick="btnAdd_Click1" />
                         <br />
                         <asp:Label ID="lblAddDes" runat="server" Text="Click this to add a new feeding schedule"></asp:Label>
                     </td>
@@ -54,7 +54,7 @@
                     <td class="auto-style5">
                         <asp:Label ID="lblUpdate" runat="server" Text="Update Schedule:"></asp:Label>
                         <br />
-                        <asp:Button ID="btnUpdate" runat="server" Text="Update Feeding" />
+                        <asp:Button ID="btnUpdate" runat="server" Text="Update Feeding" OnClick="btnUpdate_Click" />
                         <br />
                         <asp:Label ID="lblUpdateDes" runat="server" Text="Click this to update an existing schedule"></asp:Label>
                     </td>
@@ -63,7 +63,7 @@
                     <td class="auto-style6">
                         <asp:Label ID="lblDelete" runat="server" Text="Delete Schedule:"></asp:Label>
                         <br />
-                        <asp:Button ID="btnDelete" runat="server" Text="Delete Feeding:" />
+                        <asp:Button ID="btnDelete" runat="server" Text="Delete Feeding:" OnClick="btnDelete_Click" />
                         <br />
                         <asp:Label ID="lblDeleteDes" runat="server" Text="Click this to delete an existing feeding schedule"></asp:Label>
                     </td>
@@ -72,7 +72,7 @@
                     <td class="auto-style7">
                         <asp:Label ID="lblView" runat="server" Text="View Shedules:"></asp:Label>
                         <br />
-                        <asp:Button ID="btnView" runat="server" Text="View feedings:" />
+                        <asp:Button ID="btnView" runat="server" Text="View feedings:" OnClick="btnView_Click" />
                         <br />
                         <asp:Label ID="lblViewDes" runat="server" Text="Click this to view all existing feedings"></asp:Label>
                     </td>

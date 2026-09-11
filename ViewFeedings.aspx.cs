@@ -7,23 +7,16 @@ using System.Web.UI.WebControls;
 
 namespace AQUACORE_CMPG223
 {
-    public partial class RemoveFeeding : System.Web.UI.Page
+    public partial class ViewFeedings : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
 
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         protected void btnBack_Click(object sender, EventArgs e)
         {
-         
-        Response.Redirect("FeedingMenu.aspx");
-        
+            Response.Redirect("FeedingMenu.aspx");
         }
     }
 }

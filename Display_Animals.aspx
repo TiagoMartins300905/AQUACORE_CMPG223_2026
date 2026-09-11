@@ -17,6 +17,10 @@
         <div>
             <asp:GridView ID="GridView1" runat="server" Height="343px" style="text-align: left" Width="384px">
             </asp:GridView>
+            <br />
+            <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Button ID="btnMenu" runat="server" OnClick="btnMenu_Click" Text="Animal Menu" />
         </div>
     </form>
 </body>

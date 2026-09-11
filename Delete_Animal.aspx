@@ -8,7 +8,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
+        <div style="text-align: center">
             Remove an animal from the system
         </div>
 
@@ -22,6 +22,10 @@
             <br />
             <br />
             <asp:Button ID="btnDeleteAnimal" runat="server" Text="Delete Animal" OnClick="btnDeleteAnimal_Click" />
+            <br />
+            <br />
+            <br />
+            <asp:Button ID="btnMenu" runat="server" OnClick="btnMenu_Click" Text="Animal Menu" />
         </div>
     </form>
 </body>

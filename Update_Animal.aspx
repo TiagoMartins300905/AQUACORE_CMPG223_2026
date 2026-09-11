@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AddAnimals.aspx.cs" Inherits="AQUACORE_CMPG223.AddAnimals" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Update_Animal.aspx.cs" Inherits="AQUACORE_CMPG223.Update_Animal" %>
 
 <!DOCTYPE html>
 
@@ -71,9 +71,12 @@
             <br />
             <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Button ID="btnUpdate" runat="server" Text="Update Animal" />
+            <asp:Button ID="btnUpdate" runat="server" Text="Update Animal" OnClick="btnUpdate_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Button ID="btnMenu" runat="server" OnClick="btnMenu_Click" Text="Animal Menu" />
+            
+
+            <asp:Button ID="btnMenu" runat="server" OnClick="btnMenu_Click" Text="Animals Menu" CausesValidation="false"/>
+            
 
             <br />
 

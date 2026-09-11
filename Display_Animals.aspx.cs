@@ -13,5 +13,10 @@ namespace AQUACORE_CMPG223
         {
 
         }
+
+        protected void btnMenu_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Animals_DashBoard.aspx");
+        }
     }
 }

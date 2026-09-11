@@ -21,7 +21,7 @@
             <asp:Label ID="Label5" runat="server" Text="Add a new animal to the system"></asp:Label>
             <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Button ID="btnAdd" runat="server" style="margin-top: 15px" Text="Add Animal" Width="88px" />
+            <asp:Button ID="btnAdd" runat="server" style="margin-top: 15px" Text="Add Animal" Width="117px" OnClick="btnAdd_Click" />
             <br />
             <br />
             <br />
@@ -47,7 +47,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Button ID="btnDelete" runat="server" style="margin-top: 15px" Text="Remove Animals" Width="148px" />
+            <asp:Button ID="btnDelete" runat="server" style="margin-top: 15px" Text="Remove Animals" Width="148px" OnClick="btnDelete_Click" />
 
             <br />
             <br />
@@ -57,7 +57,7 @@
             <asp:Label ID="Label4" runat="server" Text="Display Animals"></asp:Label>
             <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Button ID="btnDisplay" runat="server" style="margin-top: 15px" Text="Show Animals" Width="148px" />
+            <asp:Button ID="btnDisplay" runat="server" style="margin-top: 15px" Text="Show Animals" Width="148px" OnClick="btnDisplay_Click" />
 
         </div>
     </form>

@@ -73,10 +73,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AddAnimals.aspx" />
+    <Content Include="Animals_Intro.aspx" />
     <Content Include="App_Data\Visitors.mdf" />
     <Content Include="App_Data\Visitors_log.ldf">
       <DependentUpon>Visitors.mdf</DependentUpon>
     </Content>
+    <Content Include="Display_Animals.aspx" />
     <Content Include="LandingPage.aspx" />
     <Content Include="MainScreen.aspx" />
     <Content Include="VisitorDashboard.aspx" />
@@ -91,6 +94,27 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddAnimals.aspx.cs">
+      <DependentUpon>AddAnimals.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddAnimals.aspx.designer.cs">
+      <DependentUpon>AddAnimals.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Animals_Intro.aspx.cs">
+      <DependentUpon>Animals_Intro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Animals_Intro.aspx.designer.cs">
+      <DependentUpon>Animals_Intro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Display_Animals.aspx.cs">
+      <DependentUpon>Display_Animals.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Display_Animals.aspx.designer.cs">
+      <DependentUpon>Display_Animals.aspx</DependentUpon>
+    </Compile>
     <Compile Include="LandingPage.aspx.cs">
       <DependentUpon>LandingPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

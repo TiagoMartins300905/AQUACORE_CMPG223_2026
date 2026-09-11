@@ -89,6 +89,7 @@
     <Content Include="VisitorTicket.aspx" />
     <Content Include="VisitorWelcomePage.aspx" />
     <Content Include="Web.config" />
+    <Content Include="FeedingTimeRegister.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LandingPage.aspx.cs">
@@ -168,6 +169,13 @@
     </Compile>
     <Compile Include="VisitorWelcomePage.aspx.designer.cs">
       <DependentUpon>VisitorWelcomePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FeedingTimeRegister.aspx.cs">
+      <DependentUpon>FeedingTimeRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FeedingTimeRegister.aspx.designer.cs">
+      <DependentUpon>FeedingTimeRegister.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

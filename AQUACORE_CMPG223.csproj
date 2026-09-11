@@ -79,6 +79,7 @@
     <Content Include="App_Data\Visitors_log.ldf">
       <DependentUpon>Visitors.mdf</DependentUpon>
     </Content>
+    <Content Include="Delete_Animal.aspx" />
     <Content Include="Display_Animals.aspx" />
     <Content Include="LandingPage.aspx" />
     <Content Include="MainScreen.aspx" />
@@ -107,6 +108,13 @@
     </Compile>
     <Compile Include="Animals_Intro.aspx.designer.cs">
       <DependentUpon>Animals_Intro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Delete_Animal.aspx.cs">
+      <DependentUpon>Delete_Animal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Delete_Animal.aspx.designer.cs">
+      <DependentUpon>Delete_Animal.aspx</DependentUpon>
     </Compile>
     <Compile Include="Display_Animals.aspx.cs">
       <DependentUpon>Display_Animals.aspx</DependentUpon>

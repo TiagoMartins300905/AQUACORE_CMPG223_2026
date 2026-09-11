@@ -7,14 +7,9 @@ using System.Web.UI.WebControls;
 
 namespace AQUACORE_CMPG223
 {
-    public partial class Animals_Intro : System.Web.UI.Page
+    public partial class Delete_Animal : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Button2_Click(object sender, EventArgs e)
         {
 
         }

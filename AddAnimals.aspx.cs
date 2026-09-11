@@ -13,5 +13,20 @@ namespace AQUACORE_CMPG223
         {
 
         }
+
+        protected void rdbFemale_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void rdbMale_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void rdbMale_CheckedChanged1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

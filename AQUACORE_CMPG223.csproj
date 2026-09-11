@@ -77,9 +77,11 @@
     <Content Include="App_Data\Visitors_log.ldf">
       <DependentUpon>Visitors.mdf</DependentUpon>
     </Content>
+    <Content Include="FeedingMenu.aspx" />
     <Content Include="LandingPage.aspx" />
     <Content Include="MainScreen.aspx" />
     <Content Include="RemoveFeeding.aspx" />
+    <Content Include="UpdateFeeding.aspx" />
     <Content Include="VisitorDashboard.aspx" />
     <Content Include="VisitorForgotPassword.aspx" />
     <Content Include="VisitorLogin.aspx" />
@@ -93,6 +95,13 @@
     <Content Include="FeedingTimeRegister.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeedingMenu.aspx.cs">
+      <DependentUpon>FeedingMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FeedingMenu.aspx.designer.cs">
+      <DependentUpon>FeedingMenu.aspx</DependentUpon>
+    </Compile>
     <Compile Include="LandingPage.aspx.cs">
       <DependentUpon>LandingPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -114,6 +123,13 @@
     </Compile>
     <Compile Include="RemoveFeeding.aspx.designer.cs">
       <DependentUpon>RemoveFeeding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateFeeding.aspx.cs">
+      <DependentUpon>UpdateFeeding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UpdateFeeding.aspx.designer.cs">
+      <DependentUpon>UpdateFeeding.aspx</DependentUpon>
     </Compile>
     <Compile Include="VisitorDashboard.aspx.cs">
       <DependentUpon>VisitorDashboard.aspx</DependentUpon>

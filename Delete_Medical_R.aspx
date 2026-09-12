@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Delete.aspx.cs" Inherits="AQUACORE_CMPG223.Delete" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Delete_Medical_R.aspx.cs" Inherits="AQUACORE_CMPG223.Delete" %>
 
 <!DOCTYPE html>
 
@@ -25,7 +25,7 @@
             <asp:Button ID="btnDelete" runat="server" Text="Delete Record" />
             <br />
             <br />
-            <asp:Button ID="btnBack" runat="server" Text="Medicals Menu" />
+            <asp:Button ID="btnBack" runat="server" Text="Medicals Menu" CausesValidation="false" />
         </div>
     </form>
 </body>

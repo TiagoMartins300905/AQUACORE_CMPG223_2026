@@ -80,7 +80,7 @@
     <Content Include="App_Data\Visitors_log.ldf">
       <DependentUpon>Visitors.mdf</DependentUpon>
     </Content>
-    <Content Include="Delete.aspx" />
+    <Content Include="Delete_Medical_R.aspx" />
     <Content Include="Delete_Animal.aspx" />
     <Content Include="Display_Animals.aspx" />
     <Content Include="LandingPage.aspx" />
@@ -120,12 +120,12 @@
     <Compile Include="Animals_DashBoard.aspx.designer.cs">
       <DependentUpon>Animals_DashBoard.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Delete.aspx.cs">
-      <DependentUpon>Delete.aspx</DependentUpon>
+    <Compile Include="Delete_Medical_R.aspx.cs">
+      <DependentUpon>Delete_Medical_R.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Delete.aspx.designer.cs">
-      <DependentUpon>Delete.aspx</DependentUpon>
+    <Compile Include="Delete_Medical_R.aspx.designer.cs">
+      <DependentUpon>Delete_Medical_R.aspx</DependentUpon>
     </Compile>
     <Compile Include="Delete_Animal.aspx.cs">
       <DependentUpon>Delete_Animal.aspx</DependentUpon>

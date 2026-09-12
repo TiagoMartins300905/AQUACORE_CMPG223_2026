@@ -74,11 +74,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AddAnimals.aspx" />
+    <Content Include="Add_Medical_R.aspx" />
     <Content Include="Animals_DashBoard.aspx" />
     <Content Include="App_Data\Visitors.mdf" />
     <Content Include="App_Data\Visitors_log.ldf">
       <DependentUpon>Visitors.mdf</DependentUpon>
     </Content>
+    <Content Include="Delete.aspx" />
     <Content Include="Delete_Animal.aspx" />
     <Content Include="Display_Animals.aspx" />
     <Content Include="LandingPage.aspx" />
@@ -104,12 +106,26 @@
     <Compile Include="AddAnimals.aspx.designer.cs">
       <DependentUpon>AddAnimals.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Add_Medical_R.aspx.cs">
+      <DependentUpon>Add_Medical_R.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Add_Medical_R.aspx.designer.cs">
+      <DependentUpon>Add_Medical_R.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Animals_DashBoard.aspx.cs">
       <DependentUpon>Animals_DashBoard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Animals_DashBoard.aspx.designer.cs">
       <DependentUpon>Animals_DashBoard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Delete.aspx.cs">
+      <DependentUpon>Delete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Delete.aspx.designer.cs">
+      <DependentUpon>Delete.aspx</DependentUpon>
     </Compile>
     <Compile Include="Delete_Animal.aspx.cs">
       <DependentUpon>Delete_Animal.aspx</DependentUpon>

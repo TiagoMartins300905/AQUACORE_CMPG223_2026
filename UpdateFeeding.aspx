@@ -3,310 +3,609 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head runat="server">
-    <title></title>
 
-    <style type="text/css">
-        .auto-style1 {
-            height: 545px;
+    <title>AquaCore - Update Feeding Schedule</title>
+
+    <style>
+
+        :root {
+            --abyss-deep: #051329;
+            --ocean-blue: #0b2545;
+            --aqua-glow: #00d2ff;
+            --card-glass: rgba(11, 37, 69, 0.75);
+            --card-border: rgba(0, 210, 255, 0.25);
+            --text-primary: #eef4f8;
+            --text-muted: #8da4be;
         }
 
-        .auto-style2 {
-            height: 52px;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+
+            font-family:
+                'Segoe UI',
+                -apple-system,
+                BlinkMacSystemFont,
+                sans-serif;
         }
 
-        .auto-style3 {
+        body {
+
+            background: radial-gradient(
+                circle at 50% 10%,
+                #0d325e 0%,
+                var(--ocean-blue) 40%,
+                var(--abyss-deep) 100%
+            );
+
+            color: var(--text-primary);
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            padding: 40px 20px;
+        }
+
+        .dashboard-container {
+
+            width: 100%;
+
+            max-width: 1000px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 24px;
+        }
+
+        /* Glass Panel */
+
+        .glass-panel {
+
+            background: var(--card-glass);
+
+            border: 1px solid var(--card-border);
+
+            border-radius: 16px;
+
+            padding: 32px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        /* Header */
+
+        .header-panel {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 20px;
+        }
+
+        .header-title h1 {
+
+            font-size: 2rem;
+
+            color: #ffffff;
+
+            margin-bottom: 5px;
+        }
+
+        .header-title p {
+
+            color: var(--text-muted);
+
+            font-size: 0.95rem;
+        }
+
+        /* Buttons */
+
+        .btn {
+
+            padding: 10px 18px;
+
+            border-radius: 8px;
+
+            font-weight: 600;
+
+            font-size: 0.9rem;
+
+            cursor: pointer;
+
+            border: none;
+
+            text-decoration: none;
+
             text-align: center;
+
+            transition: all 0.2s;
         }
 
-        .auto-style7 {}
+        .btn-add {
 
-        .auto-style8 {}
+            background: linear-gradient(
+                135deg,
+                #00d2ff,
+                #0077b6
+            );
 
-        .auto-style9 {
-            width: 205px;
-            height: 92px;
+            color: #ffffff;
         }
 
-        .auto-style10 {
-            height: 92px;
+        .btn-add:hover {
+
+            opacity: 0.9;
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 5px 15px rgba(0, 210, 255, 0.2);
         }
 
-        .auto-style11 {
-            width: 205px;
-            height: 87px;
+        .btn-outline {
+
+            background: rgba(255, 255, 255, 0.08);
+
+            color: var(--text-primary);
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        .auto-style12 {
-            height: 87px;
+        .btn-outline:hover {
+
+            background: rgba(255, 255, 255, 0.15);
+
+            color: #ffffff;
         }
 
-        .auto-style13 {}
+        /* Page Heading */
 
-        .auto-style14 {}
+        .page-heading {
 
-        .auto-style15 {
-            width: 205px;
-            height: 79px;
+            margin-bottom: 25px;
         }
 
-        .auto-style16 {
-            height: 79px;
+        .page-heading h2 {
+
+            font-size: 1.4rem;
+
+            color: var(--aqua-glow);
+
+            margin-bottom: 6px;
         }
 
-        .auto-style17 {}
+        .page-heading p {
 
-        .auto-style19 {}
+            color: var(--text-muted);
 
-        .auto-style20 {
+            font-size: 0.9rem;
+
+            line-height: 1.5;
+        }
+
+        /* Schedule ID Section */
+
+        .schedule-section {
+
+            background: rgba(0, 210, 255, 0.05);
+
+            border: 1px solid rgba(0, 210, 255, 0.18);
+
+            border-radius: 12px;
+
+            padding: 22px;
+
+            margin-bottom: 25px;
+        }
+
+        .section-label {
+
+            display: block;
+
+            color: #ffffff;
+
+            font-weight: 600;
+
+            font-size: 0.95rem;
+
+            margin-bottom: 10px;
+        }
+
+        .section-help {
+
+            display: block;
+
+            color: var(--text-muted);
+
+            font-size: 0.85rem;
+
+            margin-bottom: 15px;
+        }
+
+        /* Form Grid */
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns: 180px 1fr;
+
+            gap: 20px 25px;
+
+            align-items: center;
+        }
+
+        .form-label {
+
+            color: var(--text-primary);
+
+            font-weight: 600;
+
+            font-size: 0.95rem;
+        }
+
+        /* Inputs */
+
+        .input-control {
+
+            width: 100%;
+
+            max-width: 500px;
+
+            padding: 11px 14px;
+
+            border-radius: 8px;
+
+            border: 1px solid rgba(0, 210, 255, 0.25);
+
+            background: rgba(5, 19, 41, 0.65);
+
+            color: #ffffff;
+
+            font-size: 0.95rem;
+
+            outline: none;
+        }
+
+        .input-control:focus {
+
+            border-color: var(--aqua-glow);
+
+            box-shadow:
+                0 0 8px rgba(0, 210, 255, 0.3);
+        }
+
+        .input-control option {
+
+            background: #0b2545;
+
+            color: #ffffff;
+        }
+
+        /* Validation */
+
+        .validator {
+
+            display: block;
+
+            color: #ff7b7b;
+
+            font-size: 0.85rem;
+
+            margin-top: 8px;
+        }
+
+        /* Message */
+
+        .message {
+
+            display: block;
+
+            margin-top: 25px;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            background: rgba(0, 210, 255, 0.07);
+
+            border: 1px solid rgba(0, 210, 255, 0.15);
+
+            color: var(--aqua-glow);
+
             text-align: center;
+
+            font-weight: 600;
+
+            min-height: 20px;
         }
 
-        .auto-style22 {
-            height: 87px;
-            width: 585px;
+        /* Buttons Row */
+
+        .button-row {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 12px;
+
+            margin-top: 25px;
         }
 
-        .auto-style23 {
-            height: 187px;
+        /* Mobile */
+
+        @media (max-width: 700px) {
+
+            body {
+
+                padding: 20px 10px;
+            }
+
+            .glass-panel {
+
+                padding: 22px;
+            }
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+
+                gap: 8px;
+            }
+
+            .input-control {
+
+                max-width: 100%;
+            }
+
+            .schedule-section {
+
+                padding: 18px;
+            }
+
+            .button-row {
+
+                flex-direction: column;
+            }
+
+            .button-row input {
+
+                width: 100%;
+            }
         }
 
-        .auto-style25 {}
-        .auto-style27 {
-            text-align: center;
-            font-size: x-large;
-        }
     </style>
+
 </head>
 
 <body>
+
     <form id="form1" runat="server">
 
-        <div class="auto-style2">
+        <div class="dashboard-container">
 
-            <h1 class="auto-style3">
-                AquaCore-Feeding Schedule
-            </h1>
-            <p class="auto-style27">
-                Update Feeding Schedule:</p>
 
-            <p class="auto-style3">
-                <asp:Label
-                    ID="lblHeading"
-                    runat="server"
-                    Text="Please select a schedule ID to update:">
-                </asp:Label>
-            </p>
+            <!-- Header -->
 
-            <p class="auto-style3">
+            <div class="glass-panel header-panel">
 
-                <asp:DropDownList
-                    ID="ddlScheduleID"
-                    runat="server"
-                    CssClass="auto-style25"
-                    Height="33px"
-                    Width="347px">
+                <div class="header-title">
 
-                    <asp:ListItem>--Select a schedule ID--</asp:ListItem>
+                    <h1>AquaCore Operations</h1>
 
-                </asp:DropDownList>
+                    <p>
+                        Feeding Schedule Management
+                    </p>
 
-            </p>
+                </div>
 
-            <p class="auto-style3">
+                <div>
 
-                <asp:RequiredFieldValidator
-                    ID="RequiredFieldValidator1"
-                    runat="server"
-                    ControlToValidate="ddlScheduleID"
-                    ErrorMessage="A schedule ID is required!"
-                    InitialValue="--Select a schedule ID--"
-                    ValidationGroup="UpdateValidation">
-                </asp:RequiredFieldValidator>
+                    <asp:Button
+                        ID="btnBack"
+                        runat="server"
+                        Text="← Go Back"
+                        CssClass="btn btn-outline"
+                        CausesValidation="false"
+                        OnClick="btnBack_Click" />
 
-            </p>
+                </div>
 
-            <p class="auto-style3">&nbsp;</p>
+            </div>
 
-        </div>
 
-        <div class="auto-style1">
+            <!-- Update Form -->
 
-            <table style="width:100%;">
+            <div class="glass-panel">
 
-                <tr>
-                    <td class="auto-style23" colspan="3"></td>
-                </tr>
+                <div class="page-heading">
 
-                <!-- Animal -->
-                <tr>
-                    <td class="auto-style15">
+                    <h2>Update Feeding Schedule</h2>
 
-                        <asp:Label
-                            ID="lblAnimal"
-                            runat="server"
-                            Text="Animal:">
-                        </asp:Label>
+                    <p>
+                        Select an existing schedule and update its feeding details.
+                    </p>
 
-                    </td>
+                </div>
 
-                    <td class="auto-style16" colspan="2">
 
-                        <asp:DropDownList
-                            ID="ddlAnimal"
-                            runat="server"
-                            CssClass="auto-style7"
-                            Height="24px"
-                            Width="350px">
+                <!-- Schedule ID -->
 
-                            <asp:ListItem>--Select Animal--</asp:ListItem>
+                <div class="schedule-section">
 
-                        </asp:DropDownList>
+                    <asp:Label
+                        ID="lblHeading"
+                        runat="server"
+                        Text="Select a schedule ID to update:"
+                        CssClass="section-label" />
 
-                    </td>
-                </tr>
+                    <asp:Label
+                        runat="server"
+                        Text="Choose the feeding schedule you want to modify."
+                        CssClass="section-help" />
 
-                <!-- Marine Keeper -->
-                <tr>
-                    <td class="auto-style9">
+                    <asp:DropDownList
+                        ID="ddlScheduleID"
+                        runat="server"
+                        CssClass="input-control">
 
-                        <asp:Label
-                            ID="lblKeeper"
-                            runat="server"
-                            Text="Marine Keeper:">
-                        </asp:Label>
+                        <asp:ListItem>
+                            --Select a schedule ID--
+                        </asp:ListItem>
 
-                    </td>
+                    </asp:DropDownList>
 
-                    <td class="auto-style10" colspan="2">
+                    <asp:RequiredFieldValidator
+                        ID="RequiredFieldValidator1"
+                        runat="server"
+                        ControlToValidate="ddlScheduleID"
+                        ErrorMessage="A schedule ID is required!"
+                        InitialValue="--Select a schedule ID--"
+                        ValidationGroup="UpdateValidation"
+                        CssClass="validator" />
 
-                        <asp:DropDownList
-                            ID="ddlKeeper"
-                            runat="server"
-                            CssClass="auto-style8"
-                            Height="33px"
-                            Width="350px">
+                </div>
 
-                            <asp:ListItem>--Select Keeper--</asp:ListItem>
 
-                        </asp:DropDownList>
+                <!-- Feeding Details -->
 
-                    </td>
-                </tr>
+                <div class="form-grid">
 
-                <!-- Time -->
-                <tr>
-                    <td class="auto-style11">
 
-                        <asp:Label
-                            ID="lblTime"
-                            runat="server"
-                            Text="Time:">
-                        </asp:Label>
+                    <!-- Animal -->
 
-                    </td>
+                    <asp:Label
+                        ID="lblAnimal"
+                        runat="server"
+                        Text="Animal:"
+                        CssClass="form-label" />
 
-                    <td class="auto-style12" colspan="2">
+                    <asp:DropDownList
+                        ID="ddlAnimal"
+                        runat="server"
+                        CssClass="input-control">
 
-                        <asp:DropDownList
-                            ID="ddlTime"
-                            runat="server"
-                            CssClass="auto-style13"
-                            Height="16px"
-                            Width="360px">
+                        <asp:ListItem>
+                            --Select Animal--
+                        </asp:ListItem>
 
-                            <asp:ListItem>--Select a time--</asp:ListItem>
+                    </asp:DropDownList>
 
-                        </asp:DropDownList>
 
-                    </td>
-                </tr>
+                    <!-- Marine Keeper -->
 
-                <!-- Food Type -->
-                <tr>
-                    <td class="auto-style11">
+                    <asp:Label
+                        ID="lblKeeper"
+                        runat="server"
+                        Text="Marine Keeper:"
+                        CssClass="form-label" />
 
-                        <asp:Label
-                            ID="foodTypelbl"
-                            runat="server"
-                            Text="Food Type:">
-                        </asp:Label>
+                    <asp:DropDownList
+                        ID="ddlKeeper"
+                        runat="server"
+                        CssClass="input-control">
 
-                    </td>
+                        <asp:ListItem>
+                            --Select Keeper--
+                        </asp:ListItem>
 
-                    <td class="auto-style12" colspan="2">
+                    </asp:DropDownList>
 
-                        <asp:DropDownList
-                            ID="ddlFoodType"
-                            runat="server"
-                            CssClass="auto-style14"
-                            Height="30px"
-                            Width="372px">
 
-                            <asp:ListItem>--Select food type--</asp:ListItem>
+                    <!-- Time -->
 
-                        </asp:DropDownList>
+                    <asp:Label
+                        ID="lblTime"
+                        runat="server"
+                        Text="Feeding Time:"
+                        CssClass="form-label" />
 
-                    </td>
-                </tr>
+                    <asp:DropDownList
+                        ID="ddlTime"
+                        runat="server"
+                        CssClass="input-control">
+
+                        <asp:ListItem>
+                            --Select a time--
+                        </asp:ListItem>
+
+                    </asp:DropDownList>
+
+
+                    <!-- Food -->
+
+                    <asp:Label
+                        ID="foodTypelbl"
+                        runat="server"
+                        Text="Food Type:"
+                        CssClass="form-label" />
+
+                    <asp:DropDownList
+                        ID="ddlFoodType"
+                        runat="server"
+                        CssClass="input-control">
+
+                        <asp:ListItem>
+                            --Select food type--
+                        </asp:ListItem>
+
+                    </asp:DropDownList>
+
+                </div>
+
 
                 <!-- Message -->
-                <tr>
-                    <td class="auto-style11">&nbsp;</td>
 
-                    <td class="auto-style22">
+                <asp:Label
+                    ID="lblMessage"
+                    runat="server"
+                    CssClass="message" />
 
-                        <asp:Label
-                            ID="lblMessage"
-                            runat="server"
-                            CssClass="auto-style20">
-                        </asp:Label>
-
-                    </td>
-
-                    <td class="auto-style12">&nbsp;</td>
-                </tr>
 
                 <!-- Buttons -->
-                <tr>
-                    <td class="auto-style11">&nbsp;</td>
 
-                    <td class="auto-style22">
+                <div class="button-row">
 
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <asp:Button
+                        ID="btnUpdate"
+                        runat="server"
+                        Text="✏️ Update Schedule"
+                        CssClass="btn btn-add"
+                        ValidationGroup="UpdateValidation" />
 
-                        <!-- UPDATE: Runs validation -->
-                        <asp:Button
-                            ID="btnUpdate"
-                            runat="server"
-                            CssClass="auto-style17"
-                            Height="41px"
-                            Text="Update Schedule"
-                            Width="136px"
-                            ValidationGroup="UpdateValidation" />
+                    <asp:Button
+                        ID="btnBackBottom"
+                        runat="server"
+                        Text="← Cancel"
+                        CssClass="btn btn-outline"
+                        CausesValidation="false"
+                        OnClick="btnBack_Click" />
 
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
 
-                        <!-- GO BACK: Does NOT run validation -->
-                        <asp:Button
-                            ID="btnBack"
-                            runat="server"
-                            CssClass="auto-style19"
-                            Height="41px"
-                            Text="Go Back"
-                            Width="117px"
-                            CausesValidation="false"
-                            OnClick="btnBack_Click" />
-
-                    </td>
-
-                    <td class="auto-style12">&nbsp;</td>
-                </tr>
-
-            </table>
+            </div>
 
         </div>
 
     </form>
+
 </body>
+
 </html>

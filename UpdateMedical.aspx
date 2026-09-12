@@ -23,7 +23,7 @@
                 <asp:ListItem>--Select Medical ID--</asp:ListItem>
             </asp:DropDownList>
             &nbsp;&nbsp;
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtRecordID" ErrorMessage="Record ID Required!!" ForeColor="Red" InitialValue="--Select Medical ID--"></asp:RequiredFieldValidator>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="ddlMedical" ErrorMessage="Record ID Required!!" ForeColor="Red" InitialValue="--Select Medical ID--"></asp:RequiredFieldValidator>
             <br />
             <br />
             <asp:Label ID="Label12" runat="server" Text="Animal ID:"></asp:Label>

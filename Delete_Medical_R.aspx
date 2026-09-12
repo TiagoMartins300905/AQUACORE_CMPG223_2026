@@ -25,7 +25,7 @@
             <asp:Button ID="btnDelete" runat="server" Text="Delete Record" />
             <br />
             <br />
-            <asp:Button ID="btnBack" runat="server" Text="Medicals Menu" CausesValidation="false" />
+            <asp:Button ID="btnBack" runat="server" Text="Medicals Menu" CausesValidation="false" OnClick="btnBack_Click" />
         </div>
     </form>
 </body>

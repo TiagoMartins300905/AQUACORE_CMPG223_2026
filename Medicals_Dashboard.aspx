@@ -20,7 +20,7 @@
             <asp:Label ID="Label2" runat="server" ForeColor="Gray" Text="Add a medical record for an animal"></asp:Label>
             <br />
             <br />
-            <asp:Button ID="btnAdd" runat="server" Text="Add Record" />
+            <asp:Button ID="btnAdd" runat="server" Text="Add Record" OnClick="btnAdd_Click" />
             <br />
             <br />
             <br />
@@ -29,7 +29,7 @@
             <asp:Label ID="Label4" runat="server" ForeColor="Gray" Text="Update existing medical records"></asp:Label>
             <br />
             <br />
-            <asp:Button ID="btnUpdate" runat="server" Text="Update Record" />
+            <asp:Button ID="btnUpdate" runat="server" Text="Update Record" OnClick="btnUpdate_Click" />
             <br />
             <br />
             <br />
@@ -38,14 +38,14 @@
             <asp:Label ID="Label6" runat="server" ForeColor="Gray" Text="Delete an existing record"></asp:Label>
             <br />
             <br />
-            <asp:Button ID="btnDelete" runat="server" Text="Delete Record" />
+            <asp:Button ID="btnDelete" runat="server" Text="Delete Record" OnClick="btnDelete_Click" />
             <br />
             <br />
             <br />
             <asp:Label ID="Label8" runat="server" Text="Display Medical Records"></asp:Label>
             <br />
             <br />
-            <asp:Button ID="btnDisplay" runat="server" Text="Display Records" />
+            <asp:Button ID="btnDisplay" runat="server" Text="Display Records" OnClick="btnDisplay_Click" />
             <br />
             <br />
             <br />

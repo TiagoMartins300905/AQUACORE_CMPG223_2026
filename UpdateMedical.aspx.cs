@@ -18,5 +18,10 @@ namespace AQUACORE_CMPG223
         {
             Response.Redirect("Medicals_Dashboard.aspx");
         }
+
+        protected void rdbYes_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

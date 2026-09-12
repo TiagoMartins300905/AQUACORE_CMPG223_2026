@@ -56,7 +56,7 @@
             <br />
             <asp:Button ID="btnAdd" runat="server" Text="Add Record" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Button ID="btnBack" runat="server" Text="Medicals Menu" CausesValidation="false" />
+            <asp:Button ID="btnBack" runat="server" Text="Medicals Menu" CausesValidation="false" OnClick="btnBack_Click" />
 
         </div>
     </form>

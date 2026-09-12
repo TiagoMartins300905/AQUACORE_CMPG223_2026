@@ -13,5 +13,25 @@ namespace AQUACORE_CMPG223
         {
 
         }
+
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Add_Medical_R.aspx");
+        }
+
+        protected void btnUpdate_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("UpdateMedical.aspx");
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Delete_Medical_R.aspx");
+        }
+
+        protected void btnDisplay_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ViewMedical.aspx");
+        }
     }
 }

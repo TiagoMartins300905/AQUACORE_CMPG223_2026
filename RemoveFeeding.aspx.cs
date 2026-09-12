@@ -16,7 +16,8 @@ namespace AQUACORE_CMPG223
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            
+            string qry = "DELETE FROM Feeding WHERE ID = @ID";
+
         }
 
         protected void btnBack_Click(object sender, EventArgs e)

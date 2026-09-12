@@ -81,7 +81,7 @@
                     <td class="auto-style8">
                         <asp:Label ID="lblReturn" runat="server" Text="Return:"></asp:Label>
                         <br />
-                        <asp:Button ID="Button5" runat="server" Text="Go Back" />
+                        <asp:Button ID="Button5" runat="server" Text="Go Back" OnClick="Button5_Click" />
                         <br />
                         <asp:Label ID="Label10" runat="server" Text="Click this button to return to previous menu"></asp:Label>
                     </td>

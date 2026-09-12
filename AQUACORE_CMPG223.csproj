@@ -73,6 +73,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AnimalMenuDashboard.aspx" />
     <Content Include="App_Data\Visitors.mdf" />
     <Content Include="App_Data\Visitors_log.ldf">
       <DependentUpon>Visitors.mdf</DependentUpon>
@@ -96,6 +97,13 @@
     <Content Include="FeedingTimeRegister.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnimalMenuDashboard.aspx.cs">
+      <DependentUpon>AnimalMenuDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AnimalMenuDashboard.aspx.designer.cs">
+      <DependentUpon>AnimalMenuDashboard.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FeedingMenu.aspx.cs">
       <DependentUpon>FeedingMenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

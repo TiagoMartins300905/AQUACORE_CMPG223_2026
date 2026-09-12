@@ -33,5 +33,10 @@ namespace AQUACORE_CMPG223
         {
             Response.Redirect("ViewFeedings.aspx");
         }
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AnimalMenuDashboard.aspx");
+        }
     }
 }

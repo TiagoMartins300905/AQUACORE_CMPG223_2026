@@ -44,7 +44,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:TextBox ID="txtDOB" runat="server" AutoPostBack="True"></asp:TextBox>
             &nbsp;&nbsp;&nbsp;
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="txtSpecies" ErrorMessage="Enter animal's DOB!" ForeColor="Red"></asp:RequiredFieldValidator>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="txtDOB" ErrorMessage="Enter animal's DOB!" ForeColor="Red"></asp:RequiredFieldValidator>
             <br />
             <br />
             <asp:Label ID="Label5" runat="server" Text="Gender:"></asp:Label>

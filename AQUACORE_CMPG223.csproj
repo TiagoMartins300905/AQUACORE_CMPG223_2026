@@ -86,7 +86,9 @@
     <Content Include="LandingPage.aspx" />
     <Content Include="MainScreen.aspx" />
     <Content Include="Medicals_Dashboard.aspx" />
+    <Content Include="UpdateMedical.aspx" />
     <Content Include="Update_Animal.aspx" />
+    <Content Include="ViewMedical.aspx" />
     <Content Include="VisitorDashboard.aspx" />
     <Content Include="VisitorForgotPassword.aspx" />
     <Content Include="VisitorLogin.aspx" />
@@ -163,12 +165,26 @@
       <DependentUpon>Medicals_Dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdateMedical.aspx.cs">
+      <DependentUpon>UpdateMedical.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UpdateMedical.aspx.designer.cs">
+      <DependentUpon>UpdateMedical.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Update_Animal.aspx.cs">
       <DependentUpon>Update_Animal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Update_Animal.aspx.designer.cs">
       <DependentUpon>Update_Animal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewMedical.aspx.cs">
+      <DependentUpon>ViewMedical.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewMedical.aspx.designer.cs">
+      <DependentUpon>ViewMedical.aspx</DependentUpon>
     </Compile>
     <Compile Include="VisitorDashboard.aspx.cs">
       <DependentUpon>VisitorDashboard.aspx</DependentUpon>

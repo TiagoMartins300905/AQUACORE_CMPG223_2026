@@ -106,13 +106,6 @@
     <Content Include="VisitorWelcomePage.aspx" />
     <Content Include="Web.config" />
     <Content Include="FeedingTimeRegister.aspx" />
-    <Content Include="AddEmployee.aspx" />
-    <Content Include="EmployeeManagement.aspx" />
-    <Content Include="UpdateEmployee.aspx" />
-    <Content Include="DeleteEmployee.aspx" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Database\AquaCore_Employee_Schema.sql" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddAnimals.aspx.cs">
@@ -335,37 +328,6 @@
     </Compile>
     <Compile Include="FeedingTimeRegister.aspx.designer.cs">
       <DependentUpon>FeedingTimeRegister.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="App_Code\DBHelper.cs" />
-    <Compile Include="App_Code\Employee.cs" />
-    <Compile Include="App_Code\EmployeeRepository.cs" />
-    <Compile Include="EmployeeManagement.aspx.cs">
-      <DependentUpon>EmployeeManagement.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="EmployeeManagement.aspx.designer.cs">
-      <DependentUpon>EmployeeManagement.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AddEmployee.aspx.cs">
-      <DependentUpon>AddEmployee.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AddEmployee.aspx.designer.cs">
-      <DependentUpon>AddEmployee.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="UpdateEmployee.aspx.cs">
-      <DependentUpon>UpdateEmployee.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UpdateEmployee.aspx.designer.cs">
-      <DependentUpon>UpdateEmployee.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DeleteEmployee.aspx.cs">
-      <DependentUpon>DeleteEmployee.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DeleteEmployee.aspx.designer.cs">
-      <DependentUpon>DeleteEmployee.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -79,6 +79,7 @@
     <Content Include="Delete_feeding.aspx" />
     <Content Include="Delete_Medical_R.aspx" />
     <Content Include="Delete_Animal.aspx" />
+    <Content Include="Display Orders.aspx" />
     <Content Include="Display_Animals.aspx" />
     <Content Include="LandingPage.aspx" />
     <Content Include="MainScreen.aspx" />
@@ -143,6 +144,13 @@
     </Compile>
     <Compile Include="Delete_Animal.aspx.designer.cs">
       <DependentUpon>Delete_Animal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Display Orders.aspx.cs">
+      <DependentUpon>Display Orders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Display Orders.aspx.designer.cs">
+      <DependentUpon>Display Orders.aspx</DependentUpon>
     </Compile>
     <Compile Include="Display_Animals.aspx.cs">
       <DependentUpon>Display_Animals.aspx</DependentUpon>

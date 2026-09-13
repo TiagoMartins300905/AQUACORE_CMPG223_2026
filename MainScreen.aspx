@@ -33,6 +33,8 @@
 
         <nav class="auto-style1">
             <a href="Contact.aspx">Contact</a>
+            <%-- Placeholder until StaffLogin.aspx / real authentication exists: gives direct, working access to the Employee Management module. --%>
+            <a href="EmployeeManagement.aspx">Employee Management</a>
         </nav>
 
         <div class="content">

@@ -11,7 +11,7 @@ namespace AQUACORE_CMPG223
 {
 
 
-    public partial class FeedingMenu
+    public partial class Menu_Feeding
     {
 
         /// <summary>

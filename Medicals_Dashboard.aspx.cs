@@ -33,5 +33,10 @@ namespace AQUACORE_CMPG223
         {
             Response.Redirect("ViewMedical.aspx");
         }
+
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AnimalManagementDashboard.aspx");
+        }
     }
 }

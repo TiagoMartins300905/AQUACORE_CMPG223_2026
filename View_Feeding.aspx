@@ -1,4 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ViewFeedings.aspx.cs" Inherits="AQUACORE_CMPG223.ViewFeedings" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true"
+    CodeBehind="View_Feeding.aspx.cs"
+    Inherits="AQUACORE_CMPG223.View_Feeding" %>
 
 <!DOCTYPE html>
 

@@ -11,7 +11,7 @@ namespace AQUACORE_CMPG223
 {
 
 
-    public partial class RemoveFeeding
+    public partial class Delete_feeding
     {
 
         /// <summary>

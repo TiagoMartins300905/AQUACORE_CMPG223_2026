@@ -22,10 +22,6 @@ namespace AQUACORE_CMPG223
         public const string STAFF = "Staff";
         public const string CUSTOMER = "Customer";
 
-        // TODO: StaffLogin.aspx does not exist yet (auth is a separate module).
-        // Until it's built, staff/admin land on a dead redirect here - the
-        // "Employee Management" link in the nav bar (MainScreen.aspx) is the
-        // working way into the Employee Management module in the meantime.
         protected void btnAdmin_Click(object sender, EventArgs e)
         {
             HttpCookie user = new HttpCookie("Selection");

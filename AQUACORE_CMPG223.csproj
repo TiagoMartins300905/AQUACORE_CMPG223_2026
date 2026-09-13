@@ -74,10 +74,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AnimalMenuDashboard.aspx" />
-    <Content Include="App_Data\Visitors.mdf" />
-    <Content Include="App_Data\Visitors_log.ldf">
-      <DependentUpon>Visitors.mdf</DependentUpon>
-    </Content>
     <Content Include="FeedingMenu.aspx" />
     <Content Include="LandingPage.aspx" />
     <Content Include="MainScreen.aspx" />

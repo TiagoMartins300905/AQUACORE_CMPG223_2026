@@ -30,7 +30,7 @@
                         <asp:Label ID="Label3" runat="server" Text="Update Order"></asp:Label>
                     </td>
                     <td>
-                        <asp:Button ID="btnUpdate" runat="server" Text="Update" />
+                        <asp:Button ID="btnUpdate" runat="server" Text="Update" OnClick="btnUpdate_Click" />
                     </td>
                     <td>&nbsp;</td>
                 </tr>

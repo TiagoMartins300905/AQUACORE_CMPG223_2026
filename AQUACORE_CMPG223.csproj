@@ -82,6 +82,7 @@
     <Content Include="LandingPage.aspx" />
     <Content Include="MainScreen.aspx" />
     <Content Include="Medicals_Dashboard.aspx" />
+    <Content Include="UpdateAnimalFeeding.aspx" />
     <Content Include="UpdateMedical.aspx" />
     <Content Include="Update_Animal.aspx" />
     <Content Include="ViewMedical.aspx" />
@@ -162,6 +163,13 @@
       <DependentUpon>Medicals_Dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdateAnimalFeeding.aspx.cs">
+      <DependentUpon>UpdateAnimalFeeding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UpdateAnimalFeeding.aspx.designer.cs">
+      <DependentUpon>UpdateAnimalFeeding.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UpdateMedical.aspx.cs">
       <DependentUpon>UpdateMedical.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

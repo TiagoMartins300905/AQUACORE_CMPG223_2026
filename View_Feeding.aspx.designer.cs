@@ -11,7 +11,7 @@ namespace AQUACORE_CMPG223
 {
 
 
-    public partial class ViewFeedings
+    public partial class View_Feeding
     {
 
         /// <summary>

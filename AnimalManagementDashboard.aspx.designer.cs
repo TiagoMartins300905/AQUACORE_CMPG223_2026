@@ -11,7 +11,7 @@ namespace AQUACORE_CMPG223
 {
 
 
-    public partial class Delete
+    public partial class AnimalManagementDashboard
     {
 
         /// <summary>
@@ -24,48 +24,39 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// btnTopBack control.
+        /// btnAnimals control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnTopBack;
+        protected global::System.Web.UI.WebControls.Button btnAnimals;
 
         /// <summary>
-        /// Label11 control.
+        /// btnFeeding control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label11;
+        protected global::System.Web.UI.WebControls.Button btnFeeding;
 
         /// <summary>
-        /// txtRecordID control.
+        /// btnMedical control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRecordID;
+        protected global::System.Web.UI.WebControls.Button btnMedical;
 
         /// <summary>
-        /// btnDelete control.
+        /// btnReturn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDelete;
-
-        /// <summary>
-        /// btnBack control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBack;
+        protected global::System.Web.UI.WebControls.Button btnReturn;
     }
 }

@@ -11,7 +11,7 @@ namespace AQUACORE_CMPG223
 {
 
 
-    public partial class UpdateFeeding
+    public partial class UpdateAnimalFeeding
     {
 
         /// <summary>

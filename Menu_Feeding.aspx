@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true"
     CodeBehind="Menu_Feeding.aspx.cs"
-    Inherits="AQUACORE_CMPG223.FeedingMenu" %>
+    Inherits="AQUACORE_CMPG223.Menu_Feeding" %>
+
 
 <!DOCTYPE html>
 

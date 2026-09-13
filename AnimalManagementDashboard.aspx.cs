@@ -7,14 +7,14 @@ using System.Web.UI.WebControls;
 
 namespace AQUACORE_CMPG223
 {
-    public partial class View_Feeding : System.Web.UI.Page
+    public partial class AnimalManagementDashboard : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
 
-        protected void btnBack_Click(object sender, EventArgs e)
+        protected void btnFeeding_Click(object sender, EventArgs e)
         {
             Response.Redirect("Menu_Feeding.aspx");
         }

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UpdateFeeding.aspx.cs" Inherits="AQUACORE_CMPG223.UpdateFeeding" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UpdateAnimalFeeding.aspx.cs" Inherits="AQUACORE_CMPG223.UpdateAnimalFeeding" %>
 
 <!DOCTYPE html>
 

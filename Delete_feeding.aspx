@@ -1,4 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RemoveFeeding.aspx.cs" Inherits="AQUACORE_CMPG223.RemoveFeeding" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true"
+    CodeBehind="Delete_feeding.aspx.cs"
+    Inherits="AQUACORE_CMPG223.Delete_feeding" %>
 
 <!DOCTYPE html>
 
@@ -36,12 +38,13 @@
 
         body {
 
-            background: radial-gradient(
-                circle at 50% 10%,
-                #0d325e 0%,
-                var(--ocean-blue) 40%,
-                var(--abyss-deep) 100%
-            );
+            background:
+                radial-gradient(
+                    circle at 50% 10%,
+                    #0d325e 0%,
+                    var(--ocean-blue) 40%,
+                    var(--abyss-deep) 100%
+                );
 
             color: var(--text-primary);
 
@@ -69,7 +72,9 @@
             gap: 24px;
         }
 
-        /* Glass Panel */
+        /* =========================
+           GLASS PANEL
+        ========================= */
 
         .glass-panel {
 
@@ -85,7 +90,9 @@
                 0 10px 30px rgba(0, 0, 0, 0.35);
         }
 
-        /* Header */
+        /* =========================
+           HEADER
+        ========================= */
 
         .header-panel {
 
@@ -116,7 +123,9 @@
             font-size: 0.95rem;
         }
 
-        /* Buttons */
+        /* =========================
+           BUTTONS
+        ========================= */
 
         .btn {
 
@@ -153,9 +162,13 @@
             background: rgba(255, 255, 255, 0.15);
 
             color: #ffffff;
+
+            transform: translateY(-1px);
         }
 
-        /* Page Heading */
+        /* =========================
+           PAGE HEADING
+        ========================= */
 
         .page-heading {
 
@@ -180,7 +193,9 @@
             line-height: 1.5;
         }
 
-        /* Delete Box */
+        /* =========================
+           DELETE BOX
+        ========================= */
 
         .delete-box {
 
@@ -188,27 +203,57 @@
 
             margin: 0 auto;
 
-            padding: 28px;
+            padding: 30px;
 
-            background: rgba(255, 92, 108, 0.05);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 92, 108, 0.08),
+                    rgba(255, 92, 108, 0.03)
+                );
 
-            border: 1px solid rgba(255, 92, 108, 0.2);
+            border: 1px solid rgba(255, 92, 108, 0.22);
 
-            border-radius: 12px;
+            border-radius: 14px;
 
             text-align: center;
+
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.02);
         }
 
-        /* Warning Icon */
+        /* =========================
+           WARNING ICON
+        ========================= */
 
         .warning-icon {
 
-            font-size: 2.5rem;
+            width: 64px;
 
-            margin-bottom: 12px;
+            height: 64px;
+
+            margin: 0 auto 16px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 92, 108, 0.10);
+
+            border:
+                1px solid rgba(255, 92, 108, 0.25);
+
+            font-size: 1.8rem;
         }
 
-        /* Heading Label */
+        /* =========================
+           HEADING
+        ========================= */
 
         .delete-heading {
 
@@ -220,24 +265,34 @@
 
             font-weight: 600;
 
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
 
-        /* Dropdown */
+        /* =========================
+           DROPDOWN
+        ========================= */
 
         .input-control {
+
+            display: block;
 
             width: 100%;
 
             max-width: 500px;
 
-            padding: 12px 14px;
+            height: 46px;
+
+            margin: 0 auto 18px;
+
+            padding: 0 14px;
 
             border-radius: 8px;
 
-            border: 1px solid rgba(0, 210, 255, 0.25);
+            border:
+                1px solid rgba(0, 210, 255, 0.25);
 
-            background: rgba(5, 19, 41, 0.8);
+            background:
+                rgba(5, 19, 41, 0.85);
 
             color: #ffffff;
 
@@ -245,25 +300,35 @@
 
             outline: none;
 
-            margin-bottom: 18px;
+            cursor: pointer;
+        }
+
+        .input-control:hover {
+
+            border-color:
+                rgba(0, 210, 255, 0.45);
         }
 
         .input-control:focus {
 
-            border-color: var(--aqua-glow);
+            border-color:
+                var(--aqua-glow);
 
             box-shadow:
-                0 0 8px rgba(0, 210, 255, 0.3);
+                0 0 0 3px rgba(0, 210, 255, 0.08),
+                0 0 12px rgba(0, 210, 255, 0.20);
         }
 
         .input-control option {
 
             background: #0b2545;
 
-            color: white;
+            color: #ffffff;
         }
 
-        /* Message */
+        /* =========================
+           MESSAGE
+        ========================= */
 
         .message {
 
@@ -278,9 +343,13 @@
             font-size: 0.9rem;
 
             font-weight: 600;
+
+            line-height: 1.4;
         }
 
-        /* Buttons */
+        /* =========================
+           BUTTON ROW
+        ========================= */
 
         .button-row {
 
@@ -288,35 +357,52 @@
 
             justify-content: center;
 
+            align-items: center;
+
             gap: 12px;
 
             flex-wrap: wrap;
         }
 
+        /* =========================
+           DELETE BUTTON
+        ========================= */
+
         .btn-delete {
 
-            background: linear-gradient(
-                135deg,
-                var(--danger),
-                var(--danger-dark)
-            );
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--danger),
+                    var(--danger-dark)
+                );
 
             color: #ffffff;
 
-            min-width: 120px;
+            min-width: 145px;
+
+            box-shadow:
+                0 6px 18px rgba(255, 92, 108, 0.16);
         }
 
         .btn-delete:hover {
 
-            opacity: 0.9;
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff6b7a,
+                    #d9364a
+                );
 
             transform: translateY(-1px);
 
             box-shadow:
-                0 5px 15px rgba(255, 92, 108, 0.25);
+                0 8px 22px rgba(255, 92, 108, 0.28);
         }
 
-        /* Bottom Navigation */
+        /* =========================
+           BOTTOM NAVIGATION
+        ========================= */
 
         .bottom-row {
 
@@ -325,9 +411,16 @@
             justify-content: flex-end;
 
             margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* Mobile */
+        /* =========================
+           MOBILE
+        ========================= */
 
         @media (max-width: 700px) {
 
@@ -341,9 +434,14 @@
                 padding: 22px;
             }
 
+            .header-title h1 {
+
+                font-size: 1.6rem;
+            }
+
             .delete-box {
 
-                padding: 22px;
+                padding: 24px 18px;
             }
 
             .input-control {
@@ -356,7 +454,7 @@
                 flex-direction: column;
             }
 
-            .button-row input {
+            .button-row .btn {
 
                 width: 100%;
             }
@@ -366,7 +464,7 @@
                 justify-content: stretch;
             }
 
-            .bottom-row input {
+            .bottom-row .btn {
 
                 width: 100%;
             }
@@ -378,120 +476,132 @@
 
 <body>
 
-    <form id="form1" runat="server">
+<form id="form1" runat="server">
 
-        <div class="dashboard-container">
+    <div class="dashboard-container">
+
+        <!-- =========================
+             HEADER
+        ========================== -->
+
+        <div class="glass-panel header-panel">
+
+            <div class="header-title">
+
+                <h1>AquaCore Operations</h1>
+
+                <p>
+                    Feeding Schedule Management
+                </p>
+
+            </div>
+
+            <asp:Button
+                ID="btnBack"
+                runat="server"
+                Text="← Go Back"
+                CssClass="btn btn-outline"
+                CausesValidation="false"
+                OnClick="btnBack_Click" />
+
+        </div>
 
 
-            <!-- Header -->
+        <!-- =========================
+             DELETE PANEL
+        ========================== -->
 
-            <div class="glass-panel header-panel">
+        <div class="glass-panel">
 
-                <div class="header-title">
+            <div class="page-heading">
 
-                    <h1>AquaCore Operations</h1>
+                <h2>
+                    Delete Feeding Schedule
+                </h2>
 
-                    <p>
-                        Feeding Schedule Management
-                    </p>
+                <p>
+                    Select an existing feeding schedule below to permanently
+                    remove it from the system.
+                </p>
 
+            </div>
+
+
+            <!-- =========================
+                 DELETE BOX
+            ========================== -->
+
+            <div class="delete-box">
+
+                <div class="warning-icon">
+                    ⚠️
                 </div>
 
-                <div>
+                <asp:Label
+                    ID="lblHeading"
+                    runat="server"
+                    Text="Select a schedule ID to delete:"
+                    CssClass="delete-heading" />
+
+
+                <asp:DropDownList
+                    ID="DropDownList1"
+                    runat="server"
+                    CssClass="input-control">
+
+                    <asp:ListItem
+                        Text="-- Select Schedule ID --"
+                        Value="" />
+
+                </asp:DropDownList>
+
+
+                <!-- Status Message -->
+
+                <asp:Label
+                    ID="lblMessage"
+                    runat="server"
+                    CssClass="message" />
+
+
+                <!-- Delete Button -->
+
+                <div class="button-row">
 
                     <asp:Button
-                        ID="btnBack"
+                        ID="btnDelete"
                         runat="server"
-                        Text="← Go Back"
-                        CssClass="btn btn-outline"
-                        OnClick="btnBack_Click" />
+                        Text="🗑️ Delete Schedule"
+                        CssClass="btn btn-delete"
+                        CausesValidation="false"
+                        OnClick="btnDelete_Click" />
 
                 </div>
 
             </div>
 
 
-            <!-- Delete Panel -->
+            <!-- =========================
+                 BOTTOM NAVIGATION
+            ========================== -->
 
-            <div class="glass-panel">
+            <div class="bottom-row">
 
-                <div class="page-heading">
-
-                    <h2>Delete Feeding Schedule</h2>
-
-                    <p>
-                        Select a feeding schedule below to permanently remove it
-                        from the system.
-                    </p>
-
-                </div>
-
-
-                <!-- Delete Box -->
-
-                <div class="delete-box">
-
-                    <div class="warning-icon">
-                        ⚠️
-                    </div>
-
-                    <asp:Label
-                        ID="lblHeading"
-                        runat="server"
-                        Text="Select a schedule ID to delete:"
-                        CssClass="delete-heading" />
-
-
-                    <asp:DropDownList
-                        ID="DropDownList1"
-                        runat="server"
-                        CssClass="input-control">
-
-                    </asp:DropDownList>
-
-
-                    <!-- Status Message -->
-
-                    <asp:Label
-                        ID="lblMessage"
-                        runat="server"
-                        CssClass="message" />
-
-
-                    <!-- Action Buttons -->
-
-                    <div class="button-row">
-
-                        <asp:Button
-                            ID="btnDelete"
-                            runat="server"
-                            Text="🗑️ Delete"
-                            CssClass="btn btn-delete"
-                            OnClick="btnDelete_Click" />
-
-                    </div>
-
-                </div>
-
-
-                <!-- Bottom Navigation -->
-
-                <div class="bottom-row">
-
-                    <asp:Button
-                        ID="btnBackBottom"
-                        runat="server"
-                        Text="← Back"
-                        CssClass="btn btn-outline"
-                        OnClick="btnBack_Click" />
-
-                </div>
+                <asp:Button
+                    ID="btnBackBottom"
+                    runat="server"
+                    Text="← Back"
+                    CssClass="btn btn-outline"
+                    CausesValidation="false"
+                    OnClick="btnBack_Click" />
 
             </div>
 
         </div>
 
-    </form>
+    </div>
+
+</form>
 
 </body>
 

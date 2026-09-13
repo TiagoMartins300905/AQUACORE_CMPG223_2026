@@ -13,5 +13,30 @@ namespace AQUACORE_CMPG223
         {
 
         }
+
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("FeedingTimeRegister.aspx");
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Delete_feeding.aspx");
+        }
+
+        protected void btnView_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("View_Feeding.aspx");
+        }
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AnimalManagementDashboard.aspx");
+        }
+
+        protected void btnUpdate_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("UpdateAnimalFeeding.aspx");
+        }
     }
 }

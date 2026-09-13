@@ -75,6 +75,7 @@
   <ItemGroup>
     <Content Include="AddAnimals.aspx" />
     <Content Include="Add_Medical_R.aspx" />
+    <Content Include="AnimalManagementDashboard.aspx" />
     <Content Include="Animals_DashBoard.aspx" />
     <Content Include="Delete_feeding.aspx" />
     <Content Include="Delete_Medical_R.aspx" />
@@ -115,6 +116,13 @@
     </Compile>
     <Compile Include="Add_Medical_R.aspx.designer.cs">
       <DependentUpon>Add_Medical_R.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AnimalManagementDashboard.aspx.cs">
+      <DependentUpon>AnimalManagementDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AnimalManagementDashboard.aspx.designer.cs">
+      <DependentUpon>AnimalManagementDashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Animals_DashBoard.aspx.cs">
       <DependentUpon>Animals_DashBoard.aspx</DependentUpon>

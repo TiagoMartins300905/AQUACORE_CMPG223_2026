@@ -303,6 +303,29 @@
             color: #617993;
         }
 
+        /* Date Picker */
+
+        input[type="date"] {
+
+            color-scheme: dark;
+
+            cursor: pointer;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+
+            filter: invert(1);
+
+            cursor: pointer;
+
+            opacity: 0.85;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator:hover {
+
+            opacity: 1;
+        }
+
         /* Dropdown */
 
         .dropdown-control {
@@ -572,7 +595,6 @@
 
     <div class="dashboard-container">
 
-
         <!-- HEADER -->
 
         <div class="glass-panel header-panel">
@@ -740,14 +762,14 @@
                     </asp:Label>
 
                     <span class="field-description">
-                        Enter the animal's date of birth.
+                        Select the animal's date of birth.
                     </span>
 
                     <asp:TextBox
                         ID="txtDOB"
                         runat="server"
                         CssClass="input-control"
-                        placeholder="Date of birth">
+                        TextMode="Date">
                     </asp:TextBox>
 
                     <asp:RequiredFieldValidator

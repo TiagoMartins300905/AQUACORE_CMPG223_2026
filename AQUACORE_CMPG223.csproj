@@ -74,10 +74,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AddEmployee.aspx" />
-    <Content Include="App_Data\Visitors.mdf" />
-    <Content Include="App_Data\Visitors_log.ldf">
-      <DependentUpon>Visitors.mdf</DependentUpon>
-    </Content>
     <Content Include="DeleteEmployee.aspx" />
     <Content Include="EmployeeManagement.aspx" />
     <Content Include="LandingPage.aspx" />

@@ -1,463 +1,738 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true"
-    CodeBehind="Menu_Feeding.aspx.cs"
-    Inherits="AQUACORE_CMPG223.Menu_Feeding" %>
+CodeBehind="Menu_Feeding.aspx.cs"
+Inherits="AQUACORE_CMPG223.Menu_Feeding" %>
 
+<!DOCTYPE html> <html xmlns="http://www.w3.org/1999/xhtml"> <head runat="server">
+<title>AquaCore - Feeding Management</title>
 
-<!DOCTYPE html>
+<style>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+    :root {
+        --abyss-deep: #051329;
+        --ocean-blue: #0b2545;
+        --aqua-glow: #00d2ff;
+        --aqua-light: #55e6ff;
 
-<head runat="server">
+        --card-glass: rgba(11, 37, 69, 0.75);
+        --card-border: rgba(0, 210, 255, 0.25);
 
-    <title>AquaCore - Feeding Schedule Menu</title>
+        --text-primary: #eef4f8;
+        --text-muted: #8da4be;
 
-    <style>
+        --feeding-green: #54e38e;
+        --feeding-green-dark: #159957;
 
-        :root {
-            --abyss-deep: #051329;
-            --ocean-blue: #0b2545;
-            --aqua-glow: #00d2ff;
-            --card-glass: rgba(11, 37, 69, 0.75);
-            --card-border: rgba(0, 210, 255, 0.25);
-            --text-primary: #eef4f8;
-            --text-muted: #8da4be;
-        }
+        --danger: #ff6b7a;
+        --danger-dark: #d9364a;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
 
-        body {
-            background: radial-gradient(
+        font-family:
+            'Segoe UI',
+            -apple-system,
+            BlinkMacSystemFont,
+            sans-serif;
+    }
+
+    body {
+
+        background:
+            radial-gradient(
                 circle at 50% 10%,
                 #0d325e 0%,
                 var(--ocean-blue) 40%,
                 var(--abyss-deep) 100%
             );
 
-            color: var(--text-primary);
-            min-height: 100vh;
+        color: var(--text-primary);
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        min-height: 100vh;
 
-            padding: 40px 20px;
-        }
+        display: flex;
 
-        .dashboard-container {
-            width: 100%;
-            max-width: 1000px;
+        flex-direction: column;
 
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
+        align-items: center;
 
-        .glass-panel {
-            background: var(--card-glass);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
+        padding: 40px 20px;
+    }
 
-            padding: 32px;
+    /* Main Container */
 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-        }
+    .dashboard-container {
 
-        .header-panel {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        width: 100%;
 
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+        max-width: 1000px;
 
-        .header-title h1 {
-            font-size: 2rem;
-            color: #ffffff;
-            margin-bottom: 5px;
-        }
+        display: flex;
 
-        .header-title p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
+        flex-direction: column;
 
-        .btn {
-            padding: 10px 18px;
+        gap: 24px;
+    }
 
-            border-radius: 8px;
+    /* Glass Panels */
 
-            font-weight: 600;
-            font-size: 0.9rem;
+    .glass-panel {
 
-            cursor: pointer;
+        background: var(--card-glass);
 
-            border: none;
+        border: 1px solid var(--card-border);
 
-            text-decoration: none;
+        border-radius: 16px;
 
-            text-align: center;
+        padding: 32px;
 
-            transition: all 0.2s;
-        }
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.35);
 
-        .btn-outline {
-            background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(8px);
+    }
 
-            color: var(--text-primary);
+    /* Header */
 
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
+    .header-panel {
 
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-        }
+        display: flex;
 
-        .menu-heading {
-            margin-bottom: 25px;
-        }
+        justify-content: space-between;
 
-        .menu-heading h2 {
-            font-size: 1.4rem;
-            color: var(--aqua-glow);
-            margin-bottom: 5px;
-        }
+        align-items: center;
 
-        .menu-heading p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
+        flex-wrap: wrap;
 
-        .menu-grid {
-            display: grid;
+        gap: 20px;
+    }
 
-            grid-template-columns: repeat(2, 1fr);
+    .header-title h1 {
 
-            gap: 20px;
-        }
+        font-size: 2rem;
 
-        .menu-card {
-            background: rgba(5, 19, 41, 0.55);
+        color: #ffffff;
 
-            border: 1px solid rgba(0, 210, 255, 0.18);
+        margin-bottom: 5px;
+    }
 
-            border-radius: 12px;
+    .header-title p {
 
-            padding: 25px;
+        color: var(--text-muted);
 
-            text-align: center;
+        font-size: 0.95rem;
+    }
 
-            transition: all 0.25s ease;
-        }
+    /* Feeding Badge */
 
-        .menu-card:hover {
-            transform: translateY(-4px);
+    .feeding-badge {
 
-            border-color: rgba(0, 210, 255, 0.55);
+        display: inline-flex;
 
-            background: rgba(0, 210, 255, 0.08);
+        align-items: center;
 
-            box-shadow: 0 8px 25px rgba(0, 210, 255, 0.12);
-        }
+        gap: 7px;
 
-        .menu-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
+        margin-top: 12px;
 
-        .menu-card h3 {
-            color: #ffffff;
+        padding: 6px 13px;
 
-            font-size: 1.15rem;
+        border-radius: 20px;
 
-            margin-bottom: 8px;
-        }
+        background: rgba(84, 227, 142, 0.08);
 
-        .menu-card p {
-            color: var(--text-muted);
+        border: 1px solid rgba(84, 227, 142, 0.22);
 
-            font-size: 0.88rem;
+        color: #7df0a8;
 
-            line-height: 1.5;
+        font-size: 0.78rem;
 
-            margin-bottom: 18px;
-        }
+        font-weight: 600;
+    }
 
-        .menu-button {
-            display: inline-block;
+    /* Buttons */
 
-            min-width: 150px;
+    .btn {
 
-            padding: 10px 18px;
+        padding: 10px 18px;
 
-            border-radius: 8px;
+        border-radius: 8px;
 
-            background: linear-gradient(
+        font-weight: 600;
+
+        font-size: 0.9rem;
+
+        cursor: pointer;
+
+        border: none;
+
+        text-decoration: none;
+
+        text-align: center;
+
+        transition: all 0.2s ease;
+    }
+
+    .btn-outline {
+
+        background: rgba(255, 255, 255, 0.08);
+
+        color: var(--text-primary);
+
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-outline:hover {
+
+        background: rgba(255, 255, 255, 0.15);
+
+        color: #ffffff;
+
+        transform: translateY(-1px);
+    }
+
+    /* Page Heading */
+
+    .menu-heading {
+
+        margin-bottom: 25px;
+    }
+
+    .menu-heading h2 {
+
+        font-size: 1.4rem;
+
+        color: var(--aqua-glow);
+
+        margin-bottom: 6px;
+    }
+
+    .menu-heading p {
+
+        color: var(--text-muted);
+
+        font-size: 0.9rem;
+
+        line-height: 1.5;
+    }
+
+    /* Feeding Grid */
+
+    .menu-grid {
+
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 20px;
+    }
+
+    /* Feeding Cards */
+
+    .menu-card {
+
+        position: relative;
+
+        background: rgba(5, 19, 41, 0.55);
+
+        border: 1px solid rgba(0, 210, 255, 0.18);
+
+        border-radius: 14px;
+
+        padding: 26px;
+
+        text-align: center;
+
+        overflow: hidden;
+
+        transition:
+            transform 0.25s ease,
+            border-color 0.25s ease,
+            background 0.25s ease,
+            box-shadow 0.25s ease;
+    }
+
+    /* Animated top glow */
+
+    .menu-card::before {
+
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+
+        left: 0;
+
+        width: 100%;
+
+        height: 3px;
+
+        background:
+            linear-gradient(
+                90deg,
+                transparent,
+                var(--aqua-glow),
+                transparent
+            );
+
+        opacity: 0;
+
+        transition: opacity 0.25s ease;
+    }
+
+    .menu-card:hover {
+
+        transform: translateY(-5px);
+
+        border-color: rgba(0, 210, 255, 0.55);
+
+        background: rgba(0, 210, 255, 0.07);
+
+        box-shadow:
+            0 10px 30px rgba(0, 210, 255, 0.12);
+    }
+
+    .menu-card:hover::before {
+
+        opacity: 1;
+    }
+
+    /* Feeding Icon */
+
+    .menu-icon {
+
+        width: 58px;
+
+        height: 58px;
+
+        margin: 0 auto 15px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 14px;
+
+        background: rgba(0, 210, 255, 0.08);
+
+        border: 1px solid rgba(0, 210, 255, 0.2);
+
+        font-size: 1.8rem;
+
+        transition: all 0.25s ease;
+    }
+
+    .menu-card:hover .menu-icon {
+
+        background: rgba(0, 210, 255, 0.14);
+
+        border-color: rgba(0, 210, 255, 0.4);
+
+        transform: scale(1.05);
+    }
+
+    /* Card Titles */
+
+    .menu-card h3 {
+
+        color: #ffffff;
+
+        font-size: 1.15rem;
+
+        margin-bottom: 8px;
+    }
+
+    /* Card Descriptions */
+
+    .menu-card p {
+
+        color: var(--text-muted);
+
+        font-size: 0.88rem;
+
+        line-height: 1.5;
+
+        min-height: 42px;
+
+        margin-bottom: 20px;
+    }
+
+    /* Card Buttons */
+
+    .menu-button {
+
+        display: inline-block;
+
+        min-width: 150px;
+
+        padding: 10px 18px;
+
+        border-radius: 8px;
+
+        background:
+            linear-gradient(
                 135deg,
                 #00d2ff,
                 #0077b6
             );
 
-            color: #ffffff;
+        color: #ffffff;
 
-            font-weight: 600;
+        font-weight: 600;
 
-            font-size: 0.9rem;
+        font-size: 0.9rem;
 
-            border: none;
+        border: none;
 
-            cursor: pointer;
+        cursor: pointer;
 
-            transition: all 0.2s;
+        transition: all 0.2s ease;
+    }
+
+    .menu-button:hover {
+
+        opacity: 0.92;
+
+        transform: translateY(-1px);
+
+        box-shadow:
+            0 5px 15px rgba(0, 210, 255, 0.22);
+    }
+
+    /* Delete Card */
+
+    .delete-card {
+
+        background: rgba(255, 107, 122, 0.04);
+
+        border-color: rgba(255, 107, 122, 0.16);
+    }
+
+    .delete-card:hover {
+
+        border-color: rgba(255, 107, 122, 0.45);
+
+        background: rgba(255, 107, 122, 0.07);
+
+        box-shadow:
+            0 10px 30px rgba(255, 107, 122, 0.08);
+    }
+
+    .delete-card .menu-icon {
+
+        background: rgba(255, 107, 122, 0.07);
+
+        border-color: rgba(255, 107, 122, 0.2);
+    }
+
+    /* Delete Button */
+
+    .delete-button {
+
+        background:
+            linear-gradient(
+                135deg,
+                var(--danger),
+                var(--danger-dark)
+            );
+    }
+
+    .delete-button:hover {
+
+        box-shadow:
+            0 5px 15px rgba(255, 92, 108, 0.22);
+    }
+
+    /* Return Card */
+
+    .return-card {
+
+        grid-column: 1 / -1;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .return-card:hover {
+
+        border-color: rgba(255, 255, 255, 0.25);
+
+        background: rgba(255, 255, 255, 0.06);
+
+        box-shadow:
+            0 10px 30px rgba(255, 255, 255, 0.04);
+    }
+
+    .return-card .menu-button {
+
+        background: rgba(255, 255, 255, 0.08);
+
+        border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .return-card .menu-button:hover {
+
+        background: rgba(255, 255, 255, 0.15);
+
+        box-shadow: none;
+    }
+
+    /* Footer */
+
+    .footer-note {
+
+        text-align: center;
+
+        color: var(--text-muted);
+
+        font-size: 0.78rem;
+
+        margin-top: 4px;
+
+        opacity: 0.8;
+    }
+
+    /* Mobile */
+
+    @media (max-width: 700px) {
+
+        body {
+
+            padding: 20px 10px;
         }
 
-        .menu-button:hover {
-            opacity: 0.9;
+        .glass-panel {
 
-            transform: translateY(-1px);
+            padding: 22px;
+        }
 
-            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.2);
+        .menu-grid {
+
+            grid-template-columns: 1fr;
         }
 
         .return-card {
-            grid-column: 1 / -1;
 
-            background: rgba(255, 255, 255, 0.04);
-
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            grid-column: auto;
         }
 
-        .return-card .menu-button {
-            background: rgba(255, 255, 255, 0.08);
+        .menu-button {
 
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 100%;
         }
 
-        .return-card .menu-button:hover {
-            background: rgba(255, 255, 255, 0.15);
+        .header-panel {
+
+            align-items: flex-start;
         }
 
-        @media (max-width: 700px) {
+        .header-panel .btn {
 
-            body {
-                padding: 20px 10px;
-            }
-
-            .glass-panel {
-                padding: 22px;
-            }
-
-            .menu-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .return-card {
-                grid-column: auto;
-            }
-
-            .menu-button {
-                width: 100%;
-            }
+            width: 100%;
         }
+    }
 
-    </style>
+</style>
 
-</head>
+</head> <body> <form id="form1" runat="server">
+<div class="dashboard-container">
 
-<body>
 
-    <form id="form1" runat="server">
+    <!-- HEADER -->
 
-        <div class="dashboard-container">
+    <div class="glass-panel header-panel">
 
-            <!-- HEADER -->
+        <div class="header-title">
 
-            <div class="glass-panel header-panel">
+            <h1>AquaCore Operations</h1>
 
-                <div class="header-title">
+            <p>
+                Feeding Schedule Management
+            </p>
 
-                    <h1>AquaCore Operations</h1>
+            <div class="feeding-badge">
+                🐟 Daily Nutrition &amp; Feeding Care
+            </div>
 
-                    <p>
-                        Feeding Schedule Management
-                    </p>
+        </div>
 
+        <div>
+
+            <asp:Button
+                ID="Button5"
+                runat="server"
+                Text="← Go Back"
+                CssClass="btn btn-outline"
+                OnClick="Button5_Click" />
+
+        </div>
+
+    </div>
+
+
+    <!-- FEEDING MENU -->
+
+    <div class="glass-panel">
+
+        <div class="menu-heading">
+
+            <h2>Feeding Schedule</h2>
+
+            <p>
+                Manage feeding schedules and ensure every animal receives
+                the right care at the right time.
+            </p>
+
+        </div>
+
+
+        <div class="menu-grid">
+
+
+            <!-- ADD -->
+
+            <div class="menu-card">
+
+                <div class="menu-icon">
+                    🐠
                 </div>
 
-                <div>
+                <h3>
+                    Add Feeding Schedule
+                </h3>
 
-                    <asp:Button
-                        ID="Button5"
-                        runat="server"
-                        Text="← Go Back"
-                        CssClass="btn btn-outline"
-                        OnClick="Button5_Click" />
+                <p>
+                    Create a new feeding schedule for an aquarium animal.
+                </p>
 
-                </div>
+                <asp:Button
+                    ID="btnAdd"
+                    runat="server"
+                    Text="Add Feeding"
+                    CssClass="menu-button"
+                    OnClick="btnAdd_Click" />
 
             </div>
 
 
-            <!-- MENU -->
+            <!-- UPDATE -->
 
-            <div class="glass-panel">
+            <div class="menu-card">
 
-                <div class="menu-heading">
-
-                    <h2>Feeding Schedule Menu</h2>
-
-                    <p>
-                        Select an option below to manage the aquarium feeding schedules.
-                    </p>
-
+                <div class="menu-icon">
+                    ⏰
                 </div>
 
+                <h3>
+                    Update Schedule
+                </h3>
 
-                <div class="menu-grid">
+                <p>
+                    Adjust feeding times or details for an existing schedule.
+                </p>
 
-                    <!-- ADD -->
+                <asp:Button
+                    ID="btnUpdate"
+                    runat="server"
+                    Text="Update Feeding"
+                    CssClass="menu-button"
+                    OnClick="btnUpdate_Click" />
 
-                    <div class="menu-card">
-
-                        <div class="menu-icon">
-                            ➕
-                        </div>
-
-                        <h3>
-                            Add Schedule
-                        </h3>
-
-                        <p>
-                            Create a new feeding schedule for an animal.
-                        </p>
-
-                        <asp:Button
-                            ID="btnAdd"
-                            runat="server"
-                            Text="Add Feeding"
-                            CssClass="menu-button"
-                            OnClick="btnAdd_Click" />
-
-                    </div>
+            </div>
 
 
-                    <!-- UPDATE -->
+            <!-- DELETE -->
 
-                    <div class="menu-card">
+            <div class="menu-card delete-card">
 
-                        <div class="menu-icon">
-                            ✏️
-                        </div>
-
-                        <h3>
-                            Update Schedule
-                        </h3>
-
-                        <p>
-                            Modify an existing feeding schedule.
-                        </p>
-
-                        <asp:Button
-                            ID="btnUpdate"
-                            runat="server"
-                            Text="Update Feeding"
-                            CssClass="menu-button"
-                            OnClick="btnUpdate_Click" />
-
-                    </div>
-
-
-                    <!-- DELETE -->
-
-                    <div class="menu-card">
-
-                        <div class="menu-icon">
-                            🗑️
-                        </div>
-
-                        <h3>
-                            Delete Schedule
-                        </h3>
-
-                        <p>
-                            Remove an existing feeding schedule from the system.
-                        </p>
-
-                        <asp:Button
-                            ID="btnDelete"
-                            runat="server"
-                            Text="Delete Feeding"
-                            CssClass="menu-button"
-                            OnClick="btnDelete_Click" />
-
-                    </div>
-
-
-                    <!-- VIEW -->
-
-                    <div class="menu-card">
-
-                        <div class="menu-icon">
-                            📋
-                        </div>
-
-                        <h3>
-                            View Schedules
-                        </h3>
-
-                        <p>
-                            View all existing feeding schedules.
-                        </p>
-
-                        <asp:Button
-                            ID="btnView"
-                            runat="server"
-                            Text="View Feedings"
-                            CssClass="menu-button"
-                            OnClick="btnView_Click" />
-
-                    </div>
-
-
-                    <!-- RETURN -->
-
-                    <div class="menu-card return-card">
-
-                        <div class="menu-icon">
-                            ↩️
-                        </div>
-
-                        <h3>
-                            Return to Previous Menu
-                        </h3>
-
-                        <p>
-                            Return to the previous AquaCore menu.
-                        </p>
-
-                        <asp:Button
-                            ID="btnReturn"
-                            runat="server"
-                            Text="Go Back"
-                            CssClass="menu-button"
-                            OnClick="Button5_Click" />
-
-                    </div>
-
+                <div class="menu-icon">
+                    🗑️
                 </div>
+
+                <h3>
+                    Delete Schedule
+                </h3>
+
+                <p>
+                    Remove an outdated or unnecessary feeding schedule.
+                </p>
+
+                <asp:Button
+                    ID="btnDelete"
+                    runat="server"
+                    Text="Delete Feeding"
+                    CssClass="menu-button delete-button"
+                    OnClick="btnDelete_Click" />
+
+            </div>
+
+
+            <!-- VIEW -->
+
+            <div class="menu-card">
+
+                <div class="menu-icon">
+                    📋
+                </div>
+
+                <h3>
+                    View Schedules
+                </h3>
+
+                <p>
+                    View the feeding routines currently registered for animals.
+                </p>
+
+                <asp:Button
+                    ID="btnView"
+                    runat="server"
+                    Text="View Feedings"
+                    CssClass="menu-button"
+                    OnClick="btnView_Click" />
+
+            </div>
+
+
+            <!-- RETURN -->
+
+            <div class="menu-card return-card">
+
+                <div class="menu-icon">
+                    🌊
+                </div>
+
+                <h3>
+                    Return to Previous Menu
+                </h3>
+
+                <p>
+                    Return to the previous AquaCore animal management menu.
+                </p>
+
+                <asp:Button
+                    ID="btnReturn"
+                    runat="server"
+                    Text="Go Back"
+                    CssClass="menu-button"
+                    OnClick="Button5_Click" />
 
             </div>
 
         </div>
 
-    </form>
+    </div>
 
-</body>
 
-</html>
+    <div class="footer-note">
+        AquaCore • Aquarium Animal Nutrition &amp; Feeding Care
+    </div>
+
+</div>
+
+</form> </body> </html>

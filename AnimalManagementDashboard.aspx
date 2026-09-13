@@ -454,7 +454,7 @@
                             ID="btnAnimals"
                             runat="server"
                             Text="Marine Animals"
-                            CssClass="menu-button" />
+                            CssClass="menu-button" OnClick="btnAnimals_Click" />
 
                     </div>
 
@@ -505,7 +505,7 @@
                             ID="btnMedical"
                             runat="server"
                             Text="Medical Records"
-                            CssClass="menu-button" />
+                            CssClass="menu-button" OnClick="btnMedical_Click" />
 
                     </div>
 

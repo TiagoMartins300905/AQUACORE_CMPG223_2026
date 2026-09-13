@@ -18,5 +18,15 @@ namespace AQUACORE_CMPG223
         {
             Response.Redirect("Menu_Feeding.aspx");
         }
+
+        protected void btnAnimals_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Animals_DashBoard.aspx");
+        }
+
+        protected void btnMedical_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Medicals_Dashboard.aspx");
+        }
     }
 }

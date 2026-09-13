@@ -63,7 +63,7 @@
             <br />
             <asp:Label ID="Label9" runat="server" Text="Go back to previous menu"></asp:Label>
             <br />
-            <asp:Button ID="btnPrevMenu" runat="server" Text="Back" />
+            <asp:Button ID="btnPrevMenu" runat="server" Text="Back" OnClick="btnPrevMenu_Click" />
 
             <br />
             <br />

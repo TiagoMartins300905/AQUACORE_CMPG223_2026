@@ -10,7 +10,8 @@ namespace AQUACORE_CMPG223
     public partial class VisitorResetPassword : System.Web.UI.Page
     {
 
-        string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Visitors.mdf;Integrated Security=True;Connect Timeout=30"; protected void Page_Load(object sender, EventArgs e)
+        string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Visitors.mdf;Integrated Security=True;Connect Timeout=30"; 
+        protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["ResetEmail"] == null)
                 Response.Redirect("VisitorForgotPassword.aspx");

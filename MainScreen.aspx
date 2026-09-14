@@ -542,7 +542,6 @@
 
         </header>
 
-
         <!-- =========================
              NAVIGATION
         ========================= -->
@@ -551,6 +550,11 @@
 
             <a href="Contact.aspx">
                 Contact Us
+            </a>
+
+            <%-- Placeholder until StaffLogin.aspx / real authentication exists: gives direct, working access to the Employee Management module. --%>
+            <a href="EmployeeManagement.aspx">
+                Employee Management
             </a>
 
         </nav>

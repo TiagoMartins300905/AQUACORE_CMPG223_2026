@@ -13,5 +13,10 @@ namespace AQUACORE_CMPG223
         {
 
         }
+
+        protected void btnDashboard_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("RestaurantOrders_Dashboard.aspx");
+        }
     }
 }

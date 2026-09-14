@@ -16,7 +16,22 @@ namespace AQUACORE_CMPG223
 
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
+            Response.Redirect("UpdateOrder.aspx");
+        }
 
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AddOrder.aspx");
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("DeleteOrder.aspx");
+        }
+
+        protected void btnDisplay_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Display Orders.aspx");
         }
     }
 }

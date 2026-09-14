@@ -107,6 +107,7 @@
     <Content Include="AdminDashBoard.aspx" />
     <Content Include="AnimalManagementDashboard.aspx" />
     <Content Include="Animals_DashBoard.aspx" />
+    <Content Include="Contact.aspx" />
     <Content Include="DeleteEmployee.aspx" />
     <Content Include="DeleteOrder.aspx" />
     <Content Include="Delete_feeding.aspx" />
@@ -188,6 +189,13 @@
     </Compile>
     <Compile Include="Animals_DashBoard.aspx.designer.cs">
       <DependentUpon>Animals_DashBoard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="DeleteEmployee.aspx.cs">
       <DependentUpon>DeleteEmployee.aspx</DependentUpon>

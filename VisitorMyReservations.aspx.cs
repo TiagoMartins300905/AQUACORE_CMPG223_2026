@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -9,7 +10,7 @@ namespace AQUACORE_CMPG223
     public partial class VisitorMyReservations : System.Web.UI.Page
     {
 
-        string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Visitors.mdf;Integrated Security=True;Connect Timeout=30";
+        string connStr = ConfigurationManager.ConnectionStrings["AquaCoreConnectionString"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["VisitorID"] == null)
@@ -26,10 +27,10 @@ namespace AQUACORE_CMPG223
         {
             int visitorID = Convert.ToInt32(Session["VisitorID"]);
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SQLiteConnection con = new SQLiteConnection(connStr))
             {
                 string sql = "SELECT * FROM Reservations WHERE VisitorID=@VisitorID";
-                SqlDataAdapter da = new SqlDataAdapter(sql, con);
+                SQLiteDataAdapter da = new SQLiteDataAdapter(sql, con);
                 da.SelectCommand.Parameters.AddWithValue("@VisitorID", visitorID);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -60,10 +61,10 @@ namespace AQUACORE_CMPG223
 
             if (e.CommandName == "CancelRes")
             {
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SQLiteConnection con = new SQLiteConnection(connStr))
                 {
                     string sql = "UPDATE Reservations SET Status='Cancelled' WHERE ReservationID=@ReservationID AND VisitorID=@VisitorID";
-                    SqlCommand cmd = new SqlCommand(sql, con);
+                    SQLiteCommand cmd = new SQLiteCommand(sql, con);
                     cmd.Parameters.AddWithValue("@ReservationID", reservationID);
                     cmd.Parameters.AddWithValue("@VisitorID", visitorID);
 

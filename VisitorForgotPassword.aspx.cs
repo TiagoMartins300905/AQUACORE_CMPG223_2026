@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Data.SqlClient;
+using System.Configuration;
+using System.Data.SQLite;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.UI;
@@ -8,7 +9,7 @@ namespace AQUACORE_CMPG223
 {
     public partial class VisitorForgotPassword : System.Web.UI.Page
     {
-        string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Visitors.mdf;Integrated Security=True;Connect Timeout=30";
+        string connStr = ConfigurationManager.ConnectionStrings["AquaCoreConnectionString"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
         }
@@ -24,14 +25,14 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SQLiteConnection con = new SQLiteConnection(connStr))
             {
                 con.Open();
                 string sql = "SELECT COUNT(*) FROM Visitors WHERE Email=@Email";
-                SqlCommand cmd = new SqlCommand(sql, con);
+                SQLiteCommand cmd = new SQLiteCommand(sql, con);
                 cmd.Parameters.AddWithValue("@Email", email);
 
-                int exists = (int)cmd.ExecuteScalar();
+                int exists = Convert.ToInt32(cmd.ExecuteScalar());
 
                 if (exists > 0)
                 {

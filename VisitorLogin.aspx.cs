@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Data.SqlClient;
+using System.Configuration;
+using System.Data.SQLite;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.UI;
@@ -9,7 +10,7 @@ namespace AQUACORE_CMPG223
     public partial class VisitorLogin : System.Web.UI.Page
     {
 
-        string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Visitors.mdf;Integrated Security=True;Connect Timeout=30";
+        string connStr = ConfigurationManager.ConnectionStrings["AquaCoreConnectionString"].ConnectionString;
 
         public string HashPassword(string password)
         {
@@ -36,7 +37,7 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SQLiteConnection con = new SQLiteConnection(connStr))
             {
                 try
                 {
@@ -44,12 +45,12 @@ namespace AQUACORE_CMPG223
                     con.Open();
 
                     string sql = "SELECT VisitorID, Name FROM Visitors WHERE Email=@Email AND PasswordHash=@PasswordHash";
-                    SqlCommand cmd = new SqlCommand(sql, con);
+                    SQLiteCommand cmd = new SQLiteCommand(sql, con);
                     cmd.Parameters.AddWithValue("@Email", email);
                     cmd.Parameters.AddWithValue("@PasswordHash", hashed);
 
 
-                    SqlDataReader reader = cmd.ExecuteReader();
+                    SQLiteDataReader reader = cmd.ExecuteReader();
                     if (reader.Read())
                     {
                         Session["VisitorID"] = reader["VisitorID"];

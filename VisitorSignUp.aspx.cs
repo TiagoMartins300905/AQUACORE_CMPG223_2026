@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Configuration;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -71,7 +71,7 @@ namespace AQUACORE_CMPG223
 
             string hashedPassword = HashPassword(password);
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SQLiteConnection con = new SQLiteConnection(connStr))
             {
                 try
                 {
@@ -79,10 +79,10 @@ namespace AQUACORE_CMPG223
 
                     // Check if email already exists
                     string checkEmail = "SELECT COUNT(*) FROM Visitors WHERE Email=@Email";
-                    SqlCommand checkCmd = new SqlCommand(checkEmail, con);
+                    SQLiteCommand checkCmd = new SQLiteCommand(checkEmail, con);
                     checkCmd.Parameters.AddWithValue("@Email", txtEmail.Text.Trim());
 
-                    int count = (int)checkCmd.ExecuteScalar();
+                    int count = Convert.ToInt32(checkCmd.ExecuteScalar());
                     if (count > 0)
                     {
                         lblMsg.Text = "⚠ This email is already registered.";
@@ -92,9 +92,9 @@ namespace AQUACORE_CMPG223
 
                     // Check if phone exists
                     string checkPhone = "SELECT COUNT(*) FROM Visitors WHERE PhoneNumber=@PhoneNumber";
-                    SqlCommand phoneCmd = new SqlCommand(checkPhone, con);
+                    SQLiteCommand phoneCmd = new SQLiteCommand(checkPhone, con);
                     phoneCmd.Parameters.AddWithValue("@PhoneNumber", txtPhone.Text.Trim());
-                    int phoneCount = (int)phoneCmd.ExecuteScalar();
+                    int phoneCount = Convert.ToInt32(phoneCmd.ExecuteScalar());
 
                     if (phoneCount > 0)
                     {
@@ -106,7 +106,7 @@ namespace AQUACORE_CMPG223
                     // Insert new visitor
                     string sql = @"INSERT INTO Visitors (Name, Surname, Email, PhoneNumber, PasswordHash) 
                                    VALUES (@Name, @Surname, @Email, @PhoneNumber, @PasswordHash)";
-                    SqlCommand cmd = new SqlCommand(sql, con);
+                    SQLiteCommand cmd = new SQLiteCommand(sql, con);
                     cmd.Parameters.AddWithValue("@Name", txtName.Text.Trim());
                     cmd.Parameters.AddWithValue("@Surname", txtSurname.Text.Trim());
                     cmd.Parameters.AddWithValue("@Email", txtEmail.Text.Trim());

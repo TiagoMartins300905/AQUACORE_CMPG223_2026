@@ -1,7 +1,7 @@
 ﻿using QRCoder;
 using System;
 using System.Configuration;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
 using System.Web.UI;
@@ -11,21 +11,21 @@ namespace AQUACORE_CMPG223
     public partial class VisitorTicket : System.Web.UI.Page
     {
 
-        private string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Visitors.mdf;Integrated Security=True;Connect Timeout=30";
+        private string connStr = ConfigurationManager.ConnectionStrings["AquaCoreConnectionString"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack && Request.QueryString["id"] != null)
             {
                 string id = Request.QueryString["id"];
 
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SQLiteConnection con = new SQLiteConnection(connStr))
                 {
                     string sql = "SELECT * FROM Reservations WHERE ReservationID=@ID";
-                    SqlCommand cmd = new SqlCommand(sql, con);
+                    SQLiteCommand cmd = new SQLiteCommand(sql, con);
                     cmd.Parameters.AddWithValue("@ID", id);
                     con.Open();
 
-                    SqlDataReader dr = cmd.ExecuteReader();
+                    SQLiteDataReader dr = cmd.ExecuteReader();
                     if (dr.Read())
                     {
                         lblDetails.Text = $"<b>Ticket ID:</b> {dr["ReservationID"]}<br/>" + $"<b>Type:</b> {dr["TicketType"]}<br/>" + $"<b>Date:</b> {Convert.ToDateTime(dr["VisitDate"]).ToString("yyyy-MM-dd")}<br/>" +
@@ -53,6 +53,11 @@ namespace AQUACORE_CMPG223
         protected void btnBack_Click(object sender, EventArgs e)
         {
             Response.Redirect("VisitorMyReservations.aspx");
+        }
+
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

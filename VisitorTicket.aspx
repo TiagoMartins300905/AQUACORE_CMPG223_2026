@@ -28,7 +28,7 @@
         <br />
         <asp:Image ID="imgQR" runat="server" Width="200px" Height="200px" />
         <br />
-        <asp:Button ID="btnPrint" runat="server" Text="Print Ticket" OnClientClick="window.print(); return false;" CssClass="btn-print" />
+        <asp:Button ID="btnPrint" runat="server" Text="Print Ticket" OnClientClick="window.print(); return false;" CssClass="btn-print" OnClick="btnPrint_Click" />
     </div>
 </form>
 </body>

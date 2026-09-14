@@ -29,6 +29,12 @@ namespace AQUACORE_CMPG223
                     pragmaCmd.ExecuteNonQuery();
                 }
 
+                // Enable Write-Ahead Logging to reduce lock contention
+                using (SQLiteCommand walCmd = new SQLiteCommand("PRAGMA journal_mode = WAL;", conn))
+                {
+                    walCmd.ExecuteNonQuery();
+                }
+
                 string createTables = @"
                     CREATE TABLE IF NOT EXISTS Staff (
                         StaffID INTEGER PRIMARY KEY AUTOINCREMENT,

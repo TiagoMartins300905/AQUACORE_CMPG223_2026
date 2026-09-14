@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Data.SqlClient;
+using System.Configuration;
+using System.Data.SQLite;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -8,7 +9,7 @@ namespace AQUACORE_CMPG223
     public partial class VisitorReservations : System.Web.UI.Page
     {
 
-        string connStr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Visitors.mdf;Integrated Security=True;Connect Timeout=30"; protected void Page_Load(object sender, EventArgs e)
+        string connStr = ConfigurationManager.ConnectionStrings["AquaCoreConnectionString"].ConnectionString; protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["VisitorID"] == null)
                 Response.Redirect("VisitorLogin.aspx");
@@ -68,11 +69,11 @@ namespace AQUACORE_CMPG223
             DateTime visitDate = calVisitDate.SelectedDate;
             string payment = ddlPayment.SelectedValue;
 
-            using (SqlConnection con = new SqlConnection(connStr))
+            using (SQLiteConnection con = new SQLiteConnection(connStr))
             {
                 string sql = @"INSERT INTO Reservations (VisitorID, TicketType, VisitDate, NumTickets, TotalCost, PaymentMethod, Status) VALUES (@VisitorID,@TicketType,@VisitDate,@NumTickets,@TotalCost,@Payment,@Status)";
 
-                SqlCommand cmd = new SqlCommand(sql, con);
+                SQLiteCommand cmd = new SQLiteCommand(sql, con);
                 cmd.Parameters.AddWithValue("@VisitorID", visitorID);
                 cmd.Parameters.AddWithValue("@TicketType", ddlTicketType.SelectedItem.Text);
                 cmd.Parameters.AddWithValue("@VisitDate", visitDate);

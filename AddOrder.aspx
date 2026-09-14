@@ -898,7 +898,7 @@
                     ID="btnSubmit"
                     runat="server"
                     Text="✓ Submit Order"
-                    CssClass="action-button" />
+                    CssClass="action-button" OnClick="btnSubmit_Click" />
 
                 <asp:Button
                     ID="Button2"

@@ -109,16 +109,20 @@ namespace AQUACORE_CMPG223
                         FOREIGN KEY (VisitorID) REFERENCES Visitors(VisitorID)
                     );
 
-                    CREATE TABLE IF NOT EXISTS Restaurant_Order (
-                        OrderID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        VisitorID INTEGER NOT NULL,
-                        OrderDetails VARCHAR(255),
-                        Price DECIMAL(10,2),
-                        Date DATE,
-                        Time VARCHAR(20),
-                        OrderType VARCHAR(50),
-                        FOREIGN KEY (VisitorID) REFERENCES Visitors(VisitorID)
-                    );
+                    DROP TABLE IF EXISTS Restaurant_Order;
+
+                CREATE TABLE Restaurant_Order (
+                    OrderID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    VisitorID INTEGER,
+                    CustomerName VARCHAR(100),
+                    TableNumber VARCHAR(10),
+                    FoodItems VARCHAR(255),
+                    Quantity INTEGER,
+                    TotalPrice DECIMAL(10,2),
+                    OrderDate DATE,
+                    Status VARCHAR(50) DEFAULT 'Pending',
+                    FOREIGN KEY (VisitorID) REFERENCES Visitors(VisitorID)
+                );
                 ";
 
                 using (SQLiteCommand cmd = new SQLiteCommand(createTables, conn))

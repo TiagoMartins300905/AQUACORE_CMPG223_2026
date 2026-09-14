@@ -78,6 +78,43 @@
                 0 10px 30px rgba(0, 0, 0, 0.35);
 
             backdrop-filter: blur(8px);
+
+            position: relative;
+        }
+
+        /* Top Back Button */
+
+        .top-back {
+
+            margin-bottom: 20px;
+        }
+
+        .top-back-btn {
+
+            padding: 8px 14px;
+
+            border-radius: 8px;
+
+            font-weight: 600;
+
+            font-size: 0.9rem;
+
+            cursor: pointer;
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            background: rgba(255, 255, 255, 0.08);
+
+            color: var(--text-muted);
+
+            transition: all 0.2s ease;
+        }
+
+        .top-back-btn:hover {
+
+            background: rgba(255, 255, 255, 0.15);
+
+            color: #ffffff;
         }
 
         /* Heading */
@@ -368,6 +405,21 @@
 <form id="form1" runat="server">
 
     <div class="form-card">
+
+        <!-- TOP BACK BUTTON -->
+
+        <div class="top-back">
+
+            <asp:Button
+                ID="btnTopBack"
+                runat="server"
+                Text="← Back"
+                CssClass="top-back-btn"
+                OnClick="btnMenu_Click"
+                CausesValidation="false" />
+
+        </div>
+
 
         <h2>Delete Animal</h2>
 

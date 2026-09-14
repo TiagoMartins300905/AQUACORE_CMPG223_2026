@@ -24,13 +24,22 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// ddlSelectRecord control.
+        /// btnTopBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSelectRecord;
+        protected global::System.Web.UI.WebControls.Button btnTopBack;
+
+        /// <summary>
+        /// ddlSelectMedical control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSelectMedical;
 
         /// <summary>
         /// lblStatus control.
@@ -69,22 +78,49 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.Label lblAnimalID;
 
         /// <summary>
-        /// lblDiagnosis control.
+        /// lblAnimal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDiagnosis;
+        protected global::System.Web.UI.WebControls.Label lblAnimal;
 
         /// <summary>
-        /// lblTreatment control.
+        /// lblSpecies control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTreatment;
+        protected global::System.Web.UI.WebControls.Label lblSpecies;
+
+        /// <summary>
+        /// lblVet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVet;
+
+        /// <summary>
+        /// lblCheckupDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCheckupDate;
+
+        /// <summary>
+        /// lblFollowUp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFollowUp;
 
         /// <summary>
         /// btnDelete control.

@@ -24,6 +24,24 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// btnTopBack control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnTopBack;
+
+        /// <summary>
+        /// lblSelectSchedule control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSelectSchedule;
+
+        /// <summary>
         /// ddlScheduleID control.
         /// </summary>
         /// <remarks>
@@ -51,6 +69,15 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.Panel pnlEditForm;
 
         /// <summary>
+        /// lblAnimal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAnimal;
+
+        /// <summary>
         /// ddlAnimal control.
         /// </summary>
         /// <remarks>
@@ -58,6 +85,15 @@ namespace AQUACORE_CMPG223
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlAnimal;
+
+        /// <summary>
+        /// lblKeeper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblKeeper;
 
         /// <summary>
         /// ddlKeeper control.
@@ -69,6 +105,15 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.DropDownList ddlKeeper;
 
         /// <summary>
+        /// lblTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTime;
+
+        /// <summary>
         /// ddlTime control.
         /// </summary>
         /// <remarks>
@@ -76,6 +121,15 @@ namespace AQUACORE_CMPG223
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlTime;
+
+        /// <summary>
+        /// lblFoodType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFoodType;
 
         /// <summary>
         /// ddlFoodType control.

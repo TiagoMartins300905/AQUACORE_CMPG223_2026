@@ -685,7 +685,7 @@ Inherits="AQUACORE_CMPG223.ViewMedical" %>
                 ID="GridView1"
                 runat="server"
                 CssClass="aqua-grid"
-                GridLines="None">
+                GridLines="None" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
 
             </asp:GridView>
 

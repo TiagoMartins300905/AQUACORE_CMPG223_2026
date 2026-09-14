@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Configuration;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Drawing;
 using System.Web.UI.WebControls;
 
@@ -8,10 +8,9 @@ namespace AQUACORE_CMPG223
 {
     public partial class UpdateEmployee : System.Web.UI.Page
     {
-        // Centralized method to get the connection string safely
         private string GetConnectionString()
         {
-            return ConfigurationManager.ConnectionStrings["AquaCoreDB"]?.ConnectionString;
+            return ConfigurationManager.ConnectionStrings["AquaCoreConnectionString"]?.ConnectionString;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -22,7 +21,6 @@ namespace AQUACORE_CMPG223
             }
         }
 
-        // 1. Fetch all employees to populate the selection dropdown
         private void LoadEmployeeDropdown()
         {
             string connStr = GetConnectionString();
@@ -34,73 +32,69 @@ namespace AQUACORE_CMPG223
 
             try
             {
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SQLiteConnection con = new SQLiteConnection(connStr))
                 {
-                    string sql = "SELECT EmployeeID, FirstName + ' ' + LastName AS FullName FROM Employees ORDER BY FirstName";
-                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    string sql = "SELECT StaffID, Name || ' ' || Surname AS FullName FROM Staff ORDER BY Name";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, con))
                     {
                         con.Open();
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
                             ddlSelectEmployee.DataSource = reader;
                             ddlSelectEmployee.DataTextField = "FullName";
-                            ddlSelectEmployee.DataValueField = "EmployeeID";
+                            ddlSelectEmployee.DataValueField = "StaffID";
                             ddlSelectEmployee.DataBind();
                         }
                     }
                 }
 
-                // Add a default starting option
-                ddlSelectEmployee.Items.Insert(0, new ListItem("-- Select an Employee --", ""));
+                ddlSelectEmployee.Items.Insert(0, new ListItem("-- Select a Staff Member --", ""));
             }
             catch (Exception ex)
             {
-                SetStatus("Error loading employees: " + ex.Message, Color.FromArgb(255, 107, 107));
+                SetStatus("Error loading staff: " + ex.Message, Color.FromArgb(255, 107, 107));
             }
         }
 
-        // 2. Fires automatically when the user selects a name from the dropdown
         protected void ddlSelectEmployee_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lblStatus.Text = string.Empty; // Clear old messages
+            lblStatus.Text = string.Empty;
 
             if (string.IsNullOrEmpty(ddlSelectEmployee.SelectedValue))
             {
-                pnlEditForm.Visible = false; // Hide form if they go back to the default option
+                pnlEditForm.Visible = false;
                 return;
             }
 
-            string connStr = GetConnectionString();
             int selectedId = Convert.ToInt32(ddlSelectEmployee.SelectedValue);
+            string connStr = GetConnectionString();
 
             try
             {
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SQLiteConnection con = new SQLiteConnection(connStr))
                 {
-                    string sql = "SELECT FirstName, LastName, Email, Department, Salary FROM Employees WHERE EmployeeID = @EmployeeID";
-                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    string sql = "SELECT Name, Surname, Username, PasswordHash, Role, ContactDetails FROM Staff WHERE StaffID = @StaffID";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue("@EmployeeID", selectedId);
+                        cmd.Parameters.AddWithValue("@StaffID", selectedId);
                         con.Open();
 
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                // Populate the textboxes with database values
-                                txtFirstName.Text = reader["FirstName"].ToString();
-                                txtLastName.Text = reader["LastName"].ToString();
-                                txtEmail.Text = reader["Email"].ToString();
-                                txtSalary.Text = Convert.ToDecimal(reader["Salary"]).ToString("0.00");
+                                txtName.Text = reader["Name"].ToString();
+                                txtSurname.Text = reader["Surname"].ToString();
+                                txtUsername.Text = reader["Username"].ToString();
+                                txtPassword.Text = reader["PasswordHash"].ToString();
+                                txtContactDetails.Text = reader["ContactDetails"].ToString();
 
-                                // Set the dropdown list safely
-                                string dept = reader["Department"].ToString();
-                                if (ddlDepartment.Items.FindByValue(dept) != null)
+                                string role = reader["Role"].ToString();
+                                if (ddlRole.Items.FindByValue(role) != null)
                                 {
-                                    ddlDepartment.SelectedValue = dept;
+                                    ddlRole.SelectedValue = role;
                                 }
 
-                                // Reveal the edit form
                                 pnlEditForm.Visible = true;
                             }
                         }
@@ -109,65 +103,57 @@ namespace AQUACORE_CMPG223
             }
             catch (Exception ex)
             {
-                SetStatus("Error retrieving employee: " + ex.Message, Color.FromArgb(255, 107, 107));
+                SetStatus("Error retrieving staff: " + ex.Message, Color.FromArgb(255, 107, 107));
             }
         }
 
-        // 3. Perform the UPDATE in the database
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(ddlSelectEmployee.SelectedValue)) return;
 
-            int employeeId = Convert.ToInt32(ddlSelectEmployee.SelectedValue);
-            string firstName = txtFirstName.Text.Trim();
-            string lastName = txtLastName.Text.Trim();
-            string email = txtEmail.Text.Trim();
-            string department = ddlDepartment.SelectedValue;
-            string salaryInput = txtSalary.Text.Trim();
+            int staffId = Convert.ToInt32(ddlSelectEmployee.SelectedValue);
+            string name = txtName.Text.Trim();
+            string surname = txtSurname.Text.Trim();
+            string username = txtUsername.Text.Trim();
+            string password = txtPassword.Text.Trim();
+            string role = ddlRole.SelectedValue;
+            string contactDetails = txtContactDetails.Text.Trim();
 
-            // Validate
-            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(department))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname) || string.IsNullOrEmpty(role))
             {
-                SetStatus("First Name, Last Name, and Department are required.", Color.FromArgb(255, 107, 107));
+                SetStatus("Name, Surname, and Role are required.", Color.FromArgb(255, 107, 107));
                 return;
             }
 
-            if (!decimal.TryParse(salaryInput, out decimal salary) || salary < 0)
-            {
-                SetStatus("Please enter a valid numeric salary.", Color.FromArgb(255, 107, 107));
-                return;
-            }
-
-            // Save to database
             string connStr = GetConnectionString();
             try
             {
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SQLiteConnection con = new SQLiteConnection(connStr))
                 {
-                    string sql = @"UPDATE Employees 
-                                   SET FirstName = @FirstName, LastName = @LastName, 
-                                       Email = @Email, Department = @Department, Salary = @Salary 
-                                   WHERE EmployeeID = @EmployeeID";
+                    string sql = @"UPDATE Staff 
+                                   SET Name = @Name, Surname = @Surname, Username = @Username, 
+                                       PasswordHash = @PasswordHash, Role = @Role, ContactDetails = @ContactDetails 
+                                   WHERE StaffID = @StaffID";
 
-                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue("@EmployeeID", employeeId);
-                        cmd.Parameters.AddWithValue("@FirstName", firstName);
-                        cmd.Parameters.AddWithValue("@LastName", lastName);
-                        cmd.Parameters.AddWithValue("@Email", email);
-                        cmd.Parameters.AddWithValue("@Department", department);
-                        cmd.Parameters.AddWithValue("@Salary", salary);
+                        cmd.Parameters.AddWithValue("@StaffID", staffId);
+                        cmd.Parameters.AddWithValue("@Name", name);
+                        cmd.Parameters.AddWithValue("@Surname", surname);
+                        cmd.Parameters.AddWithValue("@Username", username);
+                        cmd.Parameters.AddWithValue("@PasswordHash", password);
+                        cmd.Parameters.AddWithValue("@Role", role);
+                        cmd.Parameters.AddWithValue("@ContactDetails", contactDetails);
 
                         con.Open();
                         cmd.ExecuteNonQuery();
                     }
                 }
 
-                SetStatus("Employee details updated successfully!", Color.FromArgb(128, 255, 219));
+                SetStatus("Staff details updated successfully!", Color.FromArgb(128, 255, 219));
 
-                // Refresh the dropdown in case they changed the name
                 LoadEmployeeDropdown();
-                ddlSelectEmployee.SelectedValue = employeeId.ToString();
+                ddlSelectEmployee.SelectedValue = staffId.ToString();
             }
             catch (Exception ex)
             {

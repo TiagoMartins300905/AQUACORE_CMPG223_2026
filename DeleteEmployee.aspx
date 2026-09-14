@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>AquaCore - Delete Employee</title>
+    <title>AquaCore - Delete Staff</title>
     <style>
         :root {
             --abyss-deep: #051329;
@@ -61,7 +61,6 @@
             flex-direction: column;
         }
 
-        /* Divider */
         .divider {
             height: 1px;
             background: rgba(255, 77, 77, 0.3);
@@ -98,7 +97,6 @@
             color: #ffffff;
         }
 
-        /* Confirmation Details Box */
         .details-box {
             background: rgba(255, 77, 77, 0.05);
             border: 1px solid rgba(255, 77, 77, 0.2);
@@ -137,6 +135,7 @@
 
         .btn-group {
             display: flex;
+            flex-direction: column;
             gap: 12px;
         }
 
@@ -147,9 +146,10 @@
             font-size: 0.95rem;
             cursor: pointer;
             border: none;
-            flex: 1;
+            width: 100%;
             text-align: center;
             text-decoration: none;
+            display: inline-block;
         }
 
         .btn-danger {
@@ -186,18 +186,19 @@
     <form id="form1" runat="server">
         <div class="form-card">
             <h2>Delete Staff</h2>
-            <p>Select an employee to permanently delete their records from the system.</p>
+            <p>Select a staff member to permanently remove their records from the system.</p>
 
-            <!-- Employee Selection -->
             <div class="form-group">
-                <label>Select Employee to Delete</label>
+                <label>Select Staff Member</label>
                 <asp:DropDownList ID="ddlSelectEmployee" runat="server" CssClass="input-control" AutoPostBack="True" OnSelectedIndexChanged="ddlSelectEmployee_SelectedIndexChanged">
                 </asp:DropDownList>
             </div>
 
+            <!-- Always Visible Staff Directory Button -->
+            <a href="EmployeeManagement.aspx" class="btn btn-back" style="margin-top: 10px;">🏠 Return to Staff Directory</a>
+
             <asp:Label ID="lblStatus" runat="server" CssClass="status-msg" />
 
-            <!-- Confirmation Panel (Hidden until selection) -->
             <asp:Panel ID="pnlConfirmForm" runat="server" Visible="False">
                 <div class="divider"></div>
                 
@@ -209,18 +210,17 @@
                         <asp:Label ID="lblName" runat="server" CssClass="detail-value" />
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Email:</span>
-                        <asp:Label ID="lblEmail" runat="server" CssClass="detail-value" />
+                        <span class="detail-label">Username:</span>
+                        <asp:Label ID="lblUsername" runat="server" CssClass="detail-value" />
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Department:</span>
-                        <asp:Label ID="lblDept" runat="server" CssClass="detail-value" />
+                        <span class="detail-label">Role:</span>
+                        <asp:Label ID="lblRole" runat="server" CssClass="detail-value" />
                     </div>
                 </div>
 
                 <div class="btn-group">
-                    <asp:Button ID="btnDelete" runat="server" Text="Permanently Delete" CssClass="btn btn-danger" OnClick="btnDelete_Click" OnClientClick="return confirm('Final warning: Delete this employee?');" />
-                    <a href="EmployeeManagement.aspx" class="btn btn-back">Cancel</a>
+                    <asp:Button ID="btnDelete" runat="server" Text="Permanently Delete" CssClass="btn btn-danger" OnClick="btnDelete_Click" OnClientClick="return confirm('Final warning: Delete this staff member?');" />
                 </div>
             </asp:Panel>
         </div>

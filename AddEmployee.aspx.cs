@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Configuration;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Drawing;
 
 namespace AQUACORE_CMPG223
@@ -13,59 +13,54 @@ namespace AQUACORE_CMPG223
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            string firstName = txtFirstName.Text.Trim();
-            string lastName = txtLastName.Text.Trim();
-            string email = txtEmail.Text.Trim();
-            string department = ddlDepartment.SelectedValue;
+            string name = txtName.Text.Trim();
+            string surname = txtSurname.Text.Trim();
+            string username = txtUsername.Text.Trim();
+            string password = txtPassword.Text.Trim();
+            string role = ddlRole.SelectedValue;
             string contactDetails = txtContactDetails.Text.Trim();
 
-            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                SetStatus("First name and last name are required.", Color.FromArgb(255, 107, 107));
+                SetStatus("Name, Surname, Username, and Password are required.", Color.FromArgb(255, 107, 107));
                 return;
             }
 
-            if (string.IsNullOrEmpty(department))
+            if (string.IsNullOrEmpty(role))
             {
-                SetStatus("Please select a department.", Color.FromArgb(255, 107, 107));
+                SetStatus("Please select a role.", Color.FromArgb(255, 107, 107));
                 return;
             }
 
-            if (string.IsNullOrEmpty(contactDetails))
-            {
-                SetStatus("Please enter contact details.", Color.FromArgb(255, 107, 107));
-                return;
-            }
-
-            string connStr = ConfigurationManager.ConnectionStrings["AquaCoreDB"]?.ConnectionString;
+            string connStr = ConfigurationManager.ConnectionStrings["AquaCoreConnectionString"]?.ConnectionString;
             if (string.IsNullOrEmpty(connStr))
             {
-                SetStatus("Database connection string 'AquaCoreDB' is missing from Web.config.", Color.FromArgb(255, 107, 107));
+                SetStatus("Database connection string missing.", Color.FromArgb(255, 107, 107));
                 return;
             }
 
             try
             {
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SQLiteConnection con = new SQLiteConnection(connStr))
                 {
-                    // Ensure your SQL Employees table has a ContactDetails column replacing Salary
-                    string sql = @"INSERT INTO Employees (FirstName, LastName, Email, Department, ContactDetails) 
-                                   VALUES (@FirstName, @LastName, @Email, @Department, @ContactDetails)";
+                    string sql = @"INSERT INTO Staff (Name, Surname, Role, ContactDetails, Username, PasswordHash) 
+                                   VALUES (@Name, @Surname, @Role, @ContactDetails, @Username, @PasswordHash)";
 
-                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue("@FirstName", firstName);
-                        cmd.Parameters.AddWithValue("@LastName", lastName);
-                        cmd.Parameters.AddWithValue("@Email", email);
-                        cmd.Parameters.AddWithValue("@Department", department);
+                        cmd.Parameters.AddWithValue("@Name", name);
+                        cmd.Parameters.AddWithValue("@Surname", surname);
+                        cmd.Parameters.AddWithValue("@Role", role);
                         cmd.Parameters.AddWithValue("@ContactDetails", contactDetails);
+                        cmd.Parameters.AddWithValue("@Username", username);
+                        cmd.Parameters.AddWithValue("@PasswordHash", password);
 
                         con.Open();
                         cmd.ExecuteNonQuery();
                     }
                 }
 
-                SetStatus("Employee registered successfully!", Color.FromArgb(128, 255, 219));
+                SetStatus("Staff member registered successfully!", Color.FromArgb(128, 255, 219));
                 ClearFields();
             }
             catch (Exception ex)
@@ -76,11 +71,12 @@ namespace AQUACORE_CMPG223
 
         private void ClearFields()
         {
-            txtFirstName.Text = string.Empty;
-            txtLastName.Text = string.Empty;
-            txtEmail.Text = string.Empty;
+            txtName.Text = string.Empty;
+            txtSurname.Text = string.Empty;
+            txtUsername.Text = string.Empty;
+            txtPassword.Text = string.Empty;
             txtContactDetails.Text = string.Empty;
-            ddlDepartment.SelectedIndex = 0;
+            ddlRole.SelectedIndex = 0;
         }
 
         private void SetStatus(string message, Color color)

@@ -56,7 +56,7 @@
             position: relative;
             z-index: 1;
             width: 100%;
-            max-width: 580px;
+            max-width: 650px; 
         }
 
         .glass-card {
@@ -69,11 +69,7 @@
             box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.65);
         }
 
-        .card-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
+        .card-header { text-align: center; margin-bottom: 2rem; }
         .card-header h1 {
             font-size: 2rem;
             font-weight: 700;
@@ -82,31 +78,17 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 0.4rem;
         }
-
-        .card-header p {
-            color: var(--text-sub);
-            font-size: 0.9rem;
-        }
+        .card-header p { color: var(--text-sub); font-size: 0.9rem; }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-bottom: 14px;
+            gap: 16px;
+            margin-bottom: 16px;
         }
 
-        .form-field {
-            margin-bottom: 14px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #cbd5e1;
-            margin-bottom: 6px;
-        }
+        .form-field { display: flex; flex-direction: column; }
+        label { font-size: 0.8rem; font-weight: 600; color: #cbd5e1; margin-bottom: 6px; }
 
         .input-box {
             width: 100%;
@@ -118,63 +100,29 @@
             font-size: 0.92rem;
             outline: none;
         }
-
         .input-box:focus {
             border-color: var(--accent-cyan);
             box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.18);
         }
+        select.input-box option { background-color: #08162c; color: #f8fafc; }
 
-        select.input-box option {
-            background-color: #08162c;
-            color: #f8fafc;
-        }
-
-        .actions-wrapper {
-            margin-top: 1.75rem;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
+        .actions-wrapper { margin-top: 1.75rem; display: flex; flex-direction: column; gap: 10px; }
         .btn-submit {
-            width: 100%;
-            padding: 13px;
-            border: none;
-            border-radius: 12px;
+            width: 100%; padding: 13px; border: none; border-radius: 12px;
             background: linear-gradient(135deg, #00f0ff 0%, #0284c7 100%);
-            color: #030a16;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
+            color: #030a16; font-size: 0.95rem; font-weight: 700; cursor: pointer;
         }
-
         .btn-submit:hover { filter: brightness(1.08); }
-
         .btn-secondary {
-            display: inline-block;
-            text-align: center;
-            width: 100%;
-            padding: 11px;
-            border-radius: 12px;
-            background: transparent;
-            border: 1px solid rgba(148, 163, 184, 0.2);
-            color: var(--text-sub);
-            font-size: 0.88rem;
-            font-weight: 600;
-            text-decoration: none;
+            display: inline-block; text-align: center; width: 100%; padding: 11px;
+            border-radius: 12px; background: transparent; border: 1px solid rgba(148, 163, 184, 0.2);
+            color: var(--text-sub); font-size: 0.88rem; font-weight: 600; text-decoration: none;
         }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.05); color: #ffffff; }
+        .status-alert { display: block; margin-top: 1.25rem; font-size: 0.85rem; font-weight: 600; text-align: center; }
 
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: #ffffff;
-        }
-
-        .status-alert {
-            display: block;
-            margin-top: 1.25rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-align: center;
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -192,34 +140,42 @@
 
             <div class="form-row">
                 <div class="form-field">
-                    <label>First Name</label>
-                    <asp:TextBox ID="txtFirstName" runat="server" CssClass="input-box" placeholder="e.g. John" />
+                    <label>Name</label>
+                    <asp:TextBox ID="txtName" runat="server" CssClass="input-box" placeholder="e.g. John" />
                 </div>
                 <div class="form-field">
-                    <label>Last Name</label>
-                    <asp:TextBox ID="txtLastName" runat="server" CssClass="input-box" placeholder="e.g. Doe" />
+                    <label>Surname</label>
+                    <asp:TextBox ID="txtSurname" runat="server" CssClass="input-box" placeholder="e.g. Doe" />
                 </div>
             </div>
 
-            <div class="form-field">
-                <label>Email Address</label>
-                <asp:TextBox ID="txtEmail" runat="server" CssClass="input-box" TextMode="Email" placeholder="name@aquacore.co.za" />
+            <div class="form-row">
+                <div class="form-field">
+                    <label>Username</label>
+                    <asp:TextBox ID="txtUsername" runat="server" CssClass="input-box" placeholder="e.g. jdoe123" />
+                </div>
+                <div class="form-field">
+                    <label>Password</label>
+                    <asp:TextBox ID="txtPassword" runat="server" CssClass="input-box" TextMode="Password" placeholder="Enter password" />
+                </div>
             </div>
 
-            <div class="form-field">
-                <label>Assigned Department</label>
-                <asp:DropDownList ID="ddlDepartment" runat="server" CssClass="input-box">
-                    <asp:ListItem Text="-- Select Department --" Value="" />
-                    <asp:ListItem Text="Operations" Value="Operations" />
-                    <asp:ListItem Text="Quality Control" Value="Quality Control" />
-                    <asp:ListItem Text="Maintenance" Value="Maintenance" />
-                    <asp:ListItem Text="Administration" Value="Administration" />
-                </asp:DropDownList>
-            </div>
-
-            <div class="form-field">
-                <label>Contact Details</label>
-                <asp:TextBox ID="txtContactDetails" runat="server" CssClass="input-box" placeholder="e.g. 082 123 4567" />
+            <div class="form-row">
+                <div class="form-field">
+                    <label>Role</label>
+                    <asp:DropDownList ID="ddlRole" runat="server" CssClass="input-box">
+                        <asp:ListItem Text="-- Select Role --" Value="" />
+                        <asp:ListItem Text="Manager" Value="Manager" />
+                        <asp:ListItem Text="Aquarist" Value="Aquarist" />
+                        <asp:ListItem Text="Marine Keeper" Value="Marine Keeper" />
+                        <asp:ListItem Text="Maintenance" Value="Maintenance" />
+                        <asp:ListItem Text="Admin" Value="Admin" />
+                    </asp:DropDownList>
+                </div>
+                <div class="form-field">
+                    <label>Contact Details</label>
+                    <asp:TextBox ID="txtContactDetails" runat="server" CssClass="input-box" placeholder="e.g. 082 123 4567" />
+                </div>
             </div>
 
             <div class="actions-wrapper">

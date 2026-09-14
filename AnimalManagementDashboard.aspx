@@ -527,7 +527,7 @@
                     ID="btnReturn"
                     runat="server"
                     Text="↩ Return to Login"
-                    CssClass="return-button" />
+                    CssClass="return-button" OnClick="btnReturn_Click" />
 
             </div>
 

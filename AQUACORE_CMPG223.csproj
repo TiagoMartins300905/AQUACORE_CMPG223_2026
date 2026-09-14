@@ -117,7 +117,7 @@
     <Content Include="Delete_Animal.aspx" />
     <Content Include="Display Orders.aspx" />
     <Content Include="Display_Animals.aspx" />
-    <Content Include="App_Data\Global.asax" />
+    <Content Include="Global.asax" />
     <Content Include="EmployeeManagement.aspx" />
     <Content Include="MainScreen.aspx" />
     <Content Include="Medicals_Dashboard.aspx" />
@@ -234,7 +234,7 @@
     <Compile Include="Display_Animals.aspx.designer.cs">
       <DependentUpon>Display_Animals.aspx</DependentUpon>
     </Compile>
-    <Compile Include="App_Data\Global.asax.cs">
+    <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="EmployeeManagement.aspx.cs">
@@ -402,7 +402,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

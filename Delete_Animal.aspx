@@ -1,422 +1,538 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Delete_Animal.aspx.cs" Inherits="AQUACORE_CMPG223.Delete_Animal" %>
 
-<!DOCTYPE html> <html xmlns="http://www.w3.org/1999/xhtml"> <head runat="server">
-<title>AquaCore - Delete Animal</title>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-<style>
+<head runat="server">
 
-    :root {
-        --abyss-deep: #051329;
-        --ocean-blue: #0b2545;
-        --aqua-glow: #00d2ff;
-        --card-glass: rgba(11, 37, 69, 0.78);
-        --card-border: rgba(0, 210, 255, 0.25);
-        --text-primary: #eef4f8;
-        --text-muted: #8da4be;
-        --danger: #ff6b7a;
-        --danger-dark: #d9364a;
-    }
+    <title>AquaCore - Delete Animal</title>
 
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', sans-serif;
-    }
+    <style>
 
-    body {
-        background:
-            radial-gradient(
-                circle at 50% 10%,
-                #0d325e 0%,
-                var(--ocean-blue) 40%,
-                var(--abyss-deep) 100%
-            );
+        :root {
+            --abyss-deep: #051329;
+            --ocean-blue: #0b2545;
+            --aqua-glow: #00d2ff;
 
-        color: var(--text-primary);
-        min-height: 100vh;
+            --card-glass: rgba(11, 37, 69, 0.75);
+            --card-border: rgba(0, 210, 255, 0.25);
 
-        display: flex;
-        justify-content: center;
+            --text-primary: #eef4f8;
+            --text-muted: #8da4be;
 
-        padding: 40px 20px;
-    }
+            --accent-danger: #ff4d4d;
+        }
 
-    .dashboard-container {
-        width: 100%;
-        max-width: 850px;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
 
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-    }
-
-    .glass-panel {
-        background: var(--card-glass);
-
-        border: 1px solid var(--card-border);
-
-        border-radius: 16px;
-
-        padding: 32px;
-
-        box-shadow:
-            0 10px 30px rgba(0, 0, 0, 0.35);
-
-        backdrop-filter: blur(8px);
-    }
-
-    .header-panel {
-        display: flex;
-
-        justify-content: space-between;
-
-        align-items: center;
-
-        flex-wrap: wrap;
-
-        gap: 20px;
-    }
-
-    .header-title h1 {
-        font-size: 2rem;
-
-        color: #ffffff;
-
-        margin-bottom: 5px;
-    }
-
-    .header-title p {
-        color: var(--text-muted);
-
-        font-size: 0.95rem;
-    }
-
-    .animal-badge {
-        display: inline-flex;
-
-        align-items: center;
-
-        gap: 7px;
-
-        margin-top: 12px;
-
-        padding: 6px 12px;
-
-        border-radius: 20px;
-
-        background: rgba(255, 107, 122, 0.08);
-
-        border: 1px solid rgba(255, 107, 122, 0.2);
-
-        color: #ff9aa5;
-
-        font-size: 0.78rem;
-
-        font-weight: 600;
-    }
-
-    .page-heading {
-        margin-bottom: 25px;
-    }
-
-    .page-heading h2 {
-        font-size: 1.4rem;
-
-        color: var(--danger);
-
-        margin-bottom: 6px;
-    }
-
-    .page-heading p {
-        color: var(--text-muted);
-
-        font-size: 0.9rem;
-
-        line-height: 1.5;
-    }
-
-    .delete-box {
-        background: rgba(255, 107, 122, 0.05);
-
-        border: 1px solid rgba(255, 107, 122, 0.18);
-
-        border-radius: 14px;
-
-        padding: 25px;
-    }
-
-    .form-group {
-        display: flex;
-
-        flex-direction: column;
-
-        gap: 8px;
-    }
-
-    .form-label {
-        color: #dcebf5;
-
-        font-size: 0.9rem;
-
-        font-weight: 600;
-    }
-
-    .input-control {
-        width: 100%;
-
-        padding: 12px 13px;
-
-        border-radius: 8px;
-
-        border: 1px solid rgba(0, 210, 255, 0.2);
-
-        background: rgba(5, 19, 41, 0.8);
-
-        color: #ffffff;
-
-        font-size: 0.9rem;
-
-        outline: none;
-    }
-
-    .input-control:focus {
-        border-color: var(--aqua-glow);
-
-        box-shadow:
-            0 0 0 3px rgba(0, 210, 255, 0.08);
-    }
-
-    .input-control option {
-        background: #0b2545;
-
-        color: #ffffff;
-    }
-
-    .validator {
-        color: #ff7f8c !important;
-
-        font-size: 0.8rem;
-    }
-
-    .warning {
-        margin-top: 15px;
-
-        color: #ff9aa5;
-
-        font-size: 0.82rem;
-
-        line-height: 1.5;
-    }
-
-    .button-row {
-        display: flex;
-
-        justify-content: flex-end;
-
-        gap: 12px;
-
-        margin-top: 25px;
-
-        padding-top: 22px;
-
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .delete-button {
-        min-width: 150px;
-
-        padding: 11px 20px;
-
-        border-radius: 8px;
-
-        background:
-            linear-gradient(
-                135deg,
-                var(--danger),
-                var(--danger-dark)
-            );
-
-        color: #ffffff;
-
-        font-weight: 600;
-
-        border: none;
-
-        cursor: pointer;
-
-        transition: all 0.2s ease;
-    }
-
-    .delete-button:hover {
-        transform: translateY(-1px);
-
-        box-shadow:
-            0 6px 18px rgba(255, 107, 122, 0.25);
-    }
-
-    .menu-button {
-        min-width: 140px;
-
-        padding: 11px 20px;
-
-        border-radius: 8px;
-
-        background: rgba(255, 255, 255, 0.08);
-
-        color: var(--text-primary);
-
-        border: 1px solid rgba(255, 255, 255, 0.15);
-
-        font-weight: 600;
-
-        cursor: pointer;
-    }
-
-    .menu-button:hover {
-        background: rgba(255, 255, 255, 0.15);
-    }
-
-    .footer-note {
-        text-align: center;
-
-        color: var(--text-muted);
-
-        font-size: 0.78rem;
-
-        opacity: 0.8;
-    }
-
-    @media (max-width: 700px) {
+            font-family:
+                'Segoe UI',
+                -apple-system,
+                BlinkMacSystemFont,
+                sans-serif;
+        }
 
         body {
-            padding: 20px 10px;
+
+            background:
+                radial-gradient(
+                    circle at 50% 10%,
+                    #0d325e 0%,
+                    var(--ocean-blue) 40%,
+                    var(--abyss-deep) 100%
+                );
+
+            color: var(--text-primary);
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
         }
 
-        .glass-panel {
-            padding: 22px;
+        /* Main Card */
+
+        .form-card {
+
+            background: var(--card-glass);
+
+            border: 1px solid var(--card-border);
+
+            border-radius: 16px;
+
+            padding: 32px;
+
+            width: 100%;
+
+            max-width: 550px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.35);
+
+            backdrop-filter: blur(8px);
         }
 
-        .button-row {
+        /* Heading */
+
+        .form-card h2 {
+
+            font-size: 1.8rem;
+
+            margin-bottom: 8px;
+
+            color: #ffffff;
+        }
+
+        .form-card > p {
+
+            color: var(--text-muted);
+
+            font-size: 0.95rem;
+
+            margin-bottom: 24px;
+
+            line-height: 1.5;
+        }
+
+        /* Form */
+
+        .form-group {
+
+            margin-bottom: 16px;
+
+            display: flex;
+
             flex-direction: column;
         }
 
-        .delete-button,
-        .menu-button {
-            width: 100%;
+        /* Labels */
+
+        label {
+
+            font-size: 0.85rem;
+
+            font-weight: 600;
+
+            color: var(--aqua-glow);
+
+            margin-bottom: 6px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
         }
-    }
 
-</style>
+        /* Dropdown */
 
-</head> <body> <form id="form1" runat="server">
-<div class="dashboard-container">
+        .input-control {
 
-    <!-- HEADER -->
+            width: 100%;
 
-    <div class="glass-panel header-panel">
+            padding: 10px 14px;
 
-        <div class="header-title">
+            border-radius: 8px;
 
-            <h1>AquaCore Operations</h1>
+            border: 1px solid rgba(0, 210, 255, 0.25);
 
-            <p>Animal Management</p>
+            background: rgba(5, 19, 41, 0.6);
 
-            <div class="animal-badge">
-                🗑️ Remove Aquarium Animal
-            </div>
+            color: #ffffff;
+
+            font-size: 0.95rem;
+
+            outline: none;
+        }
+
+        .input-control:focus {
+
+            border-color: var(--aqua-glow);
+
+            box-shadow:
+                0 0 8px rgba(0, 210, 255, 0.3);
+        }
+
+        select.input-control option {
+
+            background-color: #0b2545;
+
+            color: #ffffff;
+        }
+
+        /* Divider */
+
+        .divider {
+
+            height: 1px;
+
+            background:
+                rgba(255, 77, 77, 0.3);
+
+            margin: 24px 0;
+        }
+
+        /* Warning */
+
+        .warning-text {
+
+            color: var(--accent-danger);
+
+            font-size: 0.85rem;
+
+            font-weight: 600;
+
+            text-align: center;
+
+            margin-bottom: 15px;
+
+            line-height: 1.4;
+        }
+
+        /* Animal Details */
+
+        .details-box {
+
+            background:
+                rgba(255, 77, 77, 0.05);
+
+            border:
+                1px solid rgba(255, 77, 77, 0.2);
+
+            border-radius: 8px;
+
+            padding: 16px;
+
+            margin-bottom: 20px;
+        }
+
+        .detail-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 10px;
+
+            font-size: 0.95rem;
+
+            gap: 20px;
+        }
+
+        .detail-row:last-child {
+
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+
+            color: var(--text-muted);
+        }
+
+        .detail-value {
+
+            font-weight: 600;
+
+            color: #ffffff;
+
+            text-align: right;
+        }
+
+        /* Buttons */
+
+        .btn-group {
+
+            display: flex;
+
+            gap: 12px;
+        }
+
+        .btn {
+
+            padding: 12px 20px;
+
+            border-radius: 8px;
+
+            font-weight: 600;
+
+            font-size: 0.95rem;
+
+            cursor: pointer;
+
+            border: none;
+
+            flex: 1;
+
+            text-align: center;
+
+            text-decoration: none;
+        }
+
+        /* Delete */
+
+        .btn-danger {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff4d4d,
+                    #c92a2a
+                );
+
+            color: #ffffff;
+        }
+
+        .btn-danger:hover {
+
+            opacity: 0.9;
+
+            box-shadow:
+                0 0 12px rgba(255, 77, 77, 0.4);
+        }
+
+        /* Back */
+
+        .btn-back {
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            color: var(--text-muted);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-back:hover {
+
+            background:
+                rgba(255, 255, 255, 0.15);
+
+            color: #ffffff;
+        }
+
+        /* Status */
+
+        .status-msg {
+
+            display: block;
+
+            margin-top: 16px;
+
+            font-size: 0.9rem;
+
+            font-weight: 600;
+
+            text-align: center;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            .form-card {
+
+                padding: 22px;
+            }
+
+            .btn-group {
+
+                flex-direction: column;
+            }
+
+            .detail-row {
+
+                flex-direction: column;
+
+                gap: 3px;
+            }
+
+            .detail-value {
+
+                text-align: left;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<form id="form1" runat="server">
+
+    <div class="form-card">
+
+        <h2>Delete Animal</h2>
+
+        <p>
+            Select an animal from the dropdown below to view its
+            information before permanently deleting it.
+        </p>
+
+
+        <!-- Animal Selection -->
+
+        <div class="form-group">
+
+            <label>
+                Select Animal to Delete
+            </label>
+
+            <asp:DropDownList
+                ID="ddlAnimalID"
+                runat="server"
+                CssClass="input-control"
+                AutoPostBack="True"
+                OnSelectedIndexChanged="ddlAnimalID_SelectedIndexChanged">
+
+            </asp:DropDownList>
 
         </div>
 
-    </div>
+
+        <!-- Status -->
+
+        <asp:Label
+            ID="lblOutput"
+            runat="server"
+            CssClass="status-msg">
+        </asp:Label>
 
 
-    <!-- DELETE FORM -->
+        <!-- Confirmation Panel -->
 
-    <div class="glass-panel">
+        <asp:Panel
+            ID="pnlConfirmForm"
+            runat="server"
+            Visible="False">
 
-        <div class="page-heading">
+            <div class="divider"></div>
 
-            <h2>🗑️ Delete Animal</h2>
 
-            <p>
-                Select the Animal ID of the animal you want to remove
-                from the AquaCore system.
+            <p class="warning-text">
+
+                ⚠️ Are you sure you want to delete this animal?
+                This action cannot be undone.
+
             </p>
 
-        </div>
+
+            <!-- Animal Details -->
+
+            <div class="details-box">
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Animal ID:
+                    </span>
+
+                    <asp:Label
+                        ID="lblAnimalID"
+                        runat="server"
+                        CssClass="detail-value">
+                    </asp:Label>
+
+                </div>
 
 
-        <div class="delete-box">
+                <div class="detail-row">
 
-            <div class="form-group">
+                    <span class="detail-label">
+                        Name:
+                    </span>
 
-                <asp:Label
-                    ID="Label2"
-                    runat="server"
-                    Text="Select Animal ID"
-                    CssClass="form-label" />
+                    <asp:Label
+                        ID="lblName"
+                        runat="server"
+                        CssClass="detail-value">
+                    </asp:Label>
 
-                <asp:DropDownList
-                    ID="ddlAnimalID"
-                    runat="server"
-                    CssClass="input-control">
+                </div>
 
-                    <asp:ListItem Value="">
-                        -- Select Animal ID --
-                    </asp:ListItem>
 
-                </asp:DropDownList>
+                <div class="detail-row">
 
-                <asp:RequiredFieldValidator
-                    ID="RequiredFieldValidator1"
-                    runat="server"
-                    ControlToValidate="ddlAnimalID"
-                    InitialValue=""
-                    ErrorMessage="Please select an Animal ID."
-                    ForeColor="Red"
-                    CssClass="validator" />
+                    <span class="detail-label">
+                        Species:
+                    </span>
+
+                    <asp:Label
+                        ID="lblSpecies"
+                        runat="server"
+                        CssClass="detail-value">
+                    </asp:Label>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Gender:
+                    </span>
+
+                    <asp:Label
+                        ID="lblGender"
+                        runat="server"
+                        CssClass="detail-value">
+                    </asp:Label>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Habitat:
+                    </span>
+
+                    <asp:Label
+                        ID="lblHabitat"
+                        runat="server"
+                        CssClass="detail-value">
+                    </asp:Label>
+
+                </div>
 
             </div>
 
-            <div class="warning">
-                ⚠️ The selected animal and its associated records may be
-                affected by this deletion. Please make sure you have
-                selected the correct Animal ID.
+
+            <!-- Buttons -->
+
+            <div class="btn-group">
+
+                <asp:Button
+                    ID="btnDeleteAnimal"
+                    runat="server"
+                    Text="Permanently Delete"
+                    CssClass="btn btn-danger"
+                    OnClick="btnDeleteAnimal_Click"
+                    OnClientClick="return confirm('Final warning: Delete this animal?');" />
+
+                <asp:Button
+                    ID="btnMenu"
+                    runat="server"
+                    Text="Cancel"
+                    CssClass="btn btn-back"
+                    CausesValidation="false"
+                    OnClick="btnMenu_Click" />
+
             </div>
 
-        </div>
-
-
-        <div class="button-row">
-
-            <asp:Button
-                ID="btnDeleteAnimal"
-                runat="server"
-                Text="🗑 Delete Animal"
-                CssClass="delete-button"
-                OnClick="btnDeleteAnimal_Click" />
-
-            <asp:Button
-                ID="btnMenu"
-                runat="server"
-                Text="← Animal Menu"
-                CssClass="menu-button"
-                CausesValidation="false"
-                OnClick="btnMenu_Click" />
-
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Label ID="lblOutput" runat="server"></asp:Label>
-
-        </div>
+        </asp:Panel>
 
     </div>
 
+</form>
 
-    <div class="footer-note">
-        AquaCore • Animal Registry &amp; Aquarium Management
-    </div>
+</body>
 
-</div>
-
-</form> </body> </html>
+</html>

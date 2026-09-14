@@ -1,163 +1,407 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SQLite;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
+using System.Drawing;
 using System.Web.UI.WebControls;
 
 namespace AQUACORE_CMPG223
 {
     public partial class Update_Animal : System.Web.UI.Page
     {
-        string connStr = ConfigurationManager.ConnectionStrings["AquaCoreConnectionString"].ConnectionString;
+        private string GetConnectionString()
+        {
+            return ConfigurationManager
+                .ConnectionStrings["AquaCoreConnectionString"]
+                ?.ConnectionString;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-        }
-
-        protected void rdbMale_CheckedChanged1(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void btnMenu_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Animals_DashBoard.aspx", false);
-        }
-
-        protected void btnUpdate_Click(object sender, EventArgs e)
-        {
-            // Animal ID is required because we need to know which animal to update
-            if (!int.TryParse(txtID.Text, out int animalID))
+            if (!IsPostBack)
             {
-                lblOutput.Text = "Please enter a valid Animal ID.";
+                LoadAnimalDropdown();
+            }
+        }
+
+        // 1. Load all animals into the dropdown
+        private void LoadAnimalDropdown()
+        {
+            string connStr = GetConnectionString();
+
+            if (string.IsNullOrEmpty(connStr))
+            {
+                SetStatus(
+                    "Database connection string is missing.",
+                    Color.FromArgb(255, 107, 107)
+                );
                 return;
             }
 
-            string qry = "UPDATE Animal SET ";
-            List<string> updates = new List<string>();
-
-            SQLiteCommand command;
-            SQLiteConnection conn = new SQLiteConnection(connStr);
-
-            // Name
-            if (!string.IsNullOrWhiteSpace(txtName.Text))
+            try
             {
-                if (int.TryParse(txtName.Text, out _))
+                using (SQLiteConnection con = new SQLiteConnection(connStr))
                 {
-                    lblOutput.Text = "Please enter a valid name.";
-                    return;
+                    string sql = @"
+                        SELECT AnimalID, Name
+                        FROM Animal
+                        ORDER BY Name";
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, con))
+                    {
+                        con.Open();
+
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            ddlSelectAnimal.DataSource = reader;
+                            ddlSelectAnimal.DataTextField = "Name";
+                            ddlSelectAnimal.DataValueField = "AnimalID";
+                            ddlSelectAnimal.DataBind();
+                        }
+                    }
                 }
 
-                updates.Add("Name = @name");
+                ddlSelectAnimal.Items.Insert(
+                    0,
+                    new ListItem("-- Select an Animal --", "")
+                );
             }
-
-            // Species
-            if (!string.IsNullOrWhiteSpace(txtSpecies.Text))
+            catch (Exception ex)
             {
-                if (int.TryParse(txtSpecies.Text, out _))
-                {
-                    lblOutput.Text = "Please enter a valid species.";
-                    return;
-                }
-
-                updates.Add("Species = @species");
+                SetStatus(
+                    "Error loading animals: " + ex.Message,
+                    Color.FromArgb(255, 107, 107)
+                );
             }
+        }
 
-            // Date of Birth
-            DateTime dob = DateTime.MinValue;
+        // 2. Load the selected animal's information
+        protected void ddlSelectAnimal_SelectedIndexChanged(
+            object sender,
+            EventArgs e)
+        {
+            lblOutput.Text = "";
 
-            if (!string.IsNullOrWhiteSpace(txtDOB.Text))
+            if (string.IsNullOrEmpty(ddlSelectAnimal.SelectedValue))
             {
-                if (!DateTime.TryParse(txtDOB.Text, out dob))
-                {
-                    lblOutput.Text = "Please enter a valid date.";
-                    return;
-                }
-
-                updates.Add("DateOfBirth = @DOB");
+                pnlEditForm.Visible = false;
+                return;
             }
 
-            // Gender
+            string connStr = GetConnectionString();
+
+            int animalID =
+                Convert.ToInt32(ddlSelectAnimal.SelectedValue);
+
+            try
+            {
+                using (SQLiteConnection con =
+                    new SQLiteConnection(connStr))
+                {
+                    string sql = @"
+                        SELECT 
+                            Name,
+                            Species,
+                            DateOfBirth,
+                            Gender,
+                            HabitatLocation
+                        FROM Animal
+                        WHERE AnimalID = @AnimalID";
+
+                    using (SQLiteCommand cmd =
+                        new SQLiteCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue(
+                            "@AnimalID",
+                            animalID
+                        );
+
+                        con.Open();
+
+                        using (SQLiteDataReader reader =
+                            cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // Name
+                                txtName.Text =
+                                    reader["Name"].ToString();
+
+                                // Species
+                                txtSpecies.Text =
+                                    reader["Species"].ToString();
+
+                                // Date of Birth
+                                if (reader["DateOfBirth"] != DBNull.Value)
+                                {
+                                    DateTime dob =
+                                        Convert.ToDateTime(
+                                            reader["DateOfBirth"]
+                                        );
+
+                                    txtDOB.Text =
+                                        dob.ToString("yyyy-MM-dd");
+                                }
+                                else
+                                {
+                                    txtDOB.Text = "";
+                                }
+
+                                // Gender
+                                rdbMale.Checked = false;
+                                rdbFemale.Checked = false;
+
+                                string gender =
+                                    reader["Gender"].ToString();
+
+                                if (gender == "Male")
+                                {
+                                    rdbMale.Checked = true;
+                                }
+                                else if (gender == "Female")
+                                {
+                                    rdbFemale.Checked = true;
+                                }
+
+                                // Habitat
+                                string habitat =
+                                    reader["HabitatLocation"].ToString();
+
+                                if (ddHabitat.Items.FindByValue(habitat)
+                                    != null)
+                                {
+                                    ddHabitat.SelectedValue = habitat;
+                                }
+                                else
+                                {
+                                    ddHabitat.SelectedIndex = 0;
+                                }
+
+                                // Show edit form
+                                pnlEditForm.Visible = true;
+                            }
+                            else
+                            {
+                                SetStatus(
+                                    "Animal could not be found.",
+                                    Color.FromArgb(255, 107, 107)
+                                );
+
+                                pnlEditForm.Visible = false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SetStatus(
+                    "Error retrieving animal: " + ex.Message,
+                    Color.FromArgb(255, 107, 107)
+                );
+            }
+        }
+
+        // 3. Update the animal
+        protected void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(
+                ddlSelectAnimal.SelectedValue))
+            {
+                SetStatus(
+                    "Please select an animal.",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
+            }
+
+            int animalID =
+                Convert.ToInt32(ddlSelectAnimal.SelectedValue);
+
+            string name = txtName.Text.Trim();
+            string species = txtSpecies.Text.Trim();
+            string dobInput = txtDOB.Text.Trim();
+            string habitat = ddHabitat.SelectedValue;
+
             string gender = "";
 
             if (rdbMale.Checked)
             {
                 gender = "Male";
-                updates.Add("Gender = @gender");
             }
             else if (rdbFemale.Checked)
             {
                 gender = "Female";
-                updates.Add("Gender = @gender");
             }
 
-            // Habitat
-            if (ddHabitat.SelectedIndex != 0)
+            // Validation
+            if (string.IsNullOrEmpty(name))
             {
-                updates.Add("HabitatLocation = @habitat");
-            }
+                SetStatus(
+                    "Animal name is required.",
+                    Color.FromArgb(255, 107, 107)
+                );
 
-            // Make sure the user changed something
-            if (updates.Count == 0)
-            {
-                lblOutput.Text = "Please enter at least one value to update.";
                 return;
             }
 
-            // Complete the UPDATE statement
-            qry += string.Join(", ", updates);
-            qry += " WHERE AnimalID = @ID";
-
-            command = new SQLiteCommand(qry, conn);
-
-            // Animal ID
-            command.Parameters.AddWithValue("@ID", animalID);
-
-            // Only add parameters for fields that were changed
-            if (!string.IsNullOrWhiteSpace(txtName.Text))
+            if (string.IsNullOrEmpty(species))
             {
-                command.Parameters.AddWithValue("@name", txtName.Text);
+                SetStatus(
+                    "Animal species is required.",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
             }
 
-            if (!string.IsNullOrWhiteSpace(txtSpecies.Text))
+            if (string.IsNullOrEmpty(dobInput))
             {
-                command.Parameters.AddWithValue("@species", txtSpecies.Text);
+                SetStatus(
+                    "Date of birth is required.",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
             }
 
-            
-            if (!string.IsNullOrWhiteSpace(txtDOB.Text))
+            DateTime dob;
+
+            if (!DateTime.TryParse(dobInput, out dob))
             {
-                command.Parameters.AddWithValue("@DOB", dob);
+                SetStatus(
+                    "Please enter a valid date of birth.",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
             }
 
-            if (rdbMale.Checked || rdbFemale.Checked)
+            if (string.IsNullOrEmpty(gender))
             {
-                command.Parameters.AddWithValue("@gender", gender);
+                SetStatus(
+                    "Please select a gender.",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
             }
 
-            if (ddHabitat.SelectedIndex != 0)
+            if (string.IsNullOrEmpty(habitat))
             {
-                command.Parameters.AddWithValue("@habitat", ddHabitat.SelectedValue);
+                SetStatus(
+                    "Please select a habitat.",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
             }
 
-            conn.Open();
+            // Update database
+            string connStr = GetConnectionString();
 
-            int rowsAffected = command.ExecuteNonQuery();
-
-            if (rowsAffected > 0)
+            try
             {
-                lblOutput.Text = "Animal updated successfully.";
-            }
-            else
-            {
-                lblOutput.Text = "Animal ID not found.";
-            }
+                using (SQLiteConnection con =
+                    new SQLiteConnection(connStr))
+                {
+                    string sql = @"
+                        UPDATE Animal
+                        SET
+                            Name = @Name,
+                            Species = @Species,
+                            DateOfBirth = @DateOfBirth,
+                            Gender = @Gender,
+                            HabitatLocation = @HabitatLocation
+                        WHERE AnimalID = @AnimalID";
 
-            command.Dispose();
-            conn.Close();
+                    using (SQLiteCommand cmd =
+                        new SQLiteCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue(
+                            "@AnimalID",
+                            animalID
+                        );
+
+                        cmd.Parameters.AddWithValue(
+                            "@Name",
+                            name
+                        );
+
+                        cmd.Parameters.AddWithValue(
+                            "@Species",
+                            species
+                        );
+
+                        cmd.Parameters.AddWithValue(
+                            "@DateOfBirth",
+                            dob
+                        );
+
+                        cmd.Parameters.AddWithValue(
+                            "@Gender",
+                            gender
+                        );
+
+                        cmd.Parameters.AddWithValue(
+                            "@HabitatLocation",
+                            habitat
+                        );
+
+                        con.Open();
+
+                        int rowsAffected =
+                            cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            SetStatus(
+                                "Animal details updated successfully!",
+                                Color.FromArgb(128, 255, 219)
+                            );
+
+                            // Refresh dropdown
+                            LoadAnimalDropdown();
+
+                            // Select the same animal again
+                            ddlSelectAnimal.SelectedValue =
+                                animalID.ToString();
+
+                            pnlEditForm.Visible = true;
+                        }
+                        else
+                        {
+                            SetStatus(
+                                "Animal could not be updated.",
+                                Color.FromArgb(255, 107, 107)
+                            );
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SetStatus(
+                    "Database error during update: " + ex.Message,
+                    Color.FromArgb(255, 107, 107)
+                );
+            }
+        }
+
+        // 4. Menu button
+        protected void btnMenu_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(
+                "Animals_DashBoard.aspx",
+                false
+            );
+        }
+
+        // 5. Display messages
+        private void SetStatus(string message, Color color)
+        {
+            lblOutput.Text = message;
+            lblOutput.ForeColor = color;
         }
     }
 }

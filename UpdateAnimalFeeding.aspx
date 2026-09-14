@@ -1,15 +1,12 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UpdateAnimalFeeding.aspx.cs" Inherits="AQUACORE_CMPG223.UpdateAnimalFeeding" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
-
     <title>AquaCore - Update Feeding Schedule</title>
 
     <style>
-
         :root {
             --abyss-deep: #051329;
             --ocean-blue: #0b2545;
@@ -18,22 +15,17 @@
             --card-border: rgba(0, 210, 255, 0.25);
             --text-primary: #eef4f8;
             --text-muted: #8da4be;
+            --accent-warning: #ffd166;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-
-            font-family:
-                'Segoe UI',
-                -apple-system,
-                BlinkMacSystemFont,
-                sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         body {
-
             background: radial-gradient(
                 circle at 50% 10%,
                 #0d325e 0%,
@@ -46,31 +38,13 @@
             min-height: 100vh;
 
             display: flex;
-
-            flex-direction: column;
-
             align-items: center;
+            justify-content: center;
 
-            padding: 40px 20px;
+            padding: 20px;
         }
 
-        .dashboard-container {
-
-            width: 100%;
-
-            max-width: 1000px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 24px;
-        }
-
-        /* Glass Panel */
-
-        .glass-panel {
-
+        .form-card {
             background: var(--card-glass);
 
             border: 1px solid var(--card-border);
@@ -79,202 +53,72 @@
 
             padding: 32px;
 
+            width: 100%;
+
+            max-width: 550px;
+
             box-shadow:
                 0 10px 30px rgba(0, 0, 0, 0.35);
+
+            backdrop-filter: blur(8px);
         }
 
-        /* Header */
+        .form-card h2 {
+            font-size: 1.8rem;
 
-        .header-panel {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            flex-wrap: wrap;
-
-            gap: 20px;
-        }
-
-        .header-title h1 {
-
-            font-size: 2rem;
+            margin-bottom: 8px;
 
             color: #ffffff;
-
-            margin-bottom: 5px;
         }
 
-        .header-title p {
-
+        .form-card p {
             color: var(--text-muted);
 
             font-size: 0.95rem;
+
+            margin-bottom: 24px;
         }
 
-        /* Buttons */
+        .form-group {
+            margin-bottom: 16px;
 
-        .btn {
+            display: flex;
 
-            padding: 10px 18px;
+            flex-direction: column;
+        }
 
-            border-radius: 8px;
+        .divider {
+            height: 1px;
+
+            background: rgba(0, 210, 255, 0.2);
+
+            margin: 24px 0;
+        }
+
+        label {
+            font-size: 0.85rem;
 
             font-weight: 600;
-
-            font-size: 0.9rem;
-
-            cursor: pointer;
-
-            border: none;
-
-            text-decoration: none;
-
-            text-align: center;
-
-            transition: all 0.2s;
-        }
-
-        .btn-add {
-
-            background: linear-gradient(
-                135deg,
-                #00d2ff,
-                #0077b6
-            );
-
-            color: #ffffff;
-        }
-
-        .btn-add:hover {
-
-            opacity: 0.9;
-
-            transform: translateY(-1px);
-
-            box-shadow:
-                0 5px 15px rgba(0, 210, 255, 0.2);
-        }
-
-        .btn-outline {
-
-            background: rgba(255, 255, 255, 0.08);
-
-            color: var(--text-primary);
-
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .btn-outline:hover {
-
-            background: rgba(255, 255, 255, 0.15);
-
-            color: #ffffff;
-        }
-
-        /* Page Heading */
-
-        .page-heading {
-
-            margin-bottom: 25px;
-        }
-
-        .page-heading h2 {
-
-            font-size: 1.4rem;
 
             color: var(--aqua-glow);
 
             margin-bottom: 6px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
         }
-
-        .page-heading p {
-
-            color: var(--text-muted);
-
-            font-size: 0.9rem;
-
-            line-height: 1.5;
-        }
-
-        /* Schedule ID Section */
-
-        .schedule-section {
-
-            background: rgba(0, 210, 255, 0.05);
-
-            border: 1px solid rgba(0, 210, 255, 0.18);
-
-            border-radius: 12px;
-
-            padding: 22px;
-
-            margin-bottom: 25px;
-        }
-
-        .section-label {
-
-            display: block;
-
-            color: #ffffff;
-
-            font-weight: 600;
-
-            font-size: 0.95rem;
-
-            margin-bottom: 10px;
-        }
-
-        .section-help {
-
-            display: block;
-
-            color: var(--text-muted);
-
-            font-size: 0.85rem;
-
-            margin-bottom: 15px;
-        }
-
-        /* Form Grid */
-
-        .form-grid {
-
-            display: grid;
-
-            grid-template-columns: 180px 1fr;
-
-            gap: 20px 25px;
-
-            align-items: center;
-        }
-
-        .form-label {
-
-            color: var(--text-primary);
-
-            font-weight: 600;
-
-            font-size: 0.95rem;
-        }
-
-        /* Inputs */
 
         .input-control {
-
             width: 100%;
 
-            max-width: 500px;
-
-            padding: 11px 14px;
+            padding: 10px 14px;
 
             border-radius: 8px;
 
             border: 1px solid rgba(0, 210, 255, 0.25);
 
-            background: rgba(5, 19, 41, 0.65);
+            background: rgba(5, 19, 41, 0.6);
 
             color: #ffffff;
 
@@ -284,323 +128,244 @@
         }
 
         .input-control:focus {
-
             border-color: var(--aqua-glow);
 
             box-shadow:
                 0 0 8px rgba(0, 210, 255, 0.3);
         }
 
-        .input-control option {
+        .input-control:disabled {
+            background: rgba(255, 255, 255, 0.05);
 
-            background: #0b2545;
+            color: var(--text-muted);
+
+            cursor: not-allowed;
+        }
+
+        select.input-control option {
+            background-color: #0b2545;
 
             color: #ffffff;
         }
 
-        /* Validation */
-
-        .validator {
-
-            display: block;
-
-            color: #ff7b7b;
-
-            font-size: 0.85rem;
-
-            margin-top: 8px;
-        }
-
-        /* Message */
-
-        .message {
-
-            display: block;
-
-            margin-top: 25px;
-
-            padding: 12px;
-
-            border-radius: 8px;
-
-            background: rgba(0, 210, 255, 0.07);
-
-            border: 1px solid rgba(0, 210, 255, 0.15);
-
-            color: var(--aqua-glow);
-
-            text-align: center;
-
-            font-weight: 600;
-
-            min-height: 20px;
-        }
-
-        /* Buttons Row */
-
-        .button-row {
-
+        .btn-group {
             display: flex;
-
-            justify-content: flex-end;
 
             gap: 12px;
 
-            margin-top: 25px;
+            margin-top: 24px;
         }
 
-        /* Mobile */
+        .btn {
+            padding: 12px 20px;
 
-        @media (max-width: 700px) {
+            border-radius: 8px;
 
-            body {
+            font-weight: 600;
 
-                padding: 20px 10px;
-            }
+            font-size: 0.95rem;
 
-            .glass-panel {
+            cursor: pointer;
 
+            border: none;
+
+            flex: 1;
+
+            text-align: center;
+
+            text-decoration: none;
+        }
+
+        .btn-submit {
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffd166,
+                    #f77f00
+                );
+
+            color: #051329;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.9;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.08);
+
+            color: var(--text-muted);
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.15);
+
+            color: #ffffff;
+        }
+
+        .status-msg {
+            display: block;
+
+            margin-top: 16px;
+
+            font-size: 0.9rem;
+
+            font-weight: 600;
+
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+
+            .form-card {
                 padding: 22px;
             }
 
-            .form-grid {
-
-                grid-template-columns: 1fr;
-
-                gap: 8px;
-            }
-
-            .input-control {
-
-                max-width: 100%;
-            }
-
-            .schedule-section {
-
-                padding: 18px;
-            }
-
-            .button-row {
-
+            .btn-group {
                 flex-direction: column;
             }
-
-            .button-row input {
-
-                width: 100%;
-            }
         }
-
     </style>
-
 </head>
 
 <body>
 
     <form id="form1" runat="server">
 
-        <div class="dashboard-container">
+        <div class="form-card">
+
+            <h2>Modify Feeding Schedule</h2>
+
+            <p>
+                Select a feeding schedule from the dropdown below
+                to load and update its details.
+            </p>
 
 
-            <!-- Header -->
+            <!-- Select Feeding Schedule -->
 
-            <div class="glass-panel header-panel">
+            <div class="form-group">
 
-                <div class="header-title">
+                <label>Select Feeding Schedule</label>
 
-                    <h1>AquaCore Operations</h1>
+                <asp:DropDownList
+                    ID="ddlScheduleID"
+                    runat="server"
+                    CssClass="input-control"
+                    AutoPostBack="True"
+                    OnSelectedIndexChanged="ddlScheduleID_SelectedIndexChanged">
 
-                    <p>
-                        Feeding Schedule Management
-                    </p>
-
-                </div>
-
-                <div>
-
-                    <asp:Button
-                        ID="btnBack"
-                        runat="server"
-                        Text="← Go Back"
-                        CssClass="btn btn-outline"
-                        CausesValidation="false"
-                        OnClick="btnBack_Click" />
-
-                </div>
+                </asp:DropDownList>
 
             </div>
 
 
-            <!-- Update Form -->
+            <!-- Status Message -->
 
-            <div class="glass-panel">
-
-                <div class="page-heading">
-
-                    <h2>Update Feeding Schedule</h2>
-
-                    <p>
-                        Select an existing schedule and update its feeding details.
-                    </p>
-
-                </div>
+            <asp:Label
+                ID="lblMessage"
+                runat="server"
+                CssClass="status-msg" />
 
 
-                <!-- Schedule ID -->
+            <!-- Edit Form -->
 
-                <div class="schedule-section">
+            <asp:Panel
+                ID="pnlEditForm"
+                runat="server"
+                Visible="False">
 
-                    <asp:Label
-                        ID="lblHeading"
-                        runat="server"
-                        Text="Select a schedule ID to update:"
-                        CssClass="section-label" />
-
-                    <asp:Label
-                        runat="server"
-                        Text="Choose the feeding schedule you want to modify."
-                        CssClass="section-help" />
-
-                    <asp:DropDownList
-                        ID="ddlScheduleID"
-                        runat="server"
-                        CssClass="input-control">
-
-                        <asp:ListItem>
-                            --Select a schedule ID--
-                        </asp:ListItem>
-
-                    </asp:DropDownList>
-
-                    <asp:RequiredFieldValidator
-                        ID="RequiredFieldValidator1"
-                        runat="server"
-                        ControlToValidate="ddlScheduleID"
-                        ErrorMessage="A schedule ID is required!"
-                        InitialValue="--Select a schedule ID--"
-                        ValidationGroup="UpdateValidation"
-                        CssClass="validator" />
-
-                </div>
+                <div class="divider"></div>
 
 
-                <!-- Feeding Details -->
+                <!-- Animal -->
 
-                <div class="form-grid">
+                <div class="form-group">
 
-
-                    <!-- Animal -->
-
-                    <asp:Label
-                        ID="lblAnimal"
-                        runat="server"
-                        Text="Animal:"
-                        CssClass="form-label" />
+                    <label>Animal</label>
 
                     <asp:DropDownList
                         ID="ddlAnimal"
                         runat="server"
                         CssClass="input-control">
 
-                        <asp:ListItem>
-                            --Select Animal--
-                        </asp:ListItem>
-
                     </asp:DropDownList>
 
+                </div>
 
-                    <!-- Marine Keeper -->
 
-                    <asp:Label
-                        ID="lblKeeper"
-                        runat="server"
-                        Text="Marine Keeper:"
-                        CssClass="form-label" />
+                <!-- Marine Keeper -->
+
+                <div class="form-group">
+
+                    <label>Marine Keeper</label>
 
                     <asp:DropDownList
                         ID="ddlKeeper"
                         runat="server"
                         CssClass="input-control">
 
-                        <asp:ListItem>
-                            --Select Keeper--
-                        </asp:ListItem>
-
                     </asp:DropDownList>
 
+                </div>
 
-                    <!-- Time -->
 
-                    <asp:Label
-                        ID="lblTime"
-                        runat="server"
-                        Text="Feeding Time:"
-                        CssClass="form-label" />
+                <!-- Feeding Time -->
+
+                <div class="form-group">
+
+                    <label>Feeding Time</label>
 
                     <asp:DropDownList
                         ID="ddlTime"
                         runat="server"
                         CssClass="input-control">
 
-                        <asp:ListItem>
-                            --Select a time--
-                        </asp:ListItem>
-
                     </asp:DropDownList>
 
+                </div>
 
-                    <!-- Food -->
 
-                    <asp:Label
-                        ID="foodTypelbl"
-                        runat="server"
-                        Text="Food Type:"
-                        CssClass="form-label" />
+                <!-- Food Type -->
+
+                <div class="form-group">
+
+                    <label>Food Type</label>
 
                     <asp:DropDownList
                         ID="ddlFoodType"
                         runat="server"
                         CssClass="input-control">
 
-                        <asp:ListItem>
-                            --Select food type--
-                        </asp:ListItem>
-
                     </asp:DropDownList>
 
                 </div>
 
 
-                <!-- Message -->
-
-                <asp:Label
-                    ID="lblMessage"
-                    runat="server"
-                    CssClass="message" />
-
-
                 <!-- Buttons -->
 
-                <div class="button-row">
+                <div class="btn-group">
 
                     <asp:Button
                         ID="btnUpdate"
                         runat="server"
-                        Text="✏️ Update Schedule"
-                        CssClass="btn btn-add"
-                        ValidationGroup="UpdateValidation" />
+                        Text="Save Changes"
+                        CssClass="btn btn-submit"
+                        OnClick="btnUpdate_Click" />
 
                     <asp:Button
-                        ID="btnBackBottom"
+                        ID="btnBack"
                         runat="server"
-                        Text="← Cancel"
-                        CssClass="btn btn-outline"
+                        Text="Cancel"
+                        CssClass="btn btn-back"
                         CausesValidation="false"
                         OnClick="btnBack_Click" />
 
                 </div>
 
-            </div>
+            </asp:Panel>
 
         </div>
 

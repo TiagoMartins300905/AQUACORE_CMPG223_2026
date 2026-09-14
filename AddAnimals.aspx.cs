@@ -87,7 +87,7 @@ namespace AQUACORE_CMPG223
             cmd.Parameters.AddWithValue("@species", species);
             cmd.Parameters.AddWithValue("@DOB", dob);
             cmd.Parameters.AddWithValue("@gender", gender);
-            cmd.Parameters.AddWithValue("@habiti", ddHabitat.SelectedItem.ToString().Trim());
+            cmd.Parameters.AddWithValue("@habitat", ddHabitat.SelectedItem.ToString().Trim());
 
             cmd.ExecuteNonQuery();
             cmd.Dispose();

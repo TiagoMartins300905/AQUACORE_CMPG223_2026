@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
 using System.Web.UI.WebControls;
@@ -8,48 +9,37 @@ namespace AQUACORE_CMPG223
 {
     public partial class UpdateAnimalFeeding : System.Web.UI.Page
     {
-        private string GetConnectionString()
-        {
-            return ConfigurationManager
+        private readonly string connStr =
+            ConfigurationManager
                 .ConnectionStrings["AquaCoreConnectionString"]
-                ?.ConnectionString;
-        }
-
+                .ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 LoadScheduleDropdown();
-                LoadAnimalDropdown();
-                LoadKeeperDropdown();
+                LoadAnimals();
+                LoadKeepers();
+                LoadFoodTypes();
+
+                pnlEditForm.Visible = false;
             }
         }
 
-
         // =========================================================
-        // LOAD FEEDING SCHEDULES
+        // LOAD FEEDING SCHEDULE DROPDOWN
         // =========================================================
 
         private void LoadScheduleDropdown()
         {
-            string connStr = GetConnectionString();
-
-            if (string.IsNullOrEmpty(connStr))
-            {
-                SetStatus(
-                    "Database connection string is missing.",
-                    Color.FromArgb(255, 107, 107)
-                );
-
-                return;
-            }
-
             try
             {
-                using (SQLiteConnection con =
-                    new SQLiteConnection(connStr))
+                using (SQLiteConnection conn =
+                       new SQLiteConnection(connStr))
                 {
+                    conn.Open();
+
                     string sql = @"
                         SELECT
                             ScheduleID,
@@ -58,59 +48,57 @@ namespace AQUACORE_CMPG223
                         FROM FeedingSchedule
                         ORDER BY ScheduleID";
 
-                    using (SQLiteCommand cmd =
-                        new SQLiteCommand(sql, con))
+                    using (SQLiteCommand command =
+                           new SQLiteCommand(sql, conn))
                     {
-                        con.Open();
-
-                        using (SQLiteDataReader reader =
-                            cmd.ExecuteReader())
+                        using (SQLiteDataAdapter adapter =
+                               new SQLiteDataAdapter(command))
                         {
-                            ddlScheduleID.DataSource = reader;
+                            DataTable dt = new DataTable();
 
+                            adapter.Fill(dt);
+
+                            ddlScheduleID.Items.Clear();
+
+                            ddlScheduleID.DataSource = dt;
                             ddlScheduleID.DataTextField =
                                 "ScheduleName";
-
                             ddlScheduleID.DataValueField =
                                 "ScheduleID";
 
                             ddlScheduleID.DataBind();
+
+                            ddlScheduleID.Items.Insert(
+                                0,
+                                new ListItem(
+                                    "-- Select a Feeding Schedule --",
+                                    ""));
                         }
                     }
                 }
-
-                ddlScheduleID.Items.Insert(
-                    0,
-                    new ListItem(
-                        "-- Select a Feeding Schedule --",
-                        ""
-                    )
-                );
             }
             catch (Exception ex)
             {
                 SetStatus(
-                    "Error loading feeding schedules: "
-                    + ex.Message,
-                    Color.FromArgb(255, 107, 107)
-                );
+                    "Error loading feeding schedules: " +
+                    ex.Message,
+                    Color.FromArgb(255, 107, 107));
             }
         }
-
 
         // =========================================================
         // LOAD ANIMALS
         // =========================================================
 
-        private void LoadAnimalDropdown()
+        private void LoadAnimals()
         {
-            string connStr = GetConnectionString();
-
             try
             {
-                using (SQLiteConnection con =
-                    new SQLiteConnection(connStr))
+                using (SQLiteConnection conn =
+                       new SQLiteConnection(connStr))
                 {
+                    conn.Open();
+
                     string sql = @"
                         SELECT
                             AnimalID,
@@ -118,55 +106,55 @@ namespace AQUACORE_CMPG223
                         FROM Animal
                         ORDER BY Name";
 
-                    using (SQLiteCommand cmd =
-                        new SQLiteCommand(sql, con))
+                    using (SQLiteCommand command =
+                           new SQLiteCommand(sql, conn))
                     {
-                        con.Open();
-
-                        using (SQLiteDataReader reader =
-                            cmd.ExecuteReader())
+                        using (SQLiteDataAdapter adapter =
+                               new SQLiteDataAdapter(command))
                         {
-                            ddlAnimal.DataSource = reader;
+                            DataTable dt = new DataTable();
 
+                            adapter.Fill(dt);
+
+                            ddlAnimal.Items.Clear();
+
+                            ddlAnimal.DataSource = dt;
                             ddlAnimal.DataTextField = "Name";
                             ddlAnimal.DataValueField = "AnimalID";
 
                             ddlAnimal.DataBind();
+
+                            ddlAnimal.Items.Insert(
+                                0,
+                                new ListItem(
+                                    "--Select Animal--",
+                                    ""));
                         }
                     }
                 }
-
-                ddlAnimal.Items.Insert(
-                    0,
-                    new ListItem(
-                        "-- Select Animal --",
-                        ""
-                    )
-                );
             }
             catch (Exception ex)
             {
                 SetStatus(
-                    "Error loading animals: " + ex.Message,
-                    Color.FromArgb(255, 107, 107)
-                );
+                    "Error loading animals: " +
+                    ex.Message,
+                    Color.FromArgb(255, 107, 107));
             }
         }
-
 
         // =========================================================
         // LOAD MARINE KEEPERS
         // =========================================================
 
-        private void LoadKeeperDropdown()
+        private void LoadKeepers()
         {
-            string connStr = GetConnectionString();
-
             try
             {
-                using (SQLiteConnection con =
-                    new SQLiteConnection(connStr))
+                using (SQLiteConnection conn =
+                       new SQLiteConnection(connStr))
                 {
+                    conn.Open();
+
                     string sql = @"
                         SELECT
                             StaffID,
@@ -176,44 +164,98 @@ namespace AQUACORE_CMPG223
                         WHERE Role = 'Marine Keeper'
                         ORDER BY Name, Surname";
 
-                    using (SQLiteCommand cmd =
-                        new SQLiteCommand(sql, con))
+                    using (SQLiteCommand command =
+                           new SQLiteCommand(sql, conn))
                     {
-                        con.Open();
-
-                        using (SQLiteDataReader reader =
-                            cmd.ExecuteReader())
+                        using (SQLiteDataAdapter adapter =
+                               new SQLiteDataAdapter(command))
                         {
-                            ddlKeeper.DataSource = reader;
+                            DataTable dt = new DataTable();
 
-                            ddlKeeper.DataTextField = "Name";
-                            ddlKeeper.DataValueField = "StaffID";
+                            adapter.Fill(dt);
 
-                            ddlKeeper.DataBind();
+                            ddlKeeper.Items.Clear();
+
+                            ddlKeeper.Items.Add(
+                                new ListItem(
+                                    "--Select Keeper--",
+                                    ""));
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                string staffID =
+                                    row["StaffID"].ToString();
+
+                                string name =
+                                    row["Name"].ToString();
+
+                                string surname =
+                                    row["Surname"].ToString();
+
+                                ddlKeeper.Items.Add(
+                                    new ListItem(
+                                        name + " " + surname,
+                                        staffID));
+                            }
                         }
                     }
                 }
-
-                ddlKeeper.Items.Insert(
-                    0,
-                    new ListItem(
-                        "-- Select Keeper --",
-                        ""
-                    )
-                );
             }
             catch (Exception ex)
             {
                 SetStatus(
-                    "Error loading marine keepers: " + ex.Message,
-                    Color.FromArgb(255, 107, 107)
-                );
+                    "Error loading marine keepers: " +
+                    ex.Message,
+                    Color.FromArgb(255, 107, 107));
             }
         }
 
+        // =========================================================
+        // LOAD FOOD TYPES
+        // =========================================================
+
+        private void LoadFoodTypes()
+        {
+            ddlFoodType.Items.Clear();
+
+            ddlFoodType.Items.Add(
+                new ListItem(
+                    "--Select food type--",
+                    ""));
+
+            ddlFoodType.Items.Add(
+                new ListItem(
+                    "Fish",
+                    "Fish"));
+
+            ddlFoodType.Items.Add(
+                new ListItem(
+                    "Meat",
+                    "Meat"));
+
+            ddlFoodType.Items.Add(
+                new ListItem(
+                    "Pellets",
+                    "Pellets"));
+
+            ddlFoodType.Items.Add(
+                new ListItem(
+                    "Vegetables",
+                    "Vegetables"));
+
+            ddlFoodType.Items.Add(
+                new ListItem(
+                    "Fruits",
+                    "Fruits"));
+
+            ddlFoodType.Items.Add(
+                new ListItem(
+                    "Live Food",
+                    "Live Food"));
+        }
 
         // =========================================================
-        // LOAD SELECTED FEEDING SCHEDULE
+        // WHEN SCHEDULE IS SELECTED
         // =========================================================
 
         protected void ddlScheduleID_SelectedIndexChanged(
@@ -235,22 +277,31 @@ namespace AQUACORE_CMPG223
                 ddlScheduleID.SelectedValue,
                 out scheduleID))
             {
+                pnlEditForm.Visible = false;
+
                 SetStatus(
                     "Invalid feeding schedule selected.",
-                    Color.FromArgb(255, 107, 107)
-                );
+                    Color.FromArgb(255, 107, 107));
 
-                pnlEditForm.Visible = false;
                 return;
             }
 
-            string connStr = GetConnectionString();
+            LoadSelectedSchedule(scheduleID);
+        }
 
+        // =========================================================
+        // LOAD SELECTED SCHEDULE
+        // =========================================================
+
+        private void LoadSelectedSchedule(int scheduleID)
+        {
             try
             {
-                using (SQLiteConnection con =
-                    new SQLiteConnection(connStr))
+                using (SQLiteConnection conn =
+                       new SQLiteConnection(connStr))
                 {
+                    conn.Open();
+
                     string sql = @"
                         SELECT
                             StaffID,
@@ -260,70 +311,108 @@ namespace AQUACORE_CMPG223
                         FROM FeedingSchedule
                         WHERE ScheduleID = @ScheduleID";
 
-                    using (SQLiteCommand cmd =
-                        new SQLiteCommand(sql, con))
+                    using (SQLiteCommand command =
+                           new SQLiteCommand(sql, conn))
                     {
-                        cmd.Parameters.AddWithValue(
+                        command.Parameters.AddWithValue(
                             "@ScheduleID",
-                            scheduleID
-                        );
-
-                        con.Open();
+                            scheduleID);
 
                         using (SQLiteDataReader reader =
-                            cmd.ExecuteReader())
+                               command.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                // Animal
+                                // =================================================
+                                // ANIMAL
+                                // =================================================
+
                                 string animalID =
                                     reader["AnimalID"].ToString();
 
-                                if (ddlAnimal.Items.FindByValue(
-                                    animalID) != null)
+                                ddlAnimal.ClearSelection();
+
+                                ListItem animalItem =
+                                    ddlAnimal.Items.FindByValue(
+                                        animalID);
+
+                                if (animalItem != null)
                                 {
-                                    ddlAnimal.SelectedValue =
-                                        animalID;
+                                    animalItem.Selected = true;
                                 }
 
+                                // =================================================
+                                // MARINE KEEPER
+                                // =================================================
 
-                                // Marine Keeper
                                 string staffID =
                                     reader["StaffID"].ToString();
 
-                                if (ddlKeeper.Items.FindByValue(
-                                    staffID) != null)
+                                ddlKeeper.ClearSelection();
+
+                                ListItem keeperItem =
+                                    ddlKeeper.Items.FindByValue(
+                                        staffID);
+
+                                if (keeperItem != null)
                                 {
-                                    ddlKeeper.SelectedValue =
-                                        staffID;
+                                    keeperItem.Selected = true;
                                 }
 
+                                // =================================================
+                                // FOOD TYPE
+                                // =================================================
 
-                                // Food Type
                                 string foodType =
-                                    reader["FoodType"].ToString();
+                                    reader["FoodType"].ToString().Trim();
 
-                                if (ddlFoodType.Items.FindByValue(
-                                    foodType) != null)
+                                ddlFoodType.ClearSelection();
+
+                                ListItem foodItem =
+                                    ddlFoodType.Items.FindByValue(
+                                        foodType);
+
+                                if (foodItem != null)
                                 {
-                                    ddlFoodType.SelectedValue =
-                                        foodType;
+                                    foodItem.Selected = true;
                                 }
 
+                                // =================================================
+                                // FEEDING TIME
+                                // =================================================
 
-                                // Feeding Time
-                                string feedingTime =
-                                    reader["FeedingTime"].ToString();
+                                string databaseTime =
+                                    reader["FeedingTime"]
+                                    .ToString()
+                                    .Trim();
 
-                                if (ddlTime.Items.FindByValue(
-                                    feedingTime) != null)
+                                string dropdownTime =
+                                    ConvertToDropdownTime(
+                                        databaseTime);
+
+                                ddlTime.ClearSelection();
+
+                                ListItem timeItem =
+                                    ddlTime.Items.FindByValue(
+                                        dropdownTime);
+
+                                if (timeItem != null)
                                 {
-                                    ddlTime.SelectedValue =
-                                        feedingTime;
+                                    timeItem.Selected = true;
+                                }
+                                else
+                                {
+                                    SetStatus(
+                                        "Saved feeding time '" +
+                                        databaseTime +
+                                        "' could not be matched.",
+                                        Color.FromArgb(
+                                            255,
+                                            107,
+                                            107));
                                 }
 
-
-                                // Show edit form
+                                // Show form
                                 pnlEditForm.Visible = true;
                             }
                             else
@@ -332,8 +421,10 @@ namespace AQUACORE_CMPG223
 
                                 SetStatus(
                                     "Feeding schedule could not be found.",
-                                    Color.FromArgb(255, 107, 107)
-                                );
+                                    Color.FromArgb(
+                                        255,
+                                        107,
+                                        107));
                             }
                         }
                     }
@@ -344,212 +435,310 @@ namespace AQUACORE_CMPG223
                 pnlEditForm.Visible = false;
 
                 SetStatus(
-                    "Error retrieving feeding schedule: "
-                    + ex.Message,
-                    Color.FromArgb(255, 107, 107)
-                );
+                    "Error retrieving feeding schedule: " +
+                    ex.Message,
+                    Color.FromArgb(
+                        255,
+                        107,
+                        107));
             }
         }
 
-
         // =========================================================
-        // UPDATE FEEDING SCHEDULE
+        // CONVERT DATABASE TIME TO DROPDOWN TIME
+        // =========================================================
+        //
+        // Database examples:
+        //
+        // 2026/09/14 09:00:00
+        // 2026-09-14 09:00:00
+        // 09:00
+        // 09:00:00
+        //
+        // Dropdown values:
+        //
+        // 09:00
+        //
         // =========================================================
 
-        protected void btnUpdate_Click(object sender, EventArgs e)
+        private string ConvertToDropdownTime(
+            string databaseTime)
         {
-            // Check schedule
+            if (string.IsNullOrWhiteSpace(databaseTime))
+            {
+                return "";
+            }
+
+            DateTime parsedDateTime;
+
+            // Try normal DateTime parsing first
+            if (DateTime.TryParse(
+                databaseTime,
+                out parsedDateTime))
+            {
+                return parsedDateTime.ToString("HH:mm");
+            }
+
+            // If parsing failed, try to extract the time manually
+            if (databaseTime.Contains(" "))
+            {
+                string[] parts =
+                    databaseTime.Split(' ');
+
+                if (parts.Length >= 2)
+                {
+                    string timePart = parts[1];
+
+                    if (timePart.Length >= 5)
+                    {
+                        return timePart.Substring(0, 5);
+                    }
+                }
+            }
+
+            // If value is already something like 09:00
+            if (databaseTime.Length >= 5 &&
+                databaseTime.Contains(":"))
+            {
+                return databaseTime.Substring(0, 5);
+            }
+
+            return databaseTime;
+        }
+
+        // =========================================================
+        // UPDATE
+        // =========================================================
+
+        protected void btnUpdate_Click(
+            object sender,
+            EventArgs e)
+        {
+            // =====================================================
+            // VALIDATE SCHEDULE
+            // =====================================================
+
             if (string.IsNullOrEmpty(
                 ddlScheduleID.SelectedValue))
             {
                 SetStatus(
                     "Please select a feeding schedule.",
-                    Color.FromArgb(255, 107, 107)
-                );
+                    Color.FromArgb(
+                        255,
+                        107,
+                        107));
 
                 return;
             }
 
+            // =====================================================
+            // VALIDATE ANIMAL
+            // =====================================================
 
-            // Check animal
             if (string.IsNullOrEmpty(
                 ddlAnimal.SelectedValue))
             {
                 SetStatus(
                     "Please select an animal.",
-                    Color.FromArgb(255, 107, 107)
-                );
+                    Color.FromArgb(
+                        255,
+                        107,
+                        107));
 
                 return;
             }
 
+            // =====================================================
+            // VALIDATE KEEPER
+            // =====================================================
 
-            // Check keeper
             if (string.IsNullOrEmpty(
                 ddlKeeper.SelectedValue))
             {
                 SetStatus(
                     "Please select a marine keeper.",
-                    Color.FromArgb(255, 107, 107)
-                );
+                    Color.FromArgb(
+                        255,
+                        107,
+                        107));
 
                 return;
             }
 
+            // =====================================================
+            // VALIDATE TIME
+            // =====================================================
 
-            // Check feeding time
             if (string.IsNullOrEmpty(
                 ddlTime.SelectedValue))
             {
                 SetStatus(
                     "Please select a feeding time.",
-                    Color.FromArgb(255, 107, 107)
-                );
+                    Color.FromArgb(
+                        255,
+                        107,
+                        107));
 
                 return;
             }
 
+            // =====================================================
+            // VALIDATE FOOD
+            // =====================================================
 
-            // Check food type
             if (string.IsNullOrEmpty(
                 ddlFoodType.SelectedValue))
             {
                 SetStatus(
                     "Please select a food type.",
-                    Color.FromArgb(255, 107, 107)
-                );
+                    Color.FromArgb(
+                        255,
+                        107,
+                        107));
 
                 return;
             }
 
-
-            // Get values
-            int scheduleID =
-                Convert.ToInt32(
-                    ddlScheduleID.SelectedValue
-                );
-
-            int animalID =
-                Convert.ToInt32(
-                    ddlAnimal.SelectedValue
-                );
-
-            int staffID =
-                Convert.ToInt32(
-                    ddlKeeper.SelectedValue
-                );
-
-            string foodType =
-                ddlFoodType.SelectedValue;
-
-            string feedingTime =
-                ddlTime.SelectedValue;
-
-
-            string connStr = GetConnectionString();
-
-
             try
             {
-                using (SQLiteConnection con =
-                    new SQLiteConnection(connStr))
+                int scheduleID =
+                    Convert.ToInt32(
+                        ddlScheduleID.SelectedValue);
+
+                int animalID =
+                    Convert.ToInt32(
+                        ddlAnimal.SelectedValue);
+
+                int staffID =
+                    Convert.ToInt32(
+                        ddlKeeper.SelectedValue);
+
+                string foodType =
+                    ddlFoodType.SelectedValue;
+
+                string feedingTime =
+                    ddlTime.SelectedValue;
+
+                // =================================================
+                // UPDATE
+                // =================================================
+                //
+                // We save HH:mm because that is what the dropdown
+                // uses and what this page reads.
+                //
+                // =================================================
+
+                string sql = @"
+                    UPDATE FeedingSchedule
+                    SET
+                        StaffID = @StaffID,
+                        AnimalID = @AnimalID,
+                        FoodType = @FoodType,
+                        FeedingTime = @FeedingTime
+                    WHERE ScheduleID = @ScheduleID";
+
+                using (SQLiteConnection conn =
+                       new SQLiteConnection(connStr))
                 {
-                    string sql = @"
-                        UPDATE FeedingSchedule
-                        SET
-                            StaffID = @StaffID,
-                            AnimalID = @AnimalID,
-                            FoodType = @FoodType,
-                            FeedingTime = @FeedingTime
-                        WHERE ScheduleID = @ScheduleID";
+                    conn.Open();
 
-
-                    using (SQLiteCommand cmd =
-                        new SQLiteCommand(sql, con))
+                    using (SQLiteCommand command =
+                           new SQLiteCommand(sql, conn))
                     {
-                        cmd.Parameters.AddWithValue(
+                        command.Parameters.AddWithValue(
                             "@StaffID",
-                            staffID
-                        );
+                            staffID);
 
-                        cmd.Parameters.AddWithValue(
+                        command.Parameters.AddWithValue(
                             "@AnimalID",
-                            animalID
-                        );
+                            animalID);
 
-                        cmd.Parameters.AddWithValue(
+                        command.Parameters.AddWithValue(
                             "@FoodType",
-                            foodType
-                        );
+                            foodType);
 
-                        cmd.Parameters.AddWithValue(
+                        command.Parameters.AddWithValue(
                             "@FeedingTime",
-                            feedingTime
-                        );
+                            feedingTime);
 
-                        cmd.Parameters.AddWithValue(
+                        command.Parameters.AddWithValue(
                             "@ScheduleID",
-                            scheduleID
-                        );
-
-
-                        con.Open();
-
+                            scheduleID);
 
                         int rowsAffected =
-                            cmd.ExecuteNonQuery();
-
+                            command.ExecuteNonQuery();
 
                         if (rowsAffected > 0)
                         {
                             SetStatus(
                                 "Feeding schedule updated successfully!",
-                                Color.FromArgb(74, 222, 128)
-                            );
+                                Color.FromArgb(
+                                    74,
+                                    222,
+                                    128));
 
                             // Reload schedule list
                             LoadScheduleDropdown();
 
-                            // Keep selected schedule
-                            ddlScheduleID.SelectedValue =
-                                scheduleID.ToString();
+                            // Select the same schedule
+                            if (ddlScheduleID.Items.FindByValue(
+                                scheduleID.ToString()) != null)
+                            {
+                                ddlScheduleID.SelectedValue =
+                                    scheduleID.ToString();
+                            }
 
-                            // Keep form visible
+                            // Reload edited values
+                            LoadSelectedSchedule(
+                                scheduleID);
+
                             pnlEditForm.Visible = true;
                         }
                         else
                         {
                             SetStatus(
                                 "Feeding schedule could not be updated.",
-                                Color.FromArgb(255, 107, 107)
-                            );
+                                Color.FromArgb(
+                                    255,
+                                    107,
+                                    107));
                         }
                     }
                 }
             }
+            catch (SQLiteException ex)
+            {
+                SetStatus(
+                    "Database error during update: " +
+                    ex.Message,
+                    Color.FromArgb(
+                        255,
+                        107,
+                        107));
+            }
             catch (Exception ex)
             {
                 SetStatus(
-                    "Database error during update: "
-                    + ex.Message,
-                    Color.FromArgb(255, 107, 107)
-                );
+                    "Error during update: " +
+                    ex.Message,
+                    Color.FromArgb(
+                        255,
+                        107,
+                        107));
             }
         }
-
 
         // =========================================================
         // BACK BUTTON
         // =========================================================
 
-        protected void btnBack_Click(object sender, EventArgs e)
+        protected void btnBack_Click(
+            object sender,
+            EventArgs e)
         {
             Response.Redirect(
-                "Menu_Feeding.aspx",
-                false
-            );
+                "Menu_Feeding.aspx");
         }
-
 
         // =========================================================
         // STATUS MESSAGE

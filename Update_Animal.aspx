@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Update_Animal.aspx.cs" Inherits="AQUACORE_CMPG223.Update_Animal" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
@@ -14,14 +13,15 @@
             --abyss-deep: #051329;
             --ocean-blue: #0b2545;
             --aqua-glow: #00d2ff;
-            --card-glass: rgba(11, 37, 69, 0.78);
+            --card-glass: rgba(11, 37, 69, 0.75);
             --card-border: rgba(0, 210, 255, 0.25);
 
             --text-primary: #eef4f8;
             --text-muted: #8da4be;
 
-            --warning: #ffd166;
+            --accent-warning: #ffd166;
             --danger: #ff6b7a;
+            --success: #4ade80;
         }
 
         * {
@@ -52,31 +52,16 @@
 
             display: flex;
 
-            flex-direction: column;
-
             align-items: center;
 
-            padding: 40px 20px;
+            justify-content: center;
+
+            padding: 20px;
         }
 
-        /* Main Container */
+        /* Main Card */
 
-        .dashboard-container {
-
-            width: 100%;
-
-            max-width: 900px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 24px;
-        }
-
-        /* Glass Panels */
-
-        .glass-panel {
+        .form-card {
 
             background: var(--card-glass);
 
@@ -86,73 +71,26 @@
 
             padding: 32px;
 
+            width: 100%;
+
+            max-width: 550px;
+
             box-shadow:
                 0 10px 30px rgba(0, 0, 0, 0.35);
 
             backdrop-filter: blur(8px);
         }
 
-        /* Header */
+        /* Top Back */
 
-        .header-panel {
+        .top-back {
 
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            flex-wrap: wrap;
-
-            gap: 20px;
+            margin-bottom: 20px;
         }
 
-        .header-title h1 {
+        .top-back-btn {
 
-            font-size: 2rem;
-
-            color: #ffffff;
-
-            margin-bottom: 5px;
-        }
-
-        .header-title p {
-
-            color: var(--text-muted);
-
-            font-size: 0.95rem;
-        }
-
-        .animal-badge {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 7px;
-
-            margin-top: 12px;
-
-            padding: 6px 12px;
-
-            border-radius: 20px;
-
-            background: rgba(0, 210, 255, 0.08);
-
-            border: 1px solid rgba(0, 210, 255, 0.2);
-
-            color: #8eeaff;
-
-            font-size: 0.78rem;
-
-            font-weight: 600;
-        }
-
-        /* Back Button */
-
-        .btn {
-
-            padding: 10px 18px;
+            padding: 8px 14px;
 
             border-radius: 8px;
 
@@ -162,114 +100,81 @@
 
             cursor: pointer;
 
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.15);
 
-            text-align: center;
+            background: rgba(255, 255, 255, 0.08);
+
+            color: var(--text-muted);
 
             transition: all 0.2s ease;
         }
 
-        .btn-outline {
-
-            background: rgba(255, 255, 255, 0.08);
-
-            color: var(--text-primary);
-
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .btn-outline:hover {
+        .top-back-btn:hover {
 
             background: rgba(255, 255, 255, 0.15);
 
             color: #ffffff;
-
-            transform: translateY(-1px);
         }
 
-        /* Page Heading */
+        /* Heading */
 
-        .page-heading {
+        .form-card h2 {
 
-            margin-bottom: 28px;
+            font-size: 1.8rem;
+
+            margin-bottom: 8px;
+
+            color: #ffffff;
         }
 
-        .page-heading h2 {
-
-            font-size: 1.4rem;
-
-            color: var(--aqua-glow);
-
-            margin-bottom: 7px;
-        }
-
-        .page-heading p {
+        .form-card > p {
 
             color: var(--text-muted);
 
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+
+            margin-bottom: 24px;
 
             line-height: 1.5;
         }
 
-        /* Form */
-
-        .animal-form {
-
-            display: grid;
-
-            grid-template-columns: 1fr 1fr;
-
-            gap: 22px;
-        }
+        /* Form Groups */
 
         .form-group {
+
+            margin-bottom: 16px;
 
             display: flex;
 
             flex-direction: column;
-
-            gap: 8px;
-
-            padding: 20px;
-
-            background: rgba(5, 19, 41, 0.5);
-
-            border: 1px solid rgba(0, 210, 255, 0.15);
-
-            border-radius: 12px;
-
-            transition: all 0.2s ease;
         }
 
-        .form-group:hover {
+        /* Divider */
 
-            border-color: rgba(0, 210, 255, 0.35);
+        .divider {
 
-            background: rgba(0, 210, 255, 0.04);
+            height: 1px;
+
+            background: rgba(0, 210, 255, 0.2);
+
+            margin: 24px 0;
         }
 
-        .form-group.full-width {
+        /* Labels */
 
-            grid-column: 1 / -1;
-        }
+        .form-label {
 
-        .field-label {
-
-            color: #ffffff;
-
-            font-size: 0.9rem;
+            font-size: 0.85rem;
 
             font-weight: 600;
-        }
 
-        .field-description {
+            color: var(--aqua-glow);
 
-            color: var(--text-muted);
+            margin-bottom: 6px;
 
-            font-size: 0.78rem;
+            text-transform: uppercase;
 
-            margin-bottom: 3px;
+            letter-spacing: 0.5px;
         }
 
         /* Inputs */
@@ -278,17 +183,17 @@
 
             width: 100%;
 
-            padding: 11px 13px;
+            padding: 10px 14px;
 
             border-radius: 8px;
 
-            border: 1px solid rgba(0, 210, 255, 0.2);
+            border: 1px solid rgba(0, 210, 255, 0.25);
 
-            background: rgba(5, 19, 41, 0.8);
+            background: rgba(5, 19, 41, 0.6);
 
             color: #ffffff;
 
-            font-size: 0.9rem;
+            font-size: 0.95rem;
 
             outline: none;
 
@@ -300,7 +205,7 @@
             border-color: var(--aqua-glow);
 
             box-shadow:
-                0 0 0 3px rgba(0, 210, 255, 0.08);
+                0 0 8px rgba(0, 210, 255, 0.3);
         }
 
         .input-control::placeholder {
@@ -308,58 +213,20 @@
             color: #617993;
         }
 
-        /* Date Picker */
+        .input-control:disabled {
 
-        input[type="date"] {
+            background: rgba(255, 255, 255, 0.05);
 
-            color-scheme: dark;
+            color: var(--text-muted);
 
-            cursor: pointer;
+            cursor: not-allowed;
         }
 
-        input[type="date"]::-webkit-calendar-picker-indicator {
+        select.input-control option {
 
-            filter: invert(1);
-
-            cursor: pointer;
-
-            opacity: 0.85;
-        }
-
-        input[type="date"]::-webkit-calendar-picker-indicator:hover {
-
-            opacity: 1;
-        }
-
-        /* Dropdown */
-
-        .dropdown-control {
-
-            width: 100%;
-
-            padding: 11px 13px;
-
-            border-radius: 8px;
-
-            border: 1px solid rgba(0, 210, 255, 0.2);
-
-            background: rgba(5, 19, 41, 0.8);
+            background-color: #0b2545;
 
             color: #ffffff;
-
-            font-size: 0.9rem;
-
-            outline: none;
-
-            cursor: pointer;
-        }
-
-        .dropdown-control:focus {
-
-            border-color: var(--aqua-glow);
-
-            box-shadow:
-                0 0 0 3px rgba(0, 210, 255, 0.08);
         }
 
         /* Gender */
@@ -368,85 +235,77 @@
 
             display: flex;
 
-            gap: 12px;
-
-            flex-wrap: wrap;
-
-            margin-top: 3px;
+            gap: 10px;
         }
 
         .gender-option {
 
-            display: inline-flex;
+            flex: 1;
 
-            align-items: center;
-
-            gap: 8px;
-
-            padding: 10px 15px;
+            padding: 10px;
 
             border-radius: 8px;
 
             background: rgba(0, 210, 255, 0.05);
 
-            border: 1px solid rgba(0, 210, 255, 0.15);
+            border: 1px solid rgba(0, 210, 255, 0.2);
 
-            color: var(--text-primary);
+            text-align: center;
 
             cursor: pointer;
+
+            color: var(--text-primary);
+        }
+
+        .gender-option:hover {
+
+            background: rgba(0, 210, 255, 0.1);
+
+            border-color: rgba(0, 210, 255, 0.4);
         }
 
         .gender-option input {
 
             accent-color: var(--aqua-glow);
+
+            margin-right: 6px;
         }
 
-        /* Validation */
+        /* Buttons */
 
-        .validator {
-
-            color: var(--danger) !important;
-
-            font-size: 0.78rem;
-
-            line-height: 1.3;
-        }
-
-        .gender-validator {
-
-            margin-top: 5px;
-
-            color: var(--danger) !important;
-
-            font-size: 0.78rem;
-        }
-
-        /* Form Actions */
-
-        .form-actions {
-
-            grid-column: 1 / -1;
+        .btn-group {
 
             display: flex;
 
-            justify-content: center;
+            gap: 12px;
 
-            gap: 15px;
-
-            margin-top: 8px;
-
-            padding-top: 25px;
-
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            margin-top: 24px;
         }
 
-        .action-button {
-
-            min-width: 170px;
+        .btn {
 
             padding: 12px 20px;
 
-            border-radius: 9px;
+            border-radius: 8px;
+
+            font-weight: 600;
+
+            font-size: 0.95rem;
+
+            cursor: pointer;
+
+            border: none;
+
+            flex: 1;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit {
 
             background:
                 linear-gradient(
@@ -456,143 +315,66 @@
                 );
 
             color: #ffffff;
-
-            font-weight: 600;
-
-            font-size: 0.9rem;
-
-            border: none;
-
-            cursor: pointer;
-
-            transition: all 0.2s ease;
         }
 
-        .action-button:hover {
+        .btn-submit:hover {
 
-            transform: translateY(-2px);
+            opacity: 0.9;
+
+            transform: translateY(-1px);
 
             box-shadow:
-                0 6px 18px rgba(0, 210, 255, 0.25);
+                0 5px 15px rgba(0, 210, 255, 0.25);
         }
 
-        .menu-button {
+        .btn-back {
 
-            min-width: 170px;
+            background: rgba(255, 255, 255, 0.08);
 
-            padding: 12px 20px;
+            color: var(--text-muted);
 
-            border-radius: 9px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
 
-            background: rgba(255, 255, 255, 0.07);
+        .btn-back:hover {
 
-            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.15);
 
-            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .status-msg {
+
+            display: block;
+
+            margin-top: 16px;
 
             font-size: 0.9rem;
 
-            border: 1px solid rgba(255, 255, 255, 0.17);
-
-            cursor: pointer;
-
-            transition: all 0.2s ease;
-        }
-
-        .menu-button:hover {
-
-            background: rgba(255, 255, 255, 0.14);
-
-            transform: translateY(-2px);
-        }
-
-        /* Animal Info */
-
-        .animal-note {
-
-            margin-top: 22px;
-
-            padding: 15px 18px;
-
-            border-radius: 10px;
-
-            background: rgba(0, 210, 255, 0.05);
-
-            border: 1px solid rgba(0, 210, 255, 0.12);
-
-            color: var(--text-muted);
-
-            font-size: 0.8rem;
-
-            line-height: 1.5;
-
-            text-align: center;
-        }
-
-        .animal-note span {
-
-            color: #8eeaff;
-
             font-weight: 600;
-        }
-
-        /* Footer */
-
-        .footer-note {
 
             text-align: center;
 
-            color: var(--text-muted);
-
-            font-size: 0.78rem;
-
-            opacity: 0.8;
+            color: var(--aqua-glow);
         }
 
-        /* Mobile */
+        @media (max-width: 600px) {
 
-        @media (max-width: 700px) {
+            .form-card {
 
-            body {
-
-                padding: 20px 10px;
+                padding: 24px;
             }
 
-            .glass-panel {
-
-                padding: 22px;
-            }
-
-            .animal-form {
-
-                grid-template-columns: 1fr;
-            }
-
-            .form-group.full-width {
-
-                grid-column: auto;
-            }
-
-            .form-actions {
+            .btn-group {
 
                 flex-direction: column;
             }
 
-            .action-button,
-            .menu-button {
+            .gender-options {
 
-                width: 100%;
+                flex-direction: column;
             }
 
-            .header-panel {
-
-                align-items: flex-start;
-            }
-
-            .header-panel .btn {
-
-                width: 100%;
-            }
         }
 
     </style>
@@ -603,355 +385,244 @@
 
 <form id="form1" runat="server">
 
-    <div class="dashboard-container">
+    <div class="form-card">
+
+        <!-- TOP BACK BUTTON -->
+
+        <div class="top-back">
+
+            <asp:Button
+                ID="btnTopBack"
+                runat="server"
+                Text="← Back"
+                CssClass="top-back-btn"
+                OnClick="btnMenu_Click"
+                CausesValidation="false" />
+
+        </div>
 
 
-        <!-- HEADER -->
+        <h2>Modify Animal</h2>
 
-        <div class="glass-panel header-panel">
+        <p>
+            Select an animal from the dropdown below to load and update
+            its aquarium records.
+        </p>
 
-            <div class="header-title">
 
-                <h1>AquaCore Operations</h1>
+        <!-- Animal Selection -->
 
-                <p>
-                    Animal Management
-                </p>
+        <div class="form-group">
 
-                <div class="animal-badge">
-                    🐠 Animal Profile &amp; Aquarium Records
+            <asp:Label
+                ID="lblSelectAnimal"
+                runat="server"
+                Text="Select Animal to Edit"
+                CssClass="form-label">
+            </asp:Label>
+
+            <asp:DropDownList
+                ID="ddlSelectAnimal"
+                runat="server"
+                CssClass="input-control"
+                AutoPostBack="True"
+                OnSelectedIndexChanged="ddlSelectAnimal_SelectedIndexChanged">
+            </asp:DropDownList>
+
+        </div>
+
+
+        <!-- Status -->
+
+        <asp:Label
+            ID="lblOutput"
+            runat="server"
+            CssClass="status-msg">
+        </asp:Label>
+
+
+        <!-- Edit Form -->
+
+        <asp:Panel
+            ID="pnlEditForm"
+            runat="server"
+            Visible="False">
+
+            <div class="divider"></div>
+
+
+            <!-- Animal Name -->
+
+            <div class="form-group">
+
+                <asp:Label
+                    ID="lblName"
+                    runat="server"
+                    Text="Animal Name"
+                    CssClass="form-label">
+                </asp:Label>
+
+                <asp:TextBox
+                    ID="txtName"
+                    runat="server"
+                    CssClass="input-control">
+                </asp:TextBox>
+
+            </div>
+
+
+            <!-- Species -->
+
+            <div class="form-group">
+
+                <asp:Label
+                    ID="lblSpecies"
+                    runat="server"
+                    Text="Species"
+                    CssClass="form-label">
+                </asp:Label>
+
+                <asp:TextBox
+                    ID="txtSpecies"
+                    runat="server"
+                    CssClass="input-control">
+                </asp:TextBox>
+
+            </div>
+
+
+            <!-- Date of Birth -->
+
+            <div class="form-group">
+
+                <asp:Label
+                    ID="lblDOB"
+                    runat="server"
+                    Text="Date of Birth"
+                    CssClass="form-label">
+                </asp:Label>
+
+                <asp:TextBox
+                    ID="txtDOB"
+                    runat="server"
+                    CssClass="input-control"
+                    TextMode="Date">
+                </asp:TextBox>
+
+            </div>
+
+
+            <!-- Gender -->
+
+            <div class="form-group">
+
+                <asp:Label
+                    ID="lblGenderTitle"
+                    runat="server"
+                    Text="Gender"
+                    CssClass="form-label">
+                </asp:Label>
+
+                <div class="gender-options">
+
+                    <label class="gender-option">
+
+                        <asp:RadioButton
+                            ID="rdbMale"
+                            runat="server"
+                            GroupName="Gender"
+                            Text="Male" />
+
+                    </label>
+
+                    <label class="gender-option">
+
+                        <asp:RadioButton
+                            ID="rdbFemale"
+                            runat="server"
+                            GroupName="Gender"
+                            Text="Female" />
+
+                    </label>
+
                 </div>
 
             </div>
 
-            <div>
+
+            <!-- Habitat -->
+
+            <div class="form-group">
+
+                <asp:Label
+                    ID="lblHabitat"
+                    runat="server"
+                    Text="Habitat Location"
+                    CssClass="form-label">
+                </asp:Label>
+
+                <asp:DropDownList
+                    ID="ddHabitat"
+                    runat="server"
+                    CssClass="input-control">
+
+                    <asp:ListItem
+                        Text="-- Select Habitat --"
+                        Value="">
+                    </asp:ListItem>
+
+                    <asp:ListItem
+                        Text="Open Ocean Tank"
+                        Value="Open Ocean Tank">
+                    </asp:ListItem>
+
+                    <asp:ListItem
+                        Text="Coral Reef Display"
+                        Value="Coral Reef Display">
+                    </asp:ListItem>
+
+                    <asp:ListItem
+                        Text="Kelp Forest"
+                        Value="Kelp Forest">
+                    </asp:ListItem>
+
+                    <asp:ListItem
+                        Text="Tidal Touch Pool"
+                        Value="Tidal Touch Pool">
+                    </asp:ListItem>
+
+                    <asp:ListItem
+                        Text="Mangrove Estuary"
+                        Value="Mangrove Estuary">
+                    </asp:ListItem>
+
+                </asp:DropDownList>
+
+            </div>
+
+
+            <!-- Buttons -->
+
+            <div class="btn-group">
 
                 <asp:Button
-                    ID="btnTopMenu"
+                    ID="btnUpdate"
                     runat="server"
-                    Text="← Animals Menu"
-                    CssClass="btn btn-outline"
-                    OnClick="btnMenu_Click"
-                    CausesValidation="false" />
+                    Text="Save Changes"
+                    CssClass="btn btn-submit"
+                    OnClick="btnUpdate_Click" />
+
+                <asp:Button
+                    ID="btnMenu"
+                    runat="server"
+                    Text="Cancel"
+                    CssClass="btn btn-back"
+                    CausesValidation="false"
+                    OnClick="btnMenu_Click" />
 
             </div>
 
-        </div>
-
-
-        <!-- UPDATE PANEL -->
-
-        <div class="glass-panel">
-
-            <div class="page-heading">
-
-                <h2>Update Animal Details</h2>
-
-                <p>
-                    Update the information of an existing animal registered
-                    within the AquaCore aquarium system.
-                </p>
-
-            </div>
-
-
-            <div class="animal-form">
-
-
-                <!-- Animal ID -->
-
-                <div class="form-group">
-
-                    <asp:Label
-                        ID="Label1"
-                        runat="server"
-                        Text="Animal ID"
-                        CssClass="field-label">
-                    </asp:Label>
-
-                    <span class="field-description">
-                        Enter the ID of the animal you want to update.
-                    </span>
-
-                    <asp:TextBox
-                        ID="txtID"
-                        runat="server"
-                        CssClass="input-control"
-                        placeholder="Animal ID">
-                    </asp:TextBox>
-
-                    <asp:RequiredFieldValidator
-                        ID="RequiredFieldValidator1"
-                        runat="server"
-                        ControlToValidate="txtID"
-                        ErrorMessage="Animal ID cannot be empty!"
-                        CssClass="validator"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
-
-                </div>
-
-
-                <!-- Animal Name -->
-
-                <div class="form-group">
-
-                    <asp:Label
-                        ID="Label2"
-                        runat="server"
-                        Text="Animal Name"
-                        CssClass="field-label">
-                    </asp:Label>
-
-                    <span class="field-description">
-                        Enter the animal's current name.
-                    </span>
-
-                    <asp:TextBox
-                        ID="txtName"
-                        runat="server"
-                        CssClass="input-control"
-                        placeholder="Animal name">
-                    </asp:TextBox>
-
-                    <asp:RequiredFieldValidator
-                        ID="RequiredFieldValidator2"
-                        runat="server"
-                        ControlToValidate="txtName"
-                        ErrorMessage="Name cannot be empty!"
-                        CssClass="validator"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
-
-                </div>
-
-
-                <!-- Species -->
-
-                <div class="form-group">
-
-                    <asp:Label
-                        ID="Label3"
-                        runat="server"
-                        Text="Species"
-                        CssClass="field-label">
-                    </asp:Label>
-
-                    <span class="field-description">
-                        Specify the animal's species.
-                    </span>
-
-                    <asp:TextBox
-                        ID="txtSpecies"
-                        runat="server"
-                        CssClass="input-control"
-                        placeholder="Animal species">
-                    </asp:TextBox>
-
-                    <asp:RequiredFieldValidator
-                        ID="RequiredFieldValidator3"
-                        runat="server"
-                        ControlToValidate="txtSpecies"
-                        ErrorMessage="Animal species is required!"
-                        CssClass="validator"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
-
-                </div>
-
-
-                <!-- Date of Birth -->
-
-                <div class="form-group">
-
-                    <asp:Label
-                        ID="Label4"
-                        runat="server"
-                        Text="Date of Birth"
-                        CssClass="field-label">
-                    </asp:Label>
-
-                    <span class="field-description">
-                        Select the animal's date of birth.
-                    </span>
-
-                    <asp:TextBox
-                        ID="txtDOB"
-                        runat="server"
-                        CssClass="input-control"
-                        TextMode="Date">
-                    </asp:TextBox>
-
-                    <asp:RequiredFieldValidator
-                        ID="RequiredFieldValidator4"
-                        runat="server"
-                        ControlToValidate="txtDOB"
-                        ErrorMessage="Enter animal's DOB!"
-                        CssClass="validator"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
-
-                </div>
-
-
-                <!-- Gender -->
-
-                <div class="form-group">
-
-                    <asp:Label
-                        ID="Label5"
-                        runat="server"
-                        Text="Gender"
-                        CssClass="field-label">
-                    </asp:Label>
-
-                    <span class="field-description">
-                        Select the animal's gender.
-                    </span>
-
-                    <div class="gender-options">
-
-                        <label class="gender-option">
-
-                            <asp:RadioButton
-                                ID="rdbMale"
-                                runat="server"
-                                GroupName="Gender"
-                                Text="Male"
-                                OnCheckedChanged="rdbMale_CheckedChanged1"
-                                AutoPostBack="True" />
-
-                        </label>
-
-                        <label class="gender-option">
-
-                            <asp:RadioButton
-                                ID="rdbFemale"
-                                runat="server"
-                                GroupName="Gender"
-                                Text="Female"
-                                OnCheckedChanged="rdbMale_CheckedChanged1"
-                                AutoPostBack="True" />
-
-                        </label>
-
-                    </div>
-
-                    <asp:Label
-                        ID="lblGender"
-                        runat="server"
-                        ForeColor="Red"
-                        Text="Animal Gender cannot be left out!"
-                        CssClass="gender-validator">
-                    </asp:Label>
-
-                </div>
-
-
-                <!-- Habitat -->
-
-                <div class="form-group">
-
-                    <asp:Label
-                        ID="Label6"
-                        runat="server"
-                        Text="Habitat Location"
-                        CssClass="field-label">
-                    </asp:Label>
-
-                    <span class="field-description">
-                        Select where the animal is currently housed.
-                    </span>
-
-                    <asp:DropDownList
-                        ID="ddHabitat"
-                        runat="server"
-                        CssClass="dropdown-control">
-
-                        <asp:ListItem>
-                            ---Choose Habitat----
-                        </asp:ListItem>
-
-                        <asp:ListItem>
-                            Open Ocean Tank
-                        </asp:ListItem>
-
-                        <asp:ListItem>
-                            Coral Reef Display
-                        </asp:ListItem>
-
-                        <asp:ListItem>
-                            Kelp Forest
-                        </asp:ListItem>
-
-                        <asp:ListItem>
-                            Tidal Touch Pool
-                        </asp:ListItem>
-
-                        <asp:ListItem>
-                            Mangrove Estuary
-                        </asp:ListItem>
-
-                    </asp:DropDownList>
-
-                    <asp:RequiredFieldValidator
-                        ID="RequiredFieldValidator5"
-                        runat="server"
-                        ControlToValidate="ddHabitat"
-                        ErrorMessage="Animal Habitat is required!"
-                        ForeColor="Red"
-                        InitialValue="---Choose Habitat----"
-                        CssClass="validator"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
-
-                </div>
-
-
-                <!-- ACTIONS -->
-
-                <div class="form-actions">
-
-                    <asp:Button
-                        ID="btnUpdate"
-                        runat="server"
-                        Text="Update Animal"
-                        CssClass="action-button"
-                        OnClick="btnUpdate_Click" />
-
-                    <asp:Button
-                        ID="btnMenu"
-                        runat="server"
-                        Text="Animals Menu"
-                        CssClass="menu-button"
-                        OnClick="btnMenu_Click"
-                        CausesValidation="false" />
-
-                </div>
-
-            </div>
-
-
-            <!-- Helpful Note -->
-
-            <div class="animal-note">
-
-                🐋 <span>Animal Care Record:</span>
-                Keep the animal's profile information accurate so that
-                feeding schedules, medical records and habitat management
-                remain linked to the correct animal.
-
-            </div>
-
-        </div>
-
-
-        <div class="footer-note">
-
-            AquaCore • Animal Management &amp; Aquarium Operations
-
-        </div>
-
+        </asp:Panel>
 
     </div>
 

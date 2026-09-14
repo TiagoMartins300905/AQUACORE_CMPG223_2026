@@ -18,10 +18,13 @@
             --aqua-glow: #00d2ff;
             --card-glass: rgba(11, 37, 69, 0.75);
             --card-border: rgba(0, 210, 255, 0.25);
+
             --text-primary: #eef4f8;
             --text-muted: #8da4be;
-            --danger: #ff5c6c;
-            --danger-dark: #d9364a;
+
+            --accent-warning: #ffd166;
+            --danger: #ff6b7a;
+            --success: #4ade80;
         }
 
         * {
@@ -52,31 +55,14 @@
 
             display: flex;
 
-            flex-direction: column;
-
             align-items: center;
 
-            padding: 40px 20px;
+            justify-content: center;
+
+            padding: 20px;
         }
 
-        .dashboard-container {
-
-            width: 100%;
-
-            max-width: 1000px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 24px;
-        }
-
-        /* =========================
-           GLASS PANEL
-        ========================= */
-
-        .glass-panel {
+        .form-card {
 
             background: var(--card-glass);
 
@@ -86,50 +72,26 @@
 
             padding: 32px;
 
+            width: 100%;
+
+            max-width: 550px;
+
             box-shadow:
                 0 10px 30px rgba(0, 0, 0, 0.35);
+
+            backdrop-filter: blur(8px);
         }
 
-        /* =========================
-           HEADER
-        ========================= */
+        /* Top Back Button */
 
-        .header-panel {
+        .top-back {
 
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            flex-wrap: wrap;
-
-            gap: 20px;
+            margin-bottom: 20px;
         }
 
-        .header-title h1 {
+        .top-back-btn {
 
-            font-size: 2rem;
-
-            color: #ffffff;
-
-            margin-bottom: 5px;
-        }
-
-        .header-title p {
-
-            color: var(--text-muted);
-
-            font-size: 0.95rem;
-        }
-
-        /* =========================
-           BUTTONS
-        ========================= */
-
-        .btn {
-
-            padding: 10px 18px;
+            padding: 8px 14px;
 
             border-radius: 8px;
 
@@ -139,152 +101,84 @@
 
             cursor: pointer;
 
-            border: none;
+            border:
+                1px solid rgba(255, 255, 255, 0.15);
 
-            text-decoration: none;
-
-            text-align: center;
-
-            transition: all 0.2s;
-        }
-
-        .btn-outline {
-
-            background: rgba(255, 255, 255, 0.08);
-
-            color: var(--text-primary);
-
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .btn-outline:hover {
-
-            background: rgba(255, 255, 255, 0.15);
-
-            color: #ffffff;
-
-            transform: translateY(-1px);
-        }
-
-        /* =========================
-           PAGE HEADING
-        ========================= */
-
-        .page-heading {
-
-            margin-bottom: 25px;
-        }
-
-        .page-heading h2 {
-
-            font-size: 1.4rem;
-
-            color: var(--danger);
-
-            margin-bottom: 6px;
-        }
-
-        .page-heading p {
+            background:
+                rgba(255, 255, 255, 0.08);
 
             color: var(--text-muted);
 
-            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .top-back-btn:hover {
+
+            background:
+                rgba(255, 255, 255, 0.15);
+
+            color: #ffffff;
+        }
+
+        .form-card h2 {
+
+            font-size: 1.8rem;
+
+            margin-bottom: 8px;
+
+            color: #ffffff;
+        }
+
+        .form-card > p {
+
+            color: var(--text-muted);
+
+            font-size: 0.95rem;
+
+            margin-bottom: 24px;
 
             line-height: 1.5;
         }
 
-        /* =========================
-           DELETE BOX
-        ========================= */
+        .form-group {
 
-        .delete-box {
-
-            max-width: 650px;
-
-            margin: 0 auto;
-
-            padding: 30px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255, 92, 108, 0.08),
-                    rgba(255, 92, 108, 0.03)
-                );
-
-            border: 1px solid rgba(255, 92, 108, 0.22);
-
-            border-radius: 14px;
-
-            text-align: center;
-
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.02);
-        }
-
-        /* =========================
-           WARNING ICON
-        ========================= */
-
-        .warning-icon {
-
-            width: 64px;
-
-            height: 64px;
-
-            margin: 0 auto 16px;
+            margin-bottom: 16px;
 
             display: flex;
 
-            align-items: center;
-
-            justify-content: center;
-
-            border-radius: 50%;
-
-            background:
-                rgba(255, 92, 108, 0.10);
-
-            border:
-                1px solid rgba(255, 92, 108, 0.25);
-
-            font-size: 1.8rem;
+            flex-direction: column;
         }
 
-        /* =========================
-           HEADING
-        ========================= */
+        .divider {
 
-        .delete-heading {
+            height: 1px;
 
-            display: block;
+            background:
+                rgba(0, 210, 255, 0.2);
 
-            color: #ffffff;
+            margin: 24px 0;
+        }
 
-            font-size: 1.05rem;
+        .form-label {
+
+            font-size: 0.85rem;
 
             font-weight: 600;
 
-            margin-bottom: 16px;
-        }
+            color: var(--aqua-glow);
 
-        /* =========================
-           DROPDOWN
-        ========================= */
+            margin-bottom: 6px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
 
         .input-control {
 
-            display: block;
-
             width: 100%;
 
-            max-width: 500px;
-
-            height: 46px;
-
-            margin: 0 auto 18px;
-
-            padding: 0 14px;
+            padding: 10px 14px;
 
             border-radius: 8px;
 
@@ -292,7 +186,7 @@
                 1px solid rgba(0, 210, 255, 0.25);
 
             background:
-                rgba(5, 19, 41, 0.85);
+                rgba(5, 19, 41, 0.6);
 
             color: #ffffff;
 
@@ -300,13 +194,7 @@
 
             outline: none;
 
-            cursor: pointer;
-        }
-
-        .input-control:hover {
-
-            border-color:
-                rgba(0, 210, 255, 0.45);
+            transition: all 0.2s ease;
         }
 
         .input-control:focus {
@@ -315,159 +203,195 @@
                 var(--aqua-glow);
 
             box-shadow:
-                0 0 0 3px rgba(0, 210, 255, 0.08),
-                0 0 12px rgba(0, 210, 255, 0.20);
+                0 0 8px rgba(0, 210, 255, 0.3);
         }
 
-        .input-control option {
+        select.input-control option {
 
-            background: #0b2545;
+            background-color: #0b2545;
 
             color: #ffffff;
         }
 
-        /* =========================
-           MESSAGE
-        ========================= */
+        .details-box {
 
-        .message {
+            background:
+                rgba(255, 107, 122, 0.05);
 
-            display: block;
+            border:
+                1px solid rgba(255, 107, 122, 0.2);
 
-            min-height: 24px;
+            border-radius: 8px;
 
-            margin: 10px 0 20px;
+            padding: 16px;
 
-            color: var(--aqua-glow);
+            margin-bottom: 20px;
+        }
 
-            font-size: 0.9rem;
+        .detail-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 8px;
+
+            font-size: 0.95rem;
+
+            gap: 20px;
+        }
+
+        .detail-row:last-child {
+
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+
+            color: var(--text-muted);
+        }
+
+        .detail-value {
 
             font-weight: 600;
+
+            color: #ffffff;
+
+            text-align: right;
+        }
+
+        .warning-text {
+
+            color: var(--danger);
+
+            font-size: 0.85rem;
+
+            font-weight: 600;
+
+            text-align: center;
+
+            margin-bottom: 15px;
 
             line-height: 1.4;
         }
 
-        /* =========================
-           BUTTON ROW
-        ========================= */
-
-        .button-row {
+        .btn-group {
 
             display: flex;
 
-            justify-content: center;
-
-            align-items: center;
-
             gap: 12px;
 
-            flex-wrap: wrap;
+            margin-top: 24px;
         }
 
-        /* =========================
-           DELETE BUTTON
-        ========================= */
+        .btn {
 
-        .btn-delete {
+            padding: 12px 20px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--danger),
-                    var(--danger-dark)
-                );
+            border-radius: 8px;
 
-            color: #ffffff;
+            font-weight: 600;
 
-            min-width: 145px;
+            font-size: 0.95rem;
 
-            box-shadow:
-                0 6px 18px rgba(255, 92, 108, 0.16);
+            cursor: pointer;
+
+            border: none;
+
+            flex: 1;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            transition: all 0.2s ease;
         }
 
-        .btn-delete:hover {
+        .btn-danger {
 
             background:
                 linear-gradient(
                     135deg,
                     #ff6b7a,
-                    #d9364a
+                    #c92a2a
                 );
+
+            color: #ffffff;
+        }
+
+        .btn-danger:hover {
+
+            opacity: 0.9;
 
             transform: translateY(-1px);
 
             box-shadow:
-                0 8px 22px rgba(255, 92, 108, 0.28);
+                0 5px 15px rgba(255, 107, 122, 0.3);
         }
 
-        /* =========================
-           BOTTOM NAVIGATION
-        ========================= */
+        .btn-back {
 
-        .bottom-row {
+            background:
+                rgba(255, 255, 255, 0.08);
 
-            display: flex;
+            color: var(--text-muted);
 
-            justify-content: flex-end;
-
-            margin-top: 25px;
-
-            padding-top: 20px;
-
-            border-top:
-                1px solid rgba(255, 255, 255, 0.06);
+            border:
+                1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* =========================
-           MOBILE
-        ========================= */
+        .btn-back:hover {
 
-        @media (max-width: 700px) {
+            background:
+                rgba(255, 255, 255, 0.15);
+
+            color: #ffffff;
+        }
+
+        .status-msg {
+
+            display: block;
+
+            margin-top: 16px;
+
+            font-size: 0.9rem;
+
+            font-weight: 600;
+
+            text-align: center;
+
+            line-height: 1.4;
+        }
+
+        @media (max-width: 600px) {
 
             body {
 
-                padding: 20px 10px;
+                padding: 15px;
             }
 
-            .glass-panel {
+            .form-card {
 
-                padding: 22px;
+                padding: 24px;
             }
 
-            .header-title h1 {
-
-                font-size: 1.6rem;
-            }
-
-            .delete-box {
-
-                padding: 24px 18px;
-            }
-
-            .input-control {
-
-                max-width: 100%;
-            }
-
-            .button-row {
+            .btn-group {
 
                 flex-direction: column;
             }
 
-            .button-row .btn {
+            .detail-row {
 
-                width: 100%;
+                flex-direction: column;
+
+                gap: 3px;
             }
 
-            .bottom-row {
+            .detail-value {
 
-                justify-content: stretch;
+                text-align: left;
             }
 
-            .bottom-row .btn {
-
-                width: 100%;
-            }
         }
 
     </style>
@@ -478,126 +402,192 @@
 
 <form id="form1" runat="server">
 
-    <div class="dashboard-container">
+    <div class="form-card">
 
-        <!-- =========================
-             HEADER
-        ========================== -->
+        <!-- TOP BACK BUTTON -->
 
-        <div class="glass-panel header-panel">
-
-            <div class="header-title">
-
-                <h1>AquaCore Operations</h1>
-
-                <p>
-                    Feeding Schedule Management
-                </p>
-
-            </div>
+        <div class="top-back">
 
             <asp:Button
-                ID="btnBack"
+                ID="btnTopBack"
                 runat="server"
-                Text="← Go Back"
-                CssClass="btn btn-outline"
-                CausesValidation="false"
-                OnClick="btnBack_Click" />
+                Text="← Back"
+                CssClass="top-back-btn"
+                OnClick="btnBack_Click"
+                CausesValidation="false" />
 
         </div>
 
 
-        <!-- =========================
-             DELETE PANEL
-        ========================== -->
+        <h2>Delete Feeding Schedule</h2>
 
-        <div class="glass-panel">
-
-            <div class="page-heading">
-
-                <h2>
-                    Delete Feeding Schedule
-                </h2>
-
-                <p>
-                    Select an existing feeding schedule below to permanently
-                    remove it from the system.
-                </p>
-
-            </div>
+        <p>
+            Select a feeding schedule from the dropdown below
+            to remove it from the AquaCore aquarium records.
+        </p>
 
 
-            <!-- =========================
-                 DELETE BOX
-            ========================== -->
+        <!-- Schedule Selection -->
 
-            <div class="delete-box">
+        <div class="form-group">
 
-                <div class="warning-icon">
-                    ⚠️
-                </div>
-
-                <asp:Label
-                    ID="lblHeading"
-                    runat="server"
-                    Text="Select a schedule ID to delete:"
-                    CssClass="delete-heading" />
+            <asp:Label
+                ID="lblSelectSchedule"
+                runat="server"
+                Text="Select Feeding Schedule to Delete"
+                CssClass="form-label">
+            </asp:Label>
 
 
-                <asp:DropDownList
-                    ID="DropDownList1"
-                    runat="server"
-                    CssClass="input-control">
+            <asp:DropDownList
+                ID="ddlSelectSchedule"
+                runat="server"
+                CssClass="input-control"
+                AutoPostBack="True"
+                OnSelectedIndexChanged="ddlSelectSchedule_SelectedIndexChanged">
+            </asp:DropDownList>
 
-                    <asp:ListItem
-                        Text="-- Select Schedule ID --"
-                        Value="" />
-
-                </asp:DropDownList>
-
-
-                <!-- Status Message -->
-
-                <asp:Label
-                    ID="lblMessage"
-                    runat="server"
-                    CssClass="message" />
+        </div>
 
 
-                <!-- Delete Button -->
+        <!-- Status -->
 
-                <div class="button-row">
+        <asp:Label
+            ID="lblStatus"
+            runat="server"
+            CssClass="status-msg">
+        </asp:Label>
 
-                    <asp:Button
-                        ID="btnDelete"
+
+        <!-- Confirmation Form -->
+
+        <asp:Panel
+            ID="pnlConfirmForm"
+            runat="server"
+            Visible="False">
+
+            <div class="divider"></div>
+
+
+            <!-- Warning -->
+
+            <p class="warning-text">
+
+                ⚠️ Are you sure you want to delete this
+                feeding schedule?
+
+                <br />
+
+                This action cannot be undone.
+
+            </p>
+
+
+            <!-- Schedule Details -->
+
+            <div class="details-box">
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Schedule ID:
+                    </span>
+
+                    <asp:Label
+                        ID="lblScheduleID"
                         runat="server"
-                        Text="🗑️ Delete Schedule"
-                        CssClass="btn btn-delete"
-                        CausesValidation="false"
-                        OnClick="btnDelete_Click" />
+                        CssClass="detail-value">
+                    </asp:Label>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Animal:
+                    </span>
+
+                    <asp:Label
+                        ID="lblAnimal"
+                        runat="server"
+                        CssClass="detail-value">
+                    </asp:Label>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Marine Keeper:
+                    </span>
+
+                    <asp:Label
+                        ID="lblKeeper"
+                        runat="server"
+                        CssClass="detail-value">
+                    </asp:Label>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Feeding Time:
+                    </span>
+
+                    <asp:Label
+                        ID="lblTime"
+                        runat="server"
+                        CssClass="detail-value">
+                    </asp:Label>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Food Type:
+                    </span>
+
+                    <asp:Label
+                        ID="lblFoodType"
+                        runat="server"
+                        CssClass="detail-value">
+                    </asp:Label>
 
                 </div>
 
             </div>
 
 
-            <!-- =========================
-                 BOTTOM NAVIGATION
-            ========================== -->
+            <!-- Buttons -->
 
-            <div class="bottom-row">
+            <div class="btn-group">
 
                 <asp:Button
-                    ID="btnBackBottom"
+                    ID="btnDelete"
                     runat="server"
-                    Text="← Back"
-                    CssClass="btn btn-outline"
+                    Text="Permanently Delete"
+                    CssClass="btn btn-danger"
+                    OnClick="btnDelete_Click"
+                    OnClientClick="return confirm('Final warning: Delete this feeding schedule?');" />
+
+
+                <asp:Button
+                    ID="btnBack"
+                    runat="server"
+                    Text="Cancel"
+                    CssClass="btn btn-back"
                     CausesValidation="false"
                     OnClick="btnBack_Click" />
 
             </div>
 
-        </div>
+        </asp:Panel>
 
     </div>
 

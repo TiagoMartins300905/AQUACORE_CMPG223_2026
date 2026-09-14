@@ -915,6 +915,9 @@
                         OnClick="btnMenu_Click"
                         CausesValidation="false" />
 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <asp:Label ID="lblOutput" runat="server"></asp:Label>
+
                 </div>
 
             </div>

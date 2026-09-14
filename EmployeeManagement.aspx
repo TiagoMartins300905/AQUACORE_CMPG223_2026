@@ -4,13 +4,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>AquaCore - Employee Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
         :root {
-            --abyss-deep: #051329;
+            --bg-base: #030a16;
             --ocean-blue: #0b2545;
             --aqua-glow: #00d2ff;
-            --card-glass: rgba(11, 37, 69, 0.75);
-            --card-border: rgba(0, 210, 255, 0.25);
+            --card-glass: rgba(8, 22, 44, 0.70);
+            --card-border: rgba(0, 210, 255, 0.22);
             --text-primary: #eef4f8;
             --text-muted: #8da4be;
         }
@@ -19,37 +22,55 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
         }
 
         body {
-            background: radial-gradient(circle at 50% 10%, #0d325e 0%, var(--ocean-blue) 40%, var(--abyss-deep) 100%);
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(2, 132, 199, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(13, 148, 136, 0.12) 0%, transparent 45%);
             color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
         }
 
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(120px);
+            opacity: 0.25;
+            z-index: 0;
+        }
+        .orb-1 { width: 500px; height: 500px; background: #0284c7; top: -100px; left: -100px; }
+        .orb-2 { width: 600px; height: 600px; background: #0d9488; bottom: -150px; right: -100px; }
+
         .dashboard-container {
+            position: relative;
+            z-index: 1;
             width: 100%;
-            max-width: 1000px;
+            max-width: 1100px;
             display: flex;
             flex-direction: column;
             gap: 24px;
         }
 
-        /* Reusable Glass Panel */
         .glass-panel {
             background: var(--card-glass);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1px solid var(--card-border);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 32px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
         }
 
-        /* Navigation Header */
         .header-panel {
             display: flex;
             justify-content: space-between;
@@ -60,7 +81,10 @@
 
         .header-title h1 {
             font-size: 2rem;
-            color: #ffffff;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 40%, #bae6fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 4px;
         }
 
@@ -76,7 +100,7 @@
 
         .btn {
             padding: 10px 18px;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: 600;
             font-size: 0.9rem;
             cursor: pointer;
@@ -87,22 +111,23 @@
         }
 
         .btn-add {
-            background: linear-gradient(135deg, #00d2ff, #0077b6);
-            color: #ffffff;
+            background: linear-gradient(135deg, #00f0ff, #0284c7);
+            color: #030a16;
+            font-weight: 700;
         }
-        .btn-add:hover { opacity: 0.9; }
+        .btn-add:hover { filter: brightness(1.1); }
 
         .btn-outline {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
             color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(148, 163, 184, 0.2);
         }
         .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
+            border-color: var(--aqua-glow);
         }
 
-        /* Directory Tools */
         .tools-row {
             display: flex;
             justify-content: space-between;
@@ -114,7 +139,7 @@
 
         .tools-row h2 {
             font-size: 1.4rem;
-            color: var(--aqua-glow);
+            color: #bae6fd;
         }
 
         .search-group {
@@ -125,24 +150,23 @@
         .input-control {
             width: 250px;
             padding: 10px 14px;
-            border-radius: 8px;
-            border: 1px solid rgba(0, 210, 255, 0.25);
-            background: rgba(5, 19, 41, 0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            background: rgba(3, 10, 22, 0.6);
             color: #ffffff;
             font-size: 0.95rem;
             outline: none;
         }
         .input-control:focus {
             border-color: var(--aqua-glow);
-            box-shadow: 0 0 8px rgba(0, 210, 255, 0.3);
+            box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.15);
         }
 
-        /* Dark Theme GridView */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.15);
         }
 
         .aqua-grid {
@@ -153,19 +177,19 @@
         }
 
         .aqua-grid th {
-            background: rgba(0, 210, 255, 0.1);
+            background: rgba(2, 132, 199, 0.15);
             color: var(--aqua-glow);
             padding: 14px;
             font-weight: 600;
             border-bottom: 1px solid var(--card-border);
             text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
+            font-size: 0.78rem;
+            letter-spacing: 0.8px;
         }
 
         .aqua-grid td {
             padding: 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             color: var(--text-primary);
         }
 
@@ -183,14 +207,17 @@
             display: block;
             margin-top: 15px;
             font-weight: 600;
+            text-align: center;
         }
     </style>
 </head>
 <body>
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+
     <form id="form1" runat="server">
         <div class="dashboard-container">
             
-            <!-- Navigation Header -->
             <div class="glass-panel header-panel">
                 <div class="header-title">
                     <h1>AquaCore Operations</h1>
@@ -199,17 +226,15 @@
                 <div class="nav-buttons">
                     <a href="AddEmployee.aspx" class="btn btn-add">➕ Add Employee</a>
                     <a href="UpdateEmployee.aspx" class="btn btn-outline">✏️ Update</a>
-                    <!-- Updated Link Here -->
                     <a href="DeleteEmployee.aspx" class="btn btn-outline">🗑️ Delete</a>
                 </div>
             </div>
 
-            <!-- Active Directory -->
             <div class="glass-panel">
                 <div class="tools-row">
                     <h2>Personnel Directory</h2>
                     <div class="search-group">
-                        <asp:TextBox ID="txtSearch" runat="server" CssClass="input-control" placeholder="Search by name or dept..." />
+                        <asp:TextBox ID="txtSearch" runat="server" CssClass="input-control" placeholder="Search name or role..." />
                         <asp:Button ID="btnSearch" runat="server" Text="Filter" CssClass="btn btn-add" OnClick="btnSearch_Click" />
                     </div>
                 </div>
@@ -218,15 +243,16 @@
                     <asp:GridView ID="gvEmployees" runat="server" AutoGenerateColumns="False" 
                         CssClass="aqua-grid" GridLines="None">
                         <Columns>
-                            <asp:BoundField DataField="EmployeeID" HeaderText="ID" ItemStyle-Width="50px" />
+                            <asp:BoundField DataField="StaffID" HeaderText="ID" ItemStyle-Width="50px" />
                             <asp:TemplateField HeaderText="Full Name">
                                 <ItemTemplate>
-                                    <strong><%# Eval("FirstName") %> <%# Eval("LastName") %></strong>
+                                    <strong><%# Eval("Name") %> <%# Eval("Surname") %></strong>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="Email" HeaderText="Email Address" />
-                            <asp:BoundField DataField="Department" HeaderText="Department" />
-                            <asp:BoundField DataField="Salary" HeaderText="Salary" DataFormatString="R {0:N2}" />
+                            <asp:BoundField DataField="Username" HeaderText="Username" />
+                            <asp:BoundField DataField="Role" HeaderText="Role" />
+                            <asp:BoundField DataField="ContactDetails" HeaderText="Contact Info" />
+                            <asp:BoundField DataField="CreatedDate" HeaderText="Enrolled" DataFormatString="{0:MMM dd, yyyy}" />
                         </Columns>
                         <EmptyDataTemplate>
                             <div class="empty-data">

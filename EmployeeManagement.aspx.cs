@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Drawing;
 
 namespace AQUACORE_CMPG223
@@ -23,37 +23,38 @@ namespace AQUACORE_CMPG223
 
         private void LoadDirectory(string searchTerm = "")
         {
-            string connStr = ConfigurationManager.ConnectionStrings["AquaCoreDB"]?.ConnectionString;
+            // Update to match the exact connection string name used in your Global.asax.cs
+            string connStr = ConfigurationManager.ConnectionStrings["AquaCoreConnectionString"]?.ConnectionString;
 
             if (string.IsNullOrEmpty(connStr))
             {
-                lblStatus.Text = "Database connection string 'AquaCoreDB' is missing from Web.config.";
+                lblStatus.Text = "Database connection string 'AquaCoreConnectionString' is missing from Web.config.";
                 lblStatus.ForeColor = Color.FromArgb(255, 107, 107);
                 return;
             }
 
             try
             {
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SQLiteConnection con = new SQLiteConnection(connStr))
                 {
-                    string sql = @"SELECT EmployeeID, FirstName, LastName, Email, Department, Salary 
-                                   FROM Employees";
+                    string sql = @"SELECT StaffID, Name, Surname, Role, ContactDetails, Username, CreatedDate 
+                                   FROM Staff";
 
                     if (!string.IsNullOrEmpty(searchTerm))
                     {
-                        sql += " WHERE FirstName LIKE @Search OR LastName LIKE @Search OR Department LIKE @Search";
+                        sql += " WHERE Name LIKE @Search OR Surname LIKE @Search OR Role LIKE @Search";
                     }
 
-                    sql += " ORDER BY EmployeeID DESC";
+                    sql += " ORDER BY StaffID DESC";
 
-                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, con))
                     {
                         if (!string.IsNullOrEmpty(searchTerm))
                         {
                             cmd.Parameters.AddWithValue("@Search", "%" + searchTerm + "%");
                         }
 
-                        using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                        using (SQLiteDataAdapter sda = new SQLiteDataAdapter(cmd))
                         {
                             DataTable dt = new DataTable();
                             sda.Fill(dt);

@@ -60,22 +60,22 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.Label lblName;
 
         /// <summary>
-        /// lblEmail control.
+        /// lblUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEmail;
+        protected global::System.Web.UI.WebControls.Label lblUsername;
 
         /// <summary>
-        /// lblDept control.
+        /// lblRole control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDept;
+        protected global::System.Web.UI.WebControls.Label lblRole;
 
         /// <summary>
         /// btnDelete control.

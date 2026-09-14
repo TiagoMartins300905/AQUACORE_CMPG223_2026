@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Configuration;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Drawing;
 using System.Web.UI.WebControls;
 
@@ -10,7 +10,7 @@ namespace AQUACORE_CMPG223
     {
         private string GetConnectionString()
         {
-            return ConfigurationManager.ConnectionStrings["AquaCoreDB"]?.ConnectionString;
+            return ConfigurationManager.ConnectionStrings["AquaCoreConnectionString"]?.ConnectionString;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -21,7 +21,6 @@ namespace AQUACORE_CMPG223
             }
         }
 
-        // 1. Fetch all employees to populate the dropdown
         private void LoadEmployeeDropdown()
         {
             string connStr = GetConnectionString();
@@ -33,31 +32,31 @@ namespace AQUACORE_CMPG223
 
             try
             {
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SQLiteConnection con = new SQLiteConnection(connStr))
                 {
-                    string sql = "SELECT EmployeeID, FirstName + ' ' + LastName AS FullName FROM Employees ORDER BY FirstName";
-                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    // SQLite uses || for string concatenation, not +
+                    string sql = "SELECT StaffID, Name || ' ' || Surname AS FullName FROM Staff ORDER BY Name";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, con))
                     {
                         con.Open();
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
                             ddlSelectEmployee.DataSource = reader;
                             ddlSelectEmployee.DataTextField = "FullName";
-                            ddlSelectEmployee.DataValueField = "EmployeeID";
+                            ddlSelectEmployee.DataValueField = "StaffID";
                             ddlSelectEmployee.DataBind();
                         }
                     }
                 }
 
-                ddlSelectEmployee.Items.Insert(0, new ListItem("-- Select an Employee --", ""));
+                ddlSelectEmployee.Items.Insert(0, new ListItem("-- Select a Staff Member --", ""));
             }
             catch (Exception ex)
             {
-                SetStatus("Error loading employees: " + ex.Message, Color.FromArgb(255, 107, 107));
+                SetStatus("Error loading staff: " + ex.Message, Color.FromArgb(255, 107, 107));
             }
         }
 
-        // 2. Fetch and display details when an employee is selected
         protected void ddlSelectEmployee_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblStatus.Text = string.Empty;
@@ -73,21 +72,21 @@ namespace AQUACORE_CMPG223
 
             try
             {
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SQLiteConnection con = new SQLiteConnection(connStr))
                 {
-                    string sql = "SELECT FirstName, LastName, Email, Department FROM Employees WHERE EmployeeID = @EmployeeID";
-                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    string sql = "SELECT Name, Surname, Username, Role FROM Staff WHERE StaffID = @StaffID";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue("@EmployeeID", selectedId);
+                        cmd.Parameters.AddWithValue("@StaffID", selectedId);
                         con.Open();
 
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                lblName.Text = reader["FirstName"].ToString() + " " + reader["LastName"].ToString();
-                                lblEmail.Text = reader["Email"].ToString();
-                                lblDept.Text = reader["Department"].ToString();
+                                lblName.Text = reader["Name"].ToString() + " " + reader["Surname"].ToString();
+                                lblUsername.Text = reader["Username"].ToString();
+                                lblRole.Text = reader["Role"].ToString();
 
                                 pnlConfirmForm.Visible = true;
                             }
@@ -97,37 +96,34 @@ namespace AQUACORE_CMPG223
             }
             catch (Exception ex)
             {
-                SetStatus("Error retrieving employee: " + ex.Message, Color.FromArgb(255, 107, 107));
+                SetStatus("Error retrieving staff details: " + ex.Message, Color.FromArgb(255, 107, 107));
             }
         }
 
-        // 3. Delete the employee from the database
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(ddlSelectEmployee.SelectedValue)) return;
 
-            int employeeId = Convert.ToInt32(ddlSelectEmployee.SelectedValue);
+            int staffId = Convert.ToInt32(ddlSelectEmployee.SelectedValue);
             string connStr = GetConnectionString();
 
             try
             {
-                using (SqlConnection con = new SqlConnection(connStr))
+                using (SQLiteConnection con = new SQLiteConnection(connStr))
                 {
-                    string sql = "DELETE FROM Employees WHERE EmployeeID = @EmployeeID";
+                    string sql = "DELETE FROM Staff WHERE StaffID = @StaffID";
 
-                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue("@EmployeeID", employeeId);
+                        cmd.Parameters.AddWithValue("@StaffID", staffId);
                         con.Open();
                         cmd.ExecuteNonQuery();
                     }
                 }
 
-                // Hide the panel and show success message
                 pnlConfirmForm.Visible = false;
-                SetStatus("Employee successfully deleted from the system.", Color.FromArgb(128, 255, 219));
+                SetStatus("Staff member successfully deleted from the system.", Color.FromArgb(128, 255, 219));
 
-                // Refresh the dropdown so the deleted employee is gone
                 LoadEmployeeDropdown();
             }
             catch (Exception ex)

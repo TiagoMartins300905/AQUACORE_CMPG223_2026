@@ -1,0 +1,1 @@
+<%@ Application Codebehind = "Global.asax.cs" Inherits="AQUACORE_CMPG223.Global" Language="C#" %>

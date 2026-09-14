@@ -49,6 +49,10 @@
     <Reference Include="QRCoder, Version=1.8.0.0, Culture=neutral, PublicKeyToken=c4ed5b9ae8358a28, processorArchitecture=MSIL">
       <HintPath>packages\QRCoder.1.8.0\lib\net40\QRCoder.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data.SQLite, Version=2.0.4.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>packages\System.Data.SQLite.2.0.4\lib\net471\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -78,16 +82,13 @@
     <Content Include="Add_Medical_R.aspx" />
     <Content Include="AnimalManagementDashboard.aspx" />
     <Content Include="Animals_DashBoard.aspx" />
-    <Content Include="App_Data\DBAquacore.mdf" />
-    <Content Include="App_Data\DBAquacore_log.ldf">
-      <DependentUpon>DBAquacore.mdf</DependentUpon>
-    </Content>
     <Content Include="DeleteOrder.aspx" />
     <Content Include="Delete_feeding.aspx" />
     <Content Include="Delete_Medical_R.aspx" />
     <Content Include="Delete_Animal.aspx" />
     <Content Include="Display Orders.aspx" />
     <Content Include="Display_Animals.aspx" />
+    <Content Include="App_Data\Global.asax" />
     <Content Include="MainScreen.aspx" />
     <Content Include="Medicals_Dashboard.aspx" />
     <Content Include="Menu_Feeding.aspx" />
@@ -187,6 +188,9 @@
     </Compile>
     <Compile Include="Display_Animals.aspx.designer.cs">
       <DependentUpon>Display_Animals.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Data\Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="MainScreen.aspx.cs">
       <DependentUpon>MainScreen.aspx</DependentUpon>
@@ -339,6 +343,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

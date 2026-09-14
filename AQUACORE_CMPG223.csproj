@@ -134,6 +134,7 @@
     <Content Include="VisitorMyReservations.aspx" />
     <Content Include="VisitorReservations.aspx" />
     <Content Include="VisitorResetPassword.aspx" />
+    <Content Include="VisitorRestaurantOrder.aspx" />
     <Content Include="VisitorSignUp.aspx" />
     <Content Include="VisitorTicket.aspx" />
     <Content Include="VisitorWelcomePage.aspx" />
@@ -375,6 +376,13 @@
     </Compile>
     <Compile Include="VisitorResetPassword.aspx.designer.cs">
       <DependentUpon>VisitorResetPassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VisitorRestaurantOrder.aspx.cs">
+      <DependentUpon>VisitorRestaurantOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VisitorRestaurantOrder.aspx.designer.cs">
+      <DependentUpon>VisitorRestaurantOrder.aspx</DependentUpon>
     </Compile>
     <Compile Include="VisitorSignUp.aspx.cs">
       <DependentUpon>VisitorSignUp.aspx</DependentUpon>

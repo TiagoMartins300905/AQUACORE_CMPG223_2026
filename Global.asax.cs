@@ -123,6 +123,8 @@ namespace AQUACORE_CMPG223
                     Status VARCHAR(50) DEFAULT 'Pending',
                     FOREIGN KEY (VisitorID) REFERENCES Visitors(VisitorID)
                 );
+                
+                    
                 ";
 
                 using (SQLiteCommand cmd = new SQLiteCommand(createTables, conn))

@@ -20,8 +20,8 @@
             --text-primary: #eef4f8;
             --text-muted: #8da4be;
 
-            --warning: #ffd166;
             --danger: #ff6b7a;
+            --success: #4ade80;
         }
 
         * {
@@ -148,7 +148,7 @@
             font-weight: 600;
         }
 
-        /* Back Button */
+        /* Buttons */
 
         .btn {
 
@@ -249,11 +249,6 @@
             background: rgba(0, 210, 255, 0.04);
         }
 
-        .form-group.full-width {
-
-            grid-column: 1 / -1;
-        }
-
         .field-label {
 
             color: #ffffff;
@@ -308,7 +303,7 @@
             color: #617993;
         }
 
-        /* Date Picker */
+        /* Date */
 
         input[type="date"] {
 
@@ -396,12 +391,19 @@
             cursor: pointer;
         }
 
+        .gender-option:hover {
+
+            background: rgba(0, 210, 255, 0.10);
+
+            border-color: rgba(0, 210, 255, 0.30);
+        }
+
         .gender-option input {
 
             accent-color: var(--aqua-glow);
         }
 
-        /* Validation */
+        /* Validation / Output */
 
         .validator {
 
@@ -410,6 +412,12 @@
             font-size: 0.78rem;
 
             line-height: 1.3;
+
+            margin-top: 10px;
+
+            display: block;
+
+            text-align: center;
         }
 
         .gender-validator {
@@ -568,11 +576,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .form-group.full-width {
-
-                grid-column: auto;
-            }
-
             .form-actions {
 
                 flex-direction: column;
@@ -604,7 +607,6 @@
 <form id="form1" runat="server">
 
     <div class="dashboard-container">
-
 
         <!-- HEADER -->
 
@@ -648,8 +650,9 @@
                 <h2>Update Animal Details</h2>
 
                 <p>
-                    Update the information of an existing animal registered
-                    within the AquaCore aquarium system.
+                    Enter the Animal ID and provide only the information
+                    you want to change. Any field left blank will remain
+                    unchanged.
                 </p>
 
             </div>
@@ -704,24 +707,15 @@
                     </asp:Label>
 
                     <span class="field-description">
-                        Enter the animal's current name.
+                        Leave blank if you do not want to change the name.
                     </span>
 
                     <asp:TextBox
                         ID="txtName"
                         runat="server"
                         CssClass="input-control"
-                        placeholder="Animal name">
+                        placeholder="New animal name">
                     </asp:TextBox>
-
-                    <asp:RequiredFieldValidator
-                        ID="RequiredFieldValidator2"
-                        runat="server"
-                        ControlToValidate="txtName"
-                        ErrorMessage="Name cannot be empty!"
-                        CssClass="validator"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
 
                 </div>
 
@@ -738,24 +732,15 @@
                     </asp:Label>
 
                     <span class="field-description">
-                        Specify the animal's species.
+                        Leave blank if you do not want to change the species.
                     </span>
 
                     <asp:TextBox
                         ID="txtSpecies"
                         runat="server"
                         CssClass="input-control"
-                        placeholder="Animal species">
+                        placeholder="New animal species">
                     </asp:TextBox>
-
-                    <asp:RequiredFieldValidator
-                        ID="RequiredFieldValidator3"
-                        runat="server"
-                        ControlToValidate="txtSpecies"
-                        ErrorMessage="Animal species is required!"
-                        CssClass="validator"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
 
                 </div>
 
@@ -772,7 +757,7 @@
                     </asp:Label>
 
                     <span class="field-description">
-                        Select the animal's date of birth.
+                        Leave blank if you do not want to change the DOB.
                     </span>
 
                     <asp:TextBox
@@ -781,15 +766,6 @@
                         CssClass="input-control"
                         TextMode="Date">
                     </asp:TextBox>
-
-                    <asp:RequiredFieldValidator
-                        ID="RequiredFieldValidator4"
-                        runat="server"
-                        ControlToValidate="txtDOB"
-                        ErrorMessage="Enter animal's DOB!"
-                        CssClass="validator"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
 
                 </div>
 
@@ -806,7 +782,7 @@
                     </asp:Label>
 
                     <span class="field-description">
-                        Select the animal's gender.
+                        Select a gender only if you want to change it.
                     </span>
 
                     <div class="gender-options">
@@ -817,9 +793,7 @@
                                 ID="rdbMale"
                                 runat="server"
                                 GroupName="Gender"
-                                Text="Male"
-                                OnCheckedChanged="rdbMale_CheckedChanged1"
-                                AutoPostBack="True" />
+                                Text="Male" />
 
                         </label>
 
@@ -829,21 +803,11 @@
                                 ID="rdbFemale"
                                 runat="server"
                                 GroupName="Gender"
-                                Text="Female"
-                                OnCheckedChanged="rdbMale_CheckedChanged1"
-                                AutoPostBack="True" />
+                                Text="Female" />
 
                         </label>
 
                     </div>
-
-                    <asp:Label
-                        ID="lblGender"
-                        runat="server"
-                        ForeColor="Red"
-                        Text="Animal Gender cannot be left out!"
-                        CssClass="gender-validator">
-                    </asp:Label>
 
                 </div>
 
@@ -860,7 +824,7 @@
                     </asp:Label>
 
                     <span class="field-description">
-                        Select where the animal is currently housed.
+                        Select a habitat only if you want to change it.
                     </span>
 
                     <asp:DropDownList
@@ -868,47 +832,42 @@
                         runat="server"
                         CssClass="dropdown-control">
 
-                        <asp:ListItem>
-                            ---Choose Habitat----
+                        <asp:ListItem
+                            Text="---Choose Habitat----"
+                            Value="">
                         </asp:ListItem>
 
-                        <asp:ListItem>
-                            Open Ocean Tank
+                        <asp:ListItem
+                            Text="Open Ocean Tank"
+                            Value="Open Ocean Tank">
                         </asp:ListItem>
 
-                        <asp:ListItem>
-                            Coral Reef Display
+                        <asp:ListItem
+                            Text="Coral Reef Display"
+                            Value="Coral Reef Display">
                         </asp:ListItem>
 
-                        <asp:ListItem>
-                            Kelp Forest
+                        <asp:ListItem
+                            Text="Kelp Forest"
+                            Value="Kelp Forest">
                         </asp:ListItem>
 
-                        <asp:ListItem>
-                            Tidal Touch Pool
+                        <asp:ListItem
+                            Text="Tidal Touch Pool"
+                            Value="Tidal Touch Pool">
                         </asp:ListItem>
 
-                        <asp:ListItem>
-                            Mangrove Estuary
+                        <asp:ListItem
+                            Text="Mangrove Estuary"
+                            Value="Mangrove Estuary">
                         </asp:ListItem>
 
                     </asp:DropDownList>
 
-                    <asp:RequiredFieldValidator
-                        ID="RequiredFieldValidator5"
-                        runat="server"
-                        ControlToValidate="ddHabitat"
-                        ErrorMessage="Animal Habitat is required!"
-                        ForeColor="Red"
-                        InitialValue="---Choose Habitat----"
-                        CssClass="validator"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
-
                 </div>
 
 
-                <!-- ACTIONS -->
+                <!-- OUTPUT MESSAGE -->
 
                 <div class="form-actions">
 
@@ -929,6 +888,12 @@
 
                 </div>
 
+                <asp:Label
+                    ID="lblOutput"
+                    runat="server"
+                    CssClass="validator">
+                </asp:Label>
+
             </div>
 
 
@@ -937,9 +902,9 @@
             <div class="animal-note">
 
                 🐋 <span>Animal Care Record:</span>
-                Keep the animal's profile information accurate so that
-                feeding schedules, medical records and habitat management
-                remain linked to the correct animal.
+                Enter only the information you want to change.
+                Fields that are left blank will remain unchanged in
+                the database.
 
             </div>
 
@@ -951,7 +916,6 @@
             AquaCore • Animal Management &amp; Aquarium Operations
 
         </div>
-
 
     </div>
 

@@ -78,9 +78,9 @@
     <Content Include="Add_Medical_R.aspx" />
     <Content Include="AnimalManagementDashboard.aspx" />
     <Content Include="Animals_DashBoard.aspx" />
-    <Content Include="App_Data\Visitors.mdf" />
-    <Content Include="App_Data\Visitors_log.ldf">
-      <DependentUpon>Visitors.mdf</DependentUpon>
+    <Content Include="App_Data\DBAquacore.mdf" />
+    <Content Include="App_Data\DBAquacore_log.ldf">
+      <DependentUpon>DBAquacore.mdf</DependentUpon>
     </Content>
     <Content Include="DeleteOrder.aspx" />
     <Content Include="Delete_feeding.aspx" />

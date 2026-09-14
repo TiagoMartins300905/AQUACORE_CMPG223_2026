@@ -522,6 +522,21 @@
             }
         }
 
+        .auto-style1 {
+            min-width: 150px;
+            border-radius: 8px;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            padding: 11px 20px;
+        }
+
     </style>
 
 </head>
@@ -767,7 +782,7 @@
                             ID="btnAdd"
                             runat="server"
                             Text="Add Medical Record"
-                            CssClass="primary-button" />
+                            CssClass="auto-style1" OnClick="btnAdd_Click" />
 
                     </div>
 

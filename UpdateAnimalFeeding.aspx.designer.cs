@@ -24,22 +24,22 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// btnBack control.
+        /// btnTopBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBack;
+        protected global::System.Web.UI.WebControls.Button btnTopBack;
 
         /// <summary>
-        /// lblHeading control.
+        /// lblSelectSchedule control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblHeading;
+        protected global::System.Web.UI.WebControls.Label lblSelectSchedule;
 
         /// <summary>
         /// ddlScheduleID control.
@@ -51,13 +51,22 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.DropDownList ddlScheduleID;
 
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// lblMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.Label lblMessage;
+
+        /// <summary>
+        /// pnlEditForm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlEditForm;
 
         /// <summary>
         /// lblAnimal control.
@@ -114,13 +123,13 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.DropDownList ddlTime;
 
         /// <summary>
-        /// foodTypelbl control.
+        /// lblFoodType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label foodTypelbl;
+        protected global::System.Web.UI.WebControls.Label lblFoodType;
 
         /// <summary>
         /// ddlFoodType control.
@@ -132,15 +141,6 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.DropDownList ddlFoodType;
 
         /// <summary>
-        /// lblMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMessage;
-
-        /// <summary>
         /// btnUpdate control.
         /// </summary>
         /// <remarks>
@@ -150,12 +150,12 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.Button btnUpdate;
 
         /// <summary>
-        /// btnBackBottom control.
+        /// btnBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBackBottom;
+        protected global::System.Web.UI.WebControls.Button btnBack;
     }
 }

@@ -78,10 +78,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AddAnimals.aspx" />
+    <Content Include="AddEmployee.aspx" />
     <Content Include="AddOrder.aspx" />
     <Content Include="Add_Medical_R.aspx" />
     <Content Include="AnimalManagementDashboard.aspx" />
     <Content Include="Animals_DashBoard.aspx" />
+    <Content Include="DeleteEmployee.aspx" />
     <Content Include="DeleteOrder.aspx" />
     <Content Include="Delete_feeding.aspx" />
     <Content Include="Delete_Medical_R.aspx" />
@@ -89,11 +91,13 @@
     <Content Include="Display Orders.aspx" />
     <Content Include="Display_Animals.aspx" />
     <Content Include="App_Data\Global.asax" />
+    <Content Include="EmployeeManagement.aspx" />
     <Content Include="MainScreen.aspx" />
     <Content Include="Medicals_Dashboard.aspx" />
     <Content Include="Menu_Feeding.aspx" />
     <Content Include="RestaurantOrders_Dashboard.aspx" />
     <Content Include="UpdateAnimalFeeding.aspx" />
+    <Content Include="UpdateEmployee.aspx" />
     <Content Include="UpdateMedical.aspx" />
     <Content Include="UpdateOrder.aspx" />
     <Content Include="Update_Animal.aspx" />
@@ -118,6 +122,12 @@
     </Compile>
     <Compile Include="AddAnimals.aspx.designer.cs">
       <DependentUpon>AddAnimals.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddEmployee.aspx.cs">
+      <DependentUpon>AddEmployee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddEmployee.aspx.designer.cs">
+      <DependentUpon>AddEmployee.aspx</DependentUpon>
     </Compile>
     <Compile Include="AddOrder.aspx.cs">
       <DependentUpon>AddOrder.aspx</DependentUpon>
@@ -146,6 +156,12 @@
     </Compile>
     <Compile Include="Animals_DashBoard.aspx.designer.cs">
       <DependentUpon>Animals_DashBoard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteEmployee.aspx.cs">
+      <DependentUpon>DeleteEmployee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteEmployee.aspx.designer.cs">
+      <DependentUpon>DeleteEmployee.aspx</DependentUpon>
     </Compile>
     <Compile Include="DeleteOrder.aspx.cs">
       <DependentUpon>DeleteOrder.aspx</DependentUpon>
@@ -192,6 +208,12 @@
     <Compile Include="App_Data\Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeManagement.aspx.cs">
+      <DependentUpon>EmployeeManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeManagement.aspx.designer.cs">
+      <DependentUpon>EmployeeManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MainScreen.aspx.cs">
       <DependentUpon>MainScreen.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -227,6 +249,12 @@
     </Compile>
     <Compile Include="UpdateAnimalFeeding.aspx.designer.cs">
       <DependentUpon>UpdateAnimalFeeding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateEmployee.aspx.cs">
+      <DependentUpon>UpdateEmployee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateEmployee.aspx.designer.cs">
+      <DependentUpon>UpdateEmployee.aspx</DependentUpon>
     </Compile>
     <Compile Include="UpdateMedical.aspx.cs">
       <DependentUpon>UpdateMedical.aspx</DependentUpon>

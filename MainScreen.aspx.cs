@@ -29,7 +29,8 @@ namespace AQUACORE_CMPG223
             user.Expires = DateTime.Now.AddMinutes(15);
             Response.Cookies.Add(user);
 
-            Response.Redirect("StaffLogin.aspx");
+            //Response.Redirect("StaffLogin.aspx");
+            Response.Redirect("AdminDashBoard.aspx");
         }
 
         protected void btnStaff_Click(object sender, EventArgs e)

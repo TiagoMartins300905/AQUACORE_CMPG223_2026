@@ -3,9 +3,14 @@ using System.Web;
 using System.Web.UI;
 
 /*
-R. Nyabvure 49948989
-L. Tshona	5174858
-Z. Claassens  50959042
+Tiago Martins	52052532
+Zoe Claassens	50959042
+Knowledge Tshabalala	55456367
+Ruby Nyabvure	49948989
+Lihle Tshona	51748584
+Thokozani Mahlangu	50833464
+Arnold Photsane	39156222
+Tebogo Jr Mabuza	49461168
 */
 
 namespace AQUACORE_CMPG223
@@ -34,6 +39,11 @@ namespace AQUACORE_CMPG223
             Response.Cookies.Add(user);
 
             Response.Redirect("VisitorWelcomePage.aspx");
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

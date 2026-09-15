@@ -41,15 +41,15 @@ namespace AQUACORE_CMPG223
                         con.Open();
                         using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
-                            ddlSelectEmployee.DataSource = reader;
-                            ddlSelectEmployee.DataTextField = "FullName";
-                            ddlSelectEmployee.DataValueField = "StaffID";
-                            ddlSelectEmployee.DataBind();
+                            DdlSelectEmployee.DataSource = reader;
+                            DdlSelectEmployee.DataTextField = "FullName";
+                            DdlSelectEmployee.DataValueField = "StaffID";
+                            DdlSelectEmployee.DataBind();
                         }
                     }
                 }
 
-                ddlSelectEmployee.Items.Insert(0, new ListItem("-- Select a Staff Member --", ""));
+                DdlSelectEmployee.Items.Insert(0, new ListItem("-- Select a Staff Member --", ""));
             }
             catch (Exception ex)
             {
@@ -57,17 +57,17 @@ namespace AQUACORE_CMPG223
             }
         }
 
-        protected void ddlSelectEmployee_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DdlSelectEmployee_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lblStatus.Text = string.Empty;
+            LblStatus.Text = string.Empty;
 
-            if (string.IsNullOrEmpty(ddlSelectEmployee.SelectedValue))
+            if (string.IsNullOrEmpty(DdlSelectEmployee.SelectedValue))
             {
-                pnlConfirmForm.Visible = false;
+                PnlConfirmForm.Visible = false;
                 return;
             }
 
-            int selectedId = Convert.ToInt32(ddlSelectEmployee.SelectedValue);
+            int selectedId = Convert.ToInt32(DdlSelectEmployee.SelectedValue);
             string connStr = GetConnectionString();
 
             try
@@ -84,11 +84,11 @@ namespace AQUACORE_CMPG223
                         {
                             if (reader.Read())
                             {
-                                lblName.Text = reader["Name"].ToString() + " " + reader["Surname"].ToString();
-                                lblUsername.Text = reader["Username"].ToString();
-                                lblRole.Text = reader["Role"].ToString();
+                                LblName.Text = reader["Name"].ToString() + " " + reader["Surname"].ToString();
+                                LblUsername.Text = reader["Username"].ToString();
+                                LblRole.Text = reader["Role"].ToString();
 
-                                pnlConfirmForm.Visible = true;
+                                PnlConfirmForm.Visible = true;
                             }
                         }
                     }
@@ -100,11 +100,11 @@ namespace AQUACORE_CMPG223
             }
         }
 
-        protected void btnDelete_Click(object sender, EventArgs e)
+        protected void BtnDelete_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(ddlSelectEmployee.SelectedValue)) return;
+            if (string.IsNullOrEmpty(DdlSelectEmployee.SelectedValue)) return;
 
-            int staffId = Convert.ToInt32(ddlSelectEmployee.SelectedValue);
+            int staffId = Convert.ToInt32(DdlSelectEmployee.SelectedValue);
             string connStr = GetConnectionString();
 
             try
@@ -121,7 +121,7 @@ namespace AQUACORE_CMPG223
                     }
                 }
 
-                pnlConfirmForm.Visible = false;
+                PnlConfirmForm.Visible = false;
                 SetStatus("Staff member successfully deleted from the system.", Color.FromArgb(128, 255, 219));
 
                 LoadEmployeeDropdown();
@@ -134,8 +134,8 @@ namespace AQUACORE_CMPG223
 
         private void SetStatus(string message, Color color)
         {
-            lblStatus.Text = message;
-            lblStatus.ForeColor = color;
+            LblStatus.Text = message;
+            LblStatus.ForeColor = color;
         }
     }
 }

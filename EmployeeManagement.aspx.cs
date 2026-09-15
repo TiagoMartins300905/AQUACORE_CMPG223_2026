@@ -16,9 +16,9 @@ namespace AQUACORE_CMPG223
             }
         }
 
-        protected void btnSearch_Click(object sender, EventArgs e)
+        protected void BtnSearch_Click(object sender, EventArgs e)
         {
-            LoadDirectory(txtSearch.Text.Trim());
+            LoadDirectory(TxtSearch.Text.Trim());
         }
 
         protected void btnReturn_Click(object sender, EventArgs e)

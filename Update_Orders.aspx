@@ -685,6 +685,26 @@
 
 
     /* =========================================================
+       VALIDATORS
+       ========================================================= */
+
+    .validator {
+
+        color:
+            var(--danger) !important;
+
+        font-size:
+            0.78rem;
+
+        margin-top:
+            5px;
+
+        display:
+            block;
+    }
+
+
+    /* =========================================================
        FOOTER
        ========================================================= */
 
@@ -862,6 +882,15 @@
                             CssClass="input-box">
                         </asp:TextBox>
 
+                        <asp:RequiredFieldValidator
+                            ID="rfvCustomerName"
+                            runat="server"
+                            ControlToValidate="txtCustomerName"
+                            ErrorMessage="Customer name is required!"
+                            CssClass="validator"
+                            Display="Dynamic"
+                            ValidationGroup="OrderValidation" />
+
                     </div>
 
 
@@ -879,6 +908,15 @@
                             runat="server"
                             CssClass="input-box">
                         </asp:TextBox>
+
+                        <asp:RequiredFieldValidator
+                            ID="rfvTable"
+                            runat="server"
+                            ControlToValidate="txtTable"
+                            ErrorMessage="Table number is required!"
+                            CssClass="validator"
+                            Display="Dynamic"
+                            ValidationGroup="OrderValidation" />
 
                     </div>
 
@@ -905,6 +943,15 @@
                             TextMode="Number">
                         </asp:TextBox>
 
+                        <asp:RequiredFieldValidator
+                            ID="rfvQuantity"
+                            runat="server"
+                            ControlToValidate="txtQuantity"
+                            ErrorMessage="Quantity is required!"
+                            CssClass="validator"
+                            Display="Dynamic"
+                            ValidationGroup="OrderValidation" />
+
                     </div>
 
 
@@ -923,6 +970,15 @@
                             CssClass="input-box"
                             TextMode="Date">
                         </asp:TextBox>
+
+                        <asp:RequiredFieldValidator
+                            ID="rfvDate"
+                            runat="server"
+                            ControlToValidate="txtDate"
+                            ErrorMessage="Order date is required!"
+                            CssClass="validator"
+                            Display="Dynamic"
+                            ValidationGroup="OrderValidation" />
 
                     </div>
 
@@ -963,6 +1019,13 @@
 
                     </div>
 
+                    <asp:Label
+                        ID="lblFoodError"
+                        runat="server"
+                        ForeColor="Red"
+                        Text="Please select at least one food item."
+                        CssClass="validator" />
+
                 </div>
 
 
@@ -998,6 +1061,16 @@
 
                         </asp:DropDownList>
 
+                        <asp:RequiredFieldValidator
+                            ID="rfvStatus"
+                            runat="server"
+                            ControlToValidate="ddlStatus"
+                            ErrorMessage="Please select an order status!"
+                            InitialValue=""
+                            CssClass="validator"
+                            Display="Dynamic"
+                            ValidationGroup="OrderValidation" />
+
                     </div>
 
 
@@ -1031,7 +1104,8 @@
                         runat="server"
                         Text="✓ Save Changes"
                         CssClass="btn-update"
-                        OnClick="btnUpdate_Click" />
+                        OnClick="btnUpdate_Click"
+                        ValidationGroup="OrderValidation" />
 
                 </div>
 

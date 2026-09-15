@@ -196,6 +196,7 @@
             border-collapse: collapse;
             font-size: 0.95rem;
             text-align: left;
+            font-weight: 700;
         }
 
         .aqua-grid th {
@@ -321,7 +322,7 @@
                     <div class="search-group">
 
                         <asp:TextBox
-                            ID="txtSearch"
+                            ID="TxtSearch"
                             runat="server"
                             CssClass="input-control"
                             placeholder="Search name or role..." />
@@ -331,7 +332,7 @@
                             runat="server"
                             Text="Filter"
                             CssClass="btn btn-add"
-                            OnClick="btnSearch_Click" />
+                            OnClick="BtnSearch_Click" />
 
                     </div>
 
@@ -340,7 +341,7 @@
                 <div class="table-responsive">
 
                     <asp:GridView
-                        ID="gvEmployees"
+                        ID="GvEmployees"
                         runat="server"
                         AutoGenerateColumns="False"
                         CssClass="aqua-grid"
@@ -394,7 +395,7 @@
                 </div>
 
                 <asp:Label
-                    ID="lblStatus"
+                    ID="LblStatus"
                     runat="server"
                     CssClass="status-msg" />
 

@@ -123,7 +123,6 @@
     <Content Include="UpdateAnimalFeeding.aspx" />
     <Content Include="UpdateEmployee.aspx" />
     <Content Include="UpdateMedical.aspx" />
-    <Content Include="UpdateOrder.aspx" />
     <Content Include="Update_Animal.aspx" />
     <Content Include="ViewMedical.aspx" />
     <Content Include="View_Feeding.aspx" />
@@ -290,13 +289,6 @@
     </Compile>
     <Compile Include="UpdateMedical.aspx.designer.cs">
       <DependentUpon>UpdateMedical.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="UpdateOrder.aspx.cs">
-      <DependentUpon>UpdateOrder.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UpdateOrder.aspx.designer.cs">
-      <DependentUpon>UpdateOrder.aspx</DependentUpon>
     </Compile>
     <Compile Include="Update_Animal.aspx.cs">
       <DependentUpon>Update_Animal.aspx</DependentUpon>

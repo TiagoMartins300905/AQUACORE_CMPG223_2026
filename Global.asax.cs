@@ -109,7 +109,6 @@ namespace AQUACORE_CMPG223
                         FOREIGN KEY (VisitorID) REFERENCES Visitors(VisitorID)
                     );
 
-                    DROP TABLE IF EXISTS Restaurant_Order;
 
                 CREATE TABLE Restaurant_Order (
                     OrderID INTEGER PRIMARY KEY AUTOINCREMENT,

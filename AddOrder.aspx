@@ -677,34 +677,7 @@
             <div class="form-grid">
 
 
-                <!-- Order ID -->
-
-                <div class="form-group">
-
-                    <asp:Label
-                        ID="Label6"
-                        runat="server"
-                        Text="Order ID"
-                        CssClass="form-label">
-                    </asp:Label>
-
-                    <asp:TextBox
-                        ID="txtOrderID"
-                        runat="server"
-                        CssClass="form-input"
-                        placeholder="Enter order ID">
-                    </asp:TextBox>
-
-                    <asp:RequiredFieldValidator
-                        ID="RequiredFieldValidator1"
-                        runat="server"
-                        ControlToValidate="txtOrderID"
-                        CssClass="validator"
-                        ErrorMessage="Order ID cannot be empty!">
-                        Order ID cannot be empty!
-                    </asp:RequiredFieldValidator>
-
-                </div>
+                
 
 
                 <!-- Customer Name -->

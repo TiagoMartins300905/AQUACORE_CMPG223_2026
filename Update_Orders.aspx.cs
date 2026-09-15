@@ -29,6 +29,12 @@ namespace AQUACORE_CMPG223
             {
                 pnlEditForm.Visible = false;
                 lblFoodError.Text = "";
+
+                string today =
+                    DateTime.Now.ToString("yyyy-MM-dd");
+
+                txtDate.Attributes["min"] = today;
+
                 LoadOrderDropdown();
             }
         }
@@ -232,6 +238,12 @@ namespace AQUACORE_CMPG223
                                     txtDate.Text = "";
                                 }
 
+                                // Set minimum date to today
+                                string today =
+                                    DateTime.Now.ToString("yyyy-MM-dd");
+
+                                txtDate.Attributes["min"] = today;
+
                                 // Status
                                 string status =
                                     reader["Status"] == DBNull.Value
@@ -295,7 +307,6 @@ namespace AQUACORE_CMPG223
 
         private void LoadFoodItems(string foodItems)
         {
-            // Clear all existing selections first
             foreach (ListItem item in cblFooditems.Items)
             {
                 item.Selected = false;
@@ -317,15 +328,6 @@ namespace AQUACORE_CMPG223
 
                 foreach (ListItem item in cblFooditems.Items)
                 {
-                    /*
-                     * The database stores the Value.
-                     *
-                     * Burger = 55
-                     * Pizza = 85
-                     * Pasta = 65
-                     * Drink = 25
-                     */
-
                     if (item.Value.Equals(
                         food,
                         StringComparison.OrdinalIgnoreCase))
@@ -399,18 +401,6 @@ namespace AQUACORE_CMPG223
                     {
                         foodItems += ",";
                     }
-
-                    /*
-                     * Store the Value rather than the display text.
-                     *
-                     * Example:
-                     *
-                     * 55,85
-                     *
-                     * instead of:
-                     *
-                     * Burger — R55,Pizza — R85
-                     */
 
                     foodItems += item.Value;
                 }
@@ -543,6 +533,17 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
+            // Do not allow dates before today
+            if (orderDate.Date < DateTime.Now.Date)
+            {
+                SetStatus(
+                    "Order date cannot be before today.",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
+            }
+
             // -----------------------------------------------------
             // Validate status
             // -----------------------------------------------------
@@ -576,6 +577,7 @@ namespace AQUACORE_CMPG223
             {
                 lblFoodError.Text =
                     "Please select at least one food item.";
+
                 return;
             }
 
@@ -746,5 +748,4 @@ namespace AQUACORE_CMPG223
             lblStatus.ForeColor = color;
         }
     }
-
 }

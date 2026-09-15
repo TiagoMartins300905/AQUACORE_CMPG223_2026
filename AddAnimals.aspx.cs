@@ -17,6 +17,11 @@ namespace AQUACORE_CMPG223
             if (!IsPostBack)
             {
                 lblGender.Text = "";
+
+                string today =
+                    DateTime.Now.ToString("yyyy-MM-dd");
+
+                txtDOB.Attributes["max"] = today;
             }
         }
 
@@ -43,7 +48,6 @@ namespace AQUACORE_CMPG223
             string name = txtName.Text;
             string species = txtSpecies.Text;
             string gender = "";
-            
 
             if (int.TryParse(name, out _))
             {
@@ -63,9 +67,20 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
-            if (!DateTime.TryParse(txtDOB.Text, out DateTime dob))
+            DateTime dob;
+
+            if (!DateTime.TryParse(
+                txtDOB.Text,
+                out dob))
             {
                 lblOutput.Text = "Invalid date.";
+                return;
+            }
+
+            if (dob.Date > DateTime.Now.Date)
+            {
+                lblOutput.Text =
+                    "Date of birth cannot be in the future.";
                 return;
             }
 
@@ -88,24 +103,34 @@ namespace AQUACORE_CMPG223
             SQLiteCommand cmd;
             SQLiteConnection con = new SQLiteConnection(connStr);
             con.Open();
+
             String qry = "Insert Into Animal(Name, Species, DateOfBirth, Gender, HabitatLocation) Values (@name, @species, @DOB, @gender, @habitat)";
+
             cmd = new SQLiteCommand(qry, con);
+
             cmd.Parameters.AddWithValue("@name", name);
             cmd.Parameters.AddWithValue("@species", species);
             cmd.Parameters.AddWithValue("@DOB", dob);
             cmd.Parameters.AddWithValue("@gender", gender);
-            cmd.Parameters.AddWithValue("@habitat", ddHabitat.SelectedItem.ToString().Trim());
+            cmd.Parameters.AddWithValue(
+                "@habitat",
+                ddHabitat.SelectedItem.ToString().Trim()
+            );
 
             cmd.ExecuteNonQuery();
+
             cmd.Dispose();
             con.Close();
 
             txtName.Text = "";
             txtSpecies.Text = "";
             txtDOB.Text = "";
+
             rdbMale.Checked = false;
             rdbFemale.Checked = false;
+
             ddHabitat.SelectedIndex = 0;
+
             lblGender.Text = "";
         }
 
@@ -117,7 +142,11 @@ namespace AQUACORE_CMPG223
 
         protected void btnMenu_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Animals_DashBoard.aspx", false);
+            Response.Redirect(
+                "Animals_DashBoard.aspx",
+                false
+            );
         }
     }
 }
+

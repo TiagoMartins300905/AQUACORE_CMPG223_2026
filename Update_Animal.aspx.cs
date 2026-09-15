@@ -21,6 +21,11 @@ namespace AQUACORE_CMPG223
             {
                 LoadAnimalDropdown();
                 lblGender.Text = "";
+
+                string today =
+                    DateTime.Now.ToString("yyyy-MM-dd");
+
+                txtDOB.Attributes["max"] = today;
             }
         }
 
@@ -333,6 +338,17 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
+            // DOB cannot be in the future
+            if (dob.Date > DateTime.Now.Date)
+            {
+                SetStatus(
+                    "Date of birth cannot be in the future.",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
+            }
+
             if (string.IsNullOrEmpty(gender))
             {
                 lblGender.Text = "Animal Gender cannot be left out!";
@@ -465,3 +481,4 @@ namespace AQUACORE_CMPG223
         }
     }
 }
+

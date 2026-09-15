@@ -15,12 +15,12 @@ namespace AQUACORE_CMPG223
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Only set the date when the page first loads.
-            // This prevents the date from being reset after
-            // the user submits the form.
             if (!IsPostBack)
             {
-                txtDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                string today = DateTime.Now.ToString("yyyy-MM-dd");
+
+                txtDate.Text = today;
+                txtDate.Attributes["min"] = today;
             }
         }
 
@@ -68,7 +68,6 @@ namespace AQUACORE_CMPG223
             {
                 if (item.Selected)
                 {
-                    // Add comma between food items
                     if (foodItems.Length > 0)
                     {
                         foodItems.Append(", ");
@@ -76,7 +75,6 @@ namespace AQUACORE_CMPG223
 
                     foodItems.Append(item.Text);
 
-                    // Get food price
                     decimal itemPrice;
 
                     if (!decimal.TryParse(item.Value, out itemPrice))
@@ -137,6 +135,15 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
+            // Do not allow dates before today
+            if (orderDate.Date < DateTime.Now.Date)
+            {
+                lblPrize.Text =
+                    "Order date cannot be before today.";
+
+                return;
+            }
+
             // -----------------------------------------
             // CALCULATE TOTAL
             // -----------------------------------------
@@ -153,7 +160,7 @@ namespace AQUACORE_CMPG223
                        new SQLiteConnection(connStr))
                 {
                     string sql = @"
-                        INSERT INTO Restaurant_Order
+                        INSERT INTO Restaurant_Order 
                         (
                             VisitorID,
                             CustomerName,
@@ -164,7 +171,7 @@ namespace AQUACORE_CMPG223
                             OrderDate,
                             Status
                         )
-                        VALUES
+                        VALUES 
                         (
                             @VisitorID,
                             @CustomerName,
@@ -204,8 +211,6 @@ namespace AQUACORE_CMPG223
                         }
                         else
                         {
-                            // Staff may create a walk-in order.
-                            // Therefore VisitorID can be NULL.
                             cmd.Parameters.AddWithValue(
                                 "@VisitorID",
                                 DBNull.Value);
@@ -254,12 +259,6 @@ namespace AQUACORE_CMPG223
                         // -----------------------------------------
                         // ORDER DATE
                         // -----------------------------------------
-
-                        // Store the date in SQLite as:
-                        // yyyy-MM-dd
-                        //
-                        // Example:
-                        // 2026-09-15
 
                         cmd.Parameters.AddWithValue(
                             "@OrderDate",
@@ -315,8 +314,11 @@ namespace AQUACORE_CMPG223
                 txtQuantity.Text = "";
 
                 // Reset date to today's date
-                txtDate.Text =
+                string today =
                     DateTime.Now.ToString("yyyy-MM-dd");
+
+                txtDate.Text = today;
+                txtDate.Attributes["min"] = today;
 
                 // Uncheck all food items
                 foreach (ListItem item in cblFooditems.Items)

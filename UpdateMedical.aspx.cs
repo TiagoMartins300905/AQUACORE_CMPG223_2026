@@ -12,8 +12,8 @@ namespace AQUACORE_CMPG223
         private string GetConnectionString()
         {
             return ConfigurationManager
-            .ConnectionStrings["AquaCoreConnectionString"]
-            ?.ConnectionString;
+                .ConnectionStrings["AquaCoreConnectionString"]
+                ?.ConnectionString;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -22,6 +22,12 @@ namespace AQUACORE_CMPG223
             {
                 LoadMedicalDropdown();
                 LoadAnimalDropdown();
+
+                // Check-up date must be today or a future date
+                string today =
+                    DateTime.Now.ToString("yyyy-MM-dd");
+
+                txtCheckUp.Attributes["min"] = today;
             }
         }
 
@@ -43,7 +49,8 @@ namespace AQUACORE_CMPG223
 
             try
             {
-                using (SQLiteConnection con = new SQLiteConnection(connStr))
+                using (SQLiteConnection con =
+                    new SQLiteConnection(connStr))
                 {
                     string sql = @"
                     SELECT 
@@ -54,11 +61,13 @@ namespace AQUACORE_CMPG223
                     FROM Medical_Record
                     ORDER BY RecordID";
 
-                    using (SQLiteCommand cmd = new SQLiteCommand(sql, con))
+                    using (SQLiteCommand cmd =
+                        new SQLiteCommand(sql, con))
                     {
                         con.Open();
 
-                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        using (SQLiteDataReader reader =
+                            cmd.ExecuteReader())
                         {
                             ddlMedical.DataSource = reader;
                             ddlMedical.DataTextField = "RecordName";
@@ -70,13 +79,17 @@ namespace AQUACORE_CMPG223
 
                 ddlMedical.Items.Insert(
                     0,
-                    new ListItem("-- Select a Medical Record --", "")
+                    new ListItem(
+                        "-- Select a Medical Record --",
+                        ""
+                    )
                 );
             }
             catch (Exception ex)
             {
                 SetStatus(
-                    "Error loading medical records: " + ex.Message,
+                    "Error loading medical records: " +
+                    ex.Message,
                     Color.FromArgb(255, 107, 107)
                 );
             }
@@ -95,7 +108,8 @@ namespace AQUACORE_CMPG223
 
             try
             {
-                using (SQLiteConnection con = new SQLiteConnection(connStr))
+                using (SQLiteConnection con =
+                    new SQLiteConnection(connStr))
                 {
                     string sql = @"
                     SELECT 
@@ -104,11 +118,13 @@ namespace AQUACORE_CMPG223
                     FROM Animal
                     ORDER BY Name";
 
-                    using (SQLiteCommand cmd = new SQLiteCommand(sql, con))
+                    using (SQLiteCommand cmd =
+                        new SQLiteCommand(sql, con))
                     {
                         con.Open();
 
-                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        using (SQLiteDataReader reader =
+                            cmd.ExecuteReader())
                         {
                             ddlAnimal.DataSource = reader;
                             ddlAnimal.DataTextField = "AnimalName";
@@ -121,7 +137,8 @@ namespace AQUACORE_CMPG223
             catch (Exception ex)
             {
                 SetStatus(
-                    "Error loading animals: " + ex.Message,
+                    "Error loading animals: " +
+                    ex.Message,
                     Color.FromArgb(255, 107, 107)
                 );
             }
@@ -135,19 +152,23 @@ namespace AQUACORE_CMPG223
         {
             lblStatus.Text = "";
 
-            if (string.IsNullOrEmpty(ddlMedical.SelectedValue))
+            if (string.IsNullOrEmpty(
+                ddlMedical.SelectedValue))
             {
                 pnlEditForm.Visible = false;
                 return;
             }
 
-            int recordId = Convert.ToInt32(ddlMedical.SelectedValue);
+            int recordId =
+                Convert.ToInt32(ddlMedical.SelectedValue);
 
-            string connStr = GetConnectionString();
+            string connStr =
+                GetConnectionString();
 
             try
             {
-                using (SQLiteConnection con = new SQLiteConnection(connStr))
+                using (SQLiteConnection con =
+                    new SQLiteConnection(connStr))
                 {
                     string sql = @"
                     SELECT
@@ -158,7 +179,8 @@ namespace AQUACORE_CMPG223
                     FROM Medical_Record
                     WHERE RecordID = @RecordID";
 
-                    using (SQLiteCommand cmd = new SQLiteCommand(sql, con))
+                    using (SQLiteCommand cmd =
+                        new SQLiteCommand(sql, con))
                     {
                         cmd.Parameters.AddWithValue(
                             "@RecordID",
@@ -167,7 +189,8 @@ namespace AQUACORE_CMPG223
 
                         con.Open();
 
-                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        using (SQLiteDataReader reader =
+                            cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
@@ -175,9 +198,11 @@ namespace AQUACORE_CMPG223
                                 string animalId =
                                     reader["AnimalID"].ToString();
 
-                                if (ddlAnimal.Items.FindByValue(animalId) != null)
+                                if (ddlAnimal.Items.FindByValue(
+                                    animalId) != null)
                                 {
-                                    ddlAnimal.SelectedValue = animalId;
+                                    ddlAnimal.SelectedValue =
+                                        animalId;
                                 }
 
 
@@ -187,7 +212,8 @@ namespace AQUACORE_CMPG223
 
 
                                 // Load Check-Up Date
-                                if (reader["DateOfCheckup"] != DBNull.Value)
+                                if (reader["DateOfCheckup"] !=
+                                    DBNull.Value)
                                 {
                                     DateTime date =
                                         Convert.ToDateTime(
@@ -195,17 +221,30 @@ namespace AQUACORE_CMPG223
                                         );
 
                                     txtCheckUp.Text =
-                                        date.ToString("yyyy-MM-dd");
+                                        date.ToString(
+                                            "yyyy-MM-dd"
+                                        );
                                 }
                                 else
                                 {
                                     txtCheckUp.Text = "";
                                 }
 
+                                // Keep date restriction
+                                string today =
+                                    DateTime.Now.ToString(
+                                        "yyyy-MM-dd"
+                                    );
+
+                                txtCheckUp.Attributes["min"] =
+                                    today;
+
 
                                 // Load Follow-Up
                                 string followUp =
-                                    reader["IsFollowUpRequired"].ToString();
+                                    reader[
+                                        "IsFollowUpRequired"
+                                    ].ToString();
 
                                 if (followUp.Equals(
                                     "Yes",
@@ -230,7 +269,11 @@ namespace AQUACORE_CMPG223
 
                                 SetStatus(
                                     "Medical record not found.",
-                                    Color.FromArgb(255, 107, 107)
+                                    Color.FromArgb(
+                                        255,
+                                        107,
+                                        107
+                                    )
                                 );
                             }
                         }
@@ -240,7 +283,8 @@ namespace AQUACORE_CMPG223
             catch (Exception ex)
             {
                 SetStatus(
-                    "Error retrieving medical record: " + ex.Message,
+                    "Error retrieving medical record: " +
+                    ex.Message,
                     Color.FromArgb(255, 107, 107)
                 );
             }
@@ -248,9 +292,12 @@ namespace AQUACORE_CMPG223
 
 
         // 4. Update the medical record
-        protected void btnUpdate_Click(object sender, EventArgs e)
+        protected void btnUpdate_Click(
+            object sender,
+            EventArgs e)
         {
-            if (string.IsNullOrEmpty(ddlMedical.SelectedValue))
+            if (string.IsNullOrEmpty(
+                ddlMedical.SelectedValue))
             {
                 SetStatus(
                     "Please select a medical record first.",
@@ -262,7 +309,9 @@ namespace AQUACORE_CMPG223
 
 
             int recordId =
-                Convert.ToInt32(ddlMedical.SelectedValue);
+                Convert.ToInt32(
+                    ddlMedical.SelectedValue
+                );
 
 
             // Get Animal ID
@@ -285,7 +334,6 @@ namespace AQUACORE_CMPG223
             string vetName =
                 txtVet.Text.Trim();
 
-
             if (string.IsNullOrEmpty(vetName))
             {
                 SetStatus(
@@ -294,6 +342,22 @@ namespace AQUACORE_CMPG223
                 );
 
                 return;
+            }
+
+
+            // Veterinarian name must contain letters and spaces only
+            foreach (char character in vetName)
+            {
+                if (!char.IsLetter(character) &&
+                    !char.IsWhiteSpace(character))
+                {
+                    SetStatus(
+                        "Veterinarian name can only contain letters and spaces.",
+                        Color.FromArgb(255, 107, 107)
+                    );
+
+                    return;
+                }
             }
 
 
@@ -313,8 +377,22 @@ namespace AQUACORE_CMPG223
             }
 
 
+            // Check-up date must be today or future
+            if (checkUpDate.Date <
+                DateTime.Now.Date)
+            {
+                SetStatus(
+                    "Check-up date cannot be before today.",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
+            }
+
+
             // Check follow-up selection
-            if (!rdbYes.Checked && !rdbNo.Checked)
+            if (!rdbYes.Checked &&
+                !rdbNo.Checked)
             {
                 SetStatus(
                     "Please select whether a follow-up is required.",
@@ -329,7 +407,18 @@ namespace AQUACORE_CMPG223
                 rdbYes.Checked ? "Yes" : "No";
 
 
-            string connStr = GetConnectionString();
+            string connStr =
+                GetConnectionString();
+
+            if (string.IsNullOrEmpty(connStr))
+            {
+                SetStatus(
+                    "Database connection string missing in Web.config.",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
+            }
 
 
             try
@@ -345,7 +434,6 @@ namespace AQUACORE_CMPG223
                         DateOfCheckup = @DateOfCheckup,
                         IsFollowUpRequired = @IsFollowUpRequired
                     WHERE RecordID = @RecordID";
-
 
                     using (SQLiteCommand cmd =
                         new SQLiteCommand(sql, con))
@@ -367,7 +455,9 @@ namespace AQUACORE_CMPG223
 
                         cmd.Parameters.AddWithValue(
                             "@DateOfCheckup",
-                            checkUpDate.ToString("yyyy-MM-dd")
+                            checkUpDate.ToString(
+                                "yyyy-MM-dd"
+                            )
                         );
 
                         cmd.Parameters.AddWithValue(
@@ -375,38 +465,50 @@ namespace AQUACORE_CMPG223
                             followUpRequired
                         );
 
-
                         con.Open();
 
                         int rowsAffected =
                             cmd.ExecuteNonQuery();
 
-
                         if (rowsAffected > 0)
                         {
                             SetStatus(
                                 "Medical record updated successfully!",
-                                Color.FromArgb(128, 255, 219)
+                                Color.FromArgb(
+                                    128,
+                                    255,
+                                    219
+                                )
                             );
-
 
                             // Refresh medical records
                             LoadMedicalDropdown();
-
 
                             // Keep the updated record selected
                             ddlMedical.SelectedValue =
                                 recordId.ToString();
 
-
                             // Keep edit form visible
                             pnlEditForm.Visible = true;
+
+                            // Keep date restriction
+                            string today =
+                                DateTime.Now.ToString(
+                                    "yyyy-MM-dd"
+                                );
+
+                            txtCheckUp.Attributes["min"] =
+                                today;
                         }
                         else
                         {
                             SetStatus(
                                 "No medical record was updated.",
-                                Color.FromArgb(255, 107, 107)
+                                Color.FromArgb(
+                                    255,
+                                    107,
+                                    107
+                                )
                             );
                         }
                     }
@@ -415,22 +517,34 @@ namespace AQUACORE_CMPG223
             catch (Exception ex)
             {
                 SetStatus(
-                    "Database error during update: " + ex.Message,
-                    Color.FromArgb(255, 107, 107)
+                    "Database error during update: " +
+                    ex.Message,
+                    Color.FromArgb(
+                        255,
+                        107,
+                        107
+                    )
                 );
             }
         }
 
 
         // 5. Back button
-        protected void btnBack_Click(object sender, EventArgs e)
+        protected void btnBack_Click(
+            object sender,
+            EventArgs e)
         {
-            Response.Redirect("Medicals_Dashboard.aspx");
+            Response.Redirect(
+                "Medicals_Dashboard.aspx",
+                false
+            );
         }
 
 
         // 6. Optional radio button event
-        protected void rdbYes_CheckedChanged(object sender, EventArgs e)
+        protected void rdbYes_CheckedChanged(
+            object sender,
+            EventArgs e)
         {
             // No code is required here.
             // The selected value is checked when Update is clicked.
@@ -438,12 +552,12 @@ namespace AQUACORE_CMPG223
 
 
         // 7. Display status messages
-        private void SetStatus(string message, Color color)
+        private void SetStatus(
+            string message,
+            Color color)
         {
             lblStatus.Text = message;
             lblStatus.ForeColor = color;
         }
     }
-
-
 }

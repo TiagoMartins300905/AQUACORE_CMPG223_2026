@@ -37,30 +37,24 @@ namespace AQUACORE_CMPG223
 
         private void LoadOrders()
         {
-            DataTable dt = new DataTable();
-
             try
             {
-                using (SQLiteConnection con = new SQLiteConnection(connStr))
+                DataTable dt = new DataTable();
+
+                using (SQLiteConnection con =
+                       new SQLiteConnection(connStr))
                 {
                     con.Open();
 
-                    // ------------------------------------------------
-                    // Make sure SQLite foreign keys are enabled
-                    // ------------------------------------------------
 
-                    using (SQLiteCommand pragma =
-                           new SQLiteCommand(
-                               "PRAGMA foreign_keys = ON;",
-                               con))
-                    {
-                        pragma.ExecuteNonQuery();
-                    }
-
-
-                    // ------------------------------------------------
-                    // Query orders
-                    // ------------------------------------------------
+                    // ====================================================
+                    // IMPORTANT:
+                    // CAST OrderDate AS TEXT
+                    //
+                    // This prevents SQLite/.NET from trying to
+                    // automatically convert an invalid date value
+                    // into DateTime.
+                    // ====================================================
 
                     string sql = @"
                         SELECT
@@ -70,9 +64,13 @@ namespace AQUACORE_CMPG223
                             FoodItems,
                             Quantity,
                             TotalPrice,
-                            OrderDate,
+
+                            CAST(OrderDate AS TEXT) AS OrderDate,
+
                             Status
+
                         FROM Restaurant_Order
+
                         ORDER BY OrderID ASC;
                     ";
 
@@ -89,22 +87,22 @@ namespace AQUACORE_CMPG223
                 }
 
 
-                // ----------------------------------------------------
-                // Display data in GridView
-                // ----------------------------------------------------
+                // ====================================================
+                // DISPLAY DATA
+                // ====================================================
 
                 gvOrders.DataSource = dt;
+
                 gvOrders.DataBind();
 
 
-                // ----------------------------------------------------
-                // No records
-                // ----------------------------------------------------
+                // ====================================================
+                // CHECK FOR EMPTY TABLE
+                // ====================================================
 
                 if (dt.Rows.Count == 0)
                 {
                     ShowMessage(
-                        "The Restaurant_Order table is empty. " +
                         "No restaurant orders were found."
                     );
                 }
@@ -112,20 +110,22 @@ namespace AQUACORE_CMPG223
             catch (SQLiteException ex)
             {
                 gvOrders.DataSource = null;
+
                 gvOrders.DataBind();
 
                 ShowMessage(
-                    "SQLite database error:\n\n" +
+                    "SQLite database error: " +
                     ex.Message
                 );
             }
             catch (Exception ex)
             {
                 gvOrders.DataSource = null;
+
                 gvOrders.DataBind();
 
                 ShowMessage(
-                    "Error loading restaurant orders:\n\n" +
+                    "Could not load orders: " +
                     ex.Message
                 );
             }

@@ -11,7 +11,7 @@ namespace AQUACORE_CMPG223
 {
 
 
-    public partial class UpdateOrder
+    public partial class Update_Orders
     {
 
         /// <summary>
@@ -24,31 +24,40 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// Label1 control.
+        /// lblSelectOrder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lblSelectOrder;
 
         /// <summary>
-        /// txtOrderID control.
+        /// ddlSelectOrder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtOrderID;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSelectOrder;
 
         /// <summary>
-        /// Label2 control.
+        /// pnlEditForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Panel pnlEditForm;
+
+        /// <summary>
+        /// lblCustomerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCustomerName;
 
         /// <summary>
         /// txtCustomerName control.
@@ -60,13 +69,13 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.TextBox txtCustomerName;
 
         /// <summary>
-        /// Label3 control.
+        /// lblTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label lblTable;
 
         /// <summary>
         /// txtTable control.
@@ -78,13 +87,13 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.TextBox txtTable;
 
         /// <summary>
-        /// Label4 control.
+        /// lblQuantity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label lblQuantity;
 
         /// <summary>
         /// txtQuantity control.
@@ -96,22 +105,13 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.TextBox txtQuantity;
 
         /// <summary>
-        /// cblFooditems control.
+        /// lblDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList cblFooditems;
-
-        /// <summary>
-        /// Label5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
+        protected global::System.Web.UI.WebControls.Label lblDate;
 
         /// <summary>
         /// txtDate control.
@@ -123,31 +123,40 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.TextBox txtDate;
 
         /// <summary>
-        /// Label6 control.
+        /// cblFooditems control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
+        protected global::System.Web.UI.WebControls.CheckBoxList cblFooditems;
 
         /// <summary>
-        /// DropDownList1 control.
+        /// lblOrderStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        protected global::System.Web.UI.WebControls.Label lblOrderStatus;
 
         /// <summary>
-        /// Label7 control.
+        /// ddlStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label7;
+        protected global::System.Web.UI.WebControls.DropDownList ddlStatus;
+
+        /// <summary>
+        /// lblTotalLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalLabel;
 
         /// <summary>
         /// lblPrize control.
@@ -157,15 +166,6 @@ namespace AQUACORE_CMPG223
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPrize;
-
-        /// <summary>
-        /// lblStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblStatus;
 
         /// <summary>
         /// btnUpdate control.
@@ -184,5 +184,14 @@ namespace AQUACORE_CMPG223
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDashboard;
+
+        /// <summary>
+        /// lblStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStatus;
     }
 }

@@ -72,7 +72,7 @@ namespace AQUACORE_CMPG223
         protected void btnLogout_Click(object sender, EventArgs e)
         {
             // Add your logout redirect here.
-            Response.Redirect("MainScreen.aspx");
+            Response.Redirect("EmployeeLogin.aspx");
             // Example:
             // Session.Clear();
             // Session.Abandon();

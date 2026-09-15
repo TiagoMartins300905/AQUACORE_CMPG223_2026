@@ -45,13 +45,29 @@ namespace AQUACORE_CMPG223
                         {
                             if (reader.Read())
                             {
-                                // Successfully authenticated, save user info in session
-                                Session["LoggedInStaffID"] = reader["StaffID"].ToString();
-                                Session["LoggedInStaffName"] = reader["Name"].ToString();
-                                Session["LoggedInRole"] = reader["Role"].ToString();
+                                string staffId = reader["StaffID"].ToString();
+                                string staffName = reader["Name"].ToString();
+                                string role = reader["Role"].ToString();
 
-                                // Redirect to the new Employee Dashboard!
-                                Response.Redirect("EmployeeDashboard.aspx", false);
+                                // Save user info in session
+                                Session["LoggedInStaffID"] = staffId;
+                                Session["LoggedInStaffName"] = staffName;
+                                Session["LoggedInRole"] = role;
+
+                                // Normalize role for checking
+                                string normalizedRole = role.Trim().ToLower();
+
+                                // Redirect Admins and Managers to the Admin Dashboard
+                                if (normalizedRole == "admin" || normalizedRole == "manager")
+                                {
+                                    Response.Redirect("AdminDashBoard.aspx", false);
+                                }
+                                else
+                                {
+                                    // Other roles go to the regular Employee Dashboard
+                                    Response.Redirect("EmployeeDashboard.aspx", false);
+                                }
+
                                 Context.ApplicationInstance.CompleteRequest();
                             }
                             else

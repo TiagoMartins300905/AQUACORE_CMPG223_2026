@@ -58,7 +58,8 @@
                 </asp:DropDownList>
             </div>
 
-            <a href="EmployeeDashboard.aspx" class="btn-secondary" style="margin-top: 10px;">🏠 Return to Dashboard</a>
+            <!-- Dynamic exit route: Returns to EmployeeManagement for Admins/Managers, or EmployeeDashboard for regular staff -->
+            <asp:HyperLink ID="lnkReturn" runat="server" CssClass="btn-secondary" Style="margin-top: 10px;">🏠 Return</asp:HyperLink>
 
             <asp:Label ID="LblStatus" runat="server" CssClass="status-alert" />
 
@@ -93,10 +94,8 @@
                         <asp:DropDownList ID="DdlRole" runat="server" CssClass="input-box">
                             <asp:ListItem Text="-- Select Role --" Value="" />
                             <asp:ListItem Text="Manager" Value="Manager" />
-                            <asp:ListItem Text="Aquarist" Value="Aquarist" />
                             <asp:ListItem Text="Marine Keeper" Value="Marine Keeper" />
                             <asp:ListItem Text="Restaurant Employee" Value="RestaurantEmployee" />
-                            <asp:ListItem Text="Maintenance" Value="Maintenance" />
                             <asp:ListItem Text="Admin" Value="Admin" />
                         </asp:DropDownList>
                     </div>

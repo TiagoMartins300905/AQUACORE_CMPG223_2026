@@ -526,7 +526,7 @@
                 <asp:Button
                     ID="btnReturn"
                     runat="server"
-                    Text="↩ Return to Login"
+                    Text="↩ Return to Dashboard"
                     CssClass="return-button" OnClick="btnReturn_Click" />
 
             </div>

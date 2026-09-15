@@ -11,17 +11,22 @@ namespace AQUACORE_CMPG223
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-        }
-
-        protected void btnUpdate_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Update_Orders.aspx");
+            // Security Check
+            if (Session["LoggedInStaffID"] == null)
+            {
+                Response.Redirect("EmployeeLogin.aspx");
+                return;
+            }
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
             Response.Redirect("AddOrder.aspx");
+        }
+
+        protected void btnUpdate_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Update_Orders.aspx");
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
@@ -32,6 +37,32 @@ namespace AQUACORE_CMPG223
         protected void btnDisplay_Click(object sender, EventArgs e)
         {
             Response.Redirect("Display Orders.aspx");
+        }
+
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            HandleReturn();
+        }
+
+        protected void btnReturn_Click(object sender, EventArgs e)
+        {
+            HandleReturn();
+        }
+
+        // Shared logic to route correctly based on user role
+        private void HandleReturn()
+        {
+            string role = Session["LoggedInRole"] != null ? Session["LoggedInRole"].ToString().Trim().ToLower() : "";
+
+            if (role == "admin" || role == "manager")
+            {
+                Response.Redirect("AdminDashBoard.aspx");
+            }
+            else
+            {
+                // Route restaurant employees and other staff to the standard dashboard
+                Response.Redirect("EmployeeDashboard.aspx");
+            }
         }
     }
 }

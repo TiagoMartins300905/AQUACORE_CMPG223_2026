@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data.SQLite;
 using System.Drawing;
+using System.Web.UI.WebControls;
 
 namespace AQUACORE_CMPG223
 {
@@ -18,51 +19,35 @@ namespace AQUACORE_CMPG223
         {
             if (!IsPostBack)
             {
-                LoadAnimals();
-
-                pnlEditForm.Visible = false;
-                lblOutput.Text = "";
+                LoadAnimalDropdown();
+                lblGender.Text = "";
             }
         }
 
-        // =========================================================
-        // LOAD ANIMALS
-        // =========================================================
-        private void LoadAnimals()
+        // 1. Load all animals into the dropdown
+        private void LoadAnimalDropdown()
         {
             string connStr = GetConnectionString();
 
             if (string.IsNullOrEmpty(connStr))
             {
-                lblOutput.Text =
-                    "Database connection string is missing.";
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
+                SetStatus(
+                    "Database connection string is missing.",
+                    Color.FromArgb(255, 107, 107)
+                );
 
                 return;
             }
 
             try
             {
-                ddlSelectAnimal.Items.Clear();
-
-                ddlSelectAnimal.Items.Add(
-                    new System.Web.UI.WebControls.ListItem(
-                        "-- Select Animal --",
-                        ""
-                    )
-                );
-
                 using (SQLiteConnection con =
                     new SQLiteConnection(connStr))
                 {
                     string sql = @"
-                        SELECT
-                            AnimalID,
-                            Name
+                        SELECT AnimalID, Name
                         FROM Animal
-                        ORDER BY Name ASC";
+                        ORDER BY Name";
 
                     using (SQLiteCommand cmd =
                         new SQLiteCommand(sql, con))
@@ -72,92 +57,52 @@ namespace AQUACORE_CMPG223
                         using (SQLiteDataReader reader =
                             cmd.ExecuteReader())
                         {
-                            while (reader.Read())
-                            {
-                                string animalID =
-                                    reader["AnimalID"].ToString();
-
-                                string animalName =
-                                    reader["Name"].ToString();
-
-                                ddlSelectAnimal.Items.Add(
-                                    new System.Web.UI.WebControls.ListItem(
-                                        animalName +
-                                        " (ID: " +
-                                        animalID +
-                                        ")",
-                                        animalID
-                                    )
-                                );
-                            }
+                            ddlSelectAnimal.DataSource = reader;
+                            ddlSelectAnimal.DataTextField = "Name";
+                            ddlSelectAnimal.DataValueField = "AnimalID";
+                            ddlSelectAnimal.DataBind();
                         }
                     }
                 }
+
+                ddlSelectAnimal.Items.Insert(
+                    0,
+                    new ListItem(
+                        "-- Select an Animal --",
+                        ""
+                    )
+                );
             }
             catch (Exception ex)
             {
-                lblOutput.Text =
-                    "Error loading animals: " +
-                    ex.Message;
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
+                SetStatus(
+                    "Error loading animals: " + ex.Message,
+                    Color.FromArgb(255, 107, 107)
+                );
             }
         }
 
-        // =========================================================
-        // SELECT ANIMAL
-        // =========================================================
+        // 2. Load the selected animal's information
         protected void ddlSelectAnimal_SelectedIndexChanged(
             object sender,
             EventArgs e)
         {
+            lblOutput.Text = "";
+            lblGender.Text = "";
+
             if (string.IsNullOrEmpty(
                 ddlSelectAnimal.SelectedValue))
             {
                 pnlEditForm.Visible = false;
-                lblOutput.Text = "";
-
                 return;
             }
 
-            int animalID;
-
-            if (!int.TryParse(
-                ddlSelectAnimal.SelectedValue,
-                out animalID))
-            {
-                pnlEditForm.Visible = false;
-
-                lblOutput.Text =
-                    "Invalid animal selected.";
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
-
-                return;
-            }
-
-            LoadAnimal(animalID);
-        }
-
-        // =========================================================
-        // LOAD SELECTED ANIMAL
-        // =========================================================
-        private void LoadAnimal(int animalID)
-        {
             string connStr = GetConnectionString();
 
-            if (string.IsNullOrEmpty(connStr))
-            {
-                lblOutput.Text =
-                    "Database connection string is missing.";
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
-
-                return;
-            }
+            int animalID =
+                Convert.ToInt32(
+                    ddlSelectAnimal.SelectedValue
+                );
 
             try
             {
@@ -166,7 +111,6 @@ namespace AQUACORE_CMPG223
                 {
                     string sql = @"
                         SELECT
-                            AnimalID,
                             Name,
                             Species,
                             DateOfBirth,
@@ -190,53 +134,52 @@ namespace AQUACORE_CMPG223
                         {
                             if (reader.Read())
                             {
+                                // Name
                                 txtName.Text =
                                     reader["Name"].ToString();
 
+                                // Species
                                 txtSpecies.Text =
                                     reader["Species"].ToString();
 
+                                // Date of Birth
                                 if (reader["DateOfBirth"] != DBNull.Value)
                                 {
-                                    DateTime dob;
+                                    DateTime dob =
+                                        Convert.ToDateTime(
+                                            reader["DateOfBirth"]
+                                        );
 
-                                    if (DateTime.TryParse(
-                                        reader["DateOfBirth"].ToString(),
-                                        out dob))
-                                    {
-                                        txtDOB.Text =
-                                            dob.ToString("yyyy-MM-dd");
-                                    }
-                                    else
-                                    {
-                                        txtDOB.Text = "";
-                                    }
+                                    txtDOB.Text =
+                                        dob.ToString("yyyy-MM-dd");
                                 }
                                 else
                                 {
                                     txtDOB.Text = "";
                                 }
 
+                                // Gender
+                                rdbMale.Checked = false;
+                                rdbFemale.Checked = false;
+
                                 string gender =
                                     reader["Gender"].ToString();
 
-                                rdbMale.Checked =
-                                    gender.Equals(
-                                        "Male",
-                                        StringComparison.OrdinalIgnoreCase
-                                    );
+                                if (gender == "Male")
+                                {
+                                    rdbMale.Checked = true;
+                                }
+                                else if (gender == "Female")
+                                {
+                                    rdbFemale.Checked = true;
+                                }
 
-                                rdbFemale.Checked =
-                                    gender.Equals(
-                                        "Female",
-                                        StringComparison.OrdinalIgnoreCase
-                                    );
-
+                                // Habitat
                                 string habitat =
                                     reader["HabitatLocation"].ToString();
 
-                                if (ddHabitat.Items.FindByValue(
-                                    habitat) != null)
+                                if (ddHabitat.Items.FindByValue(habitat)
+                                    != null)
                                 {
                                     ddHabitat.SelectedValue =
                                         habitat;
@@ -246,23 +189,17 @@ namespace AQUACORE_CMPG223
                                     ddHabitat.SelectedIndex = 0;
                                 }
 
+                                // Show edit form
                                 pnlEditForm.Visible = true;
-
-                                lblOutput.Text =
-                                    "Animal loaded. Make your changes and click Save Changes.";
-
-                                lblOutput.ForeColor =
-                                    Color.FromArgb(128, 255, 219);
                             }
                             else
                             {
+                                SetStatus(
+                                    "Animal could not be found.",
+                                    Color.FromArgb(255, 107, 107)
+                                );
+
                                 pnlEditForm.Visible = false;
-
-                                lblOutput.Text =
-                                    "Animal could not be found.";
-
-                                lblOutput.ForeColor =
-                                    Color.FromArgb(255, 107, 122);
                             }
                         }
                     }
@@ -270,20 +207,24 @@ namespace AQUACORE_CMPG223
             }
             catch (Exception ex)
             {
-                pnlEditForm.Visible = false;
-
-                lblOutput.Text =
-                    "Error loading animal: " +
-                    ex.Message;
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
+                SetStatus(
+                    "Error retrieving animal: " +
+                    ex.Message,
+                    Color.FromArgb(255, 107, 107)
+                );
             }
         }
 
-        // =========================================================
-        // UPDATE ANIMAL
-        // =========================================================
+        // 3. Clear the gender error label when a radio is picked
+        protected void rdbGender_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rdbMale.Checked || rdbFemale.Checked)
+            {
+                lblGender.Text = "";
+            }
+        }
+
+        // 4. Update the animal
         protected void btnUpdate_Click(
             object sender,
             EventArgs e)
@@ -291,29 +232,18 @@ namespace AQUACORE_CMPG223
             if (string.IsNullOrEmpty(
                 ddlSelectAnimal.SelectedValue))
             {
-                lblOutput.Text =
-                    "Please select an animal first.";
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
-
-                return;
-            }
-
-            int animalID;
-
-            if (!int.TryParse(
-                ddlSelectAnimal.SelectedValue,
-                out animalID))
-            {
-                lblOutput.Text =
-                    "Invalid animal ID.";
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
+                SetStatus(
+                    "Please select an animal.",
+                    Color.FromArgb(255, 107, 107)
+                );
 
                 return;
             }
+
+            int animalID =
+                Convert.ToInt32(
+                    ddlSelectAnimal.SelectedValue
+                );
 
             string name =
                 txtName.Text.Trim();
@@ -321,8 +251,11 @@ namespace AQUACORE_CMPG223
             string species =
                 txtSpecies.Text.Trim();
 
-            string dateOfBirth =
+            string dobInput =
                 txtDOB.Text.Trim();
+
+            string habitat =
+                ddHabitat.SelectedValue;
 
             string gender = "";
 
@@ -335,104 +268,90 @@ namespace AQUACORE_CMPG223
                 gender = "Female";
             }
 
-            string habitat =
-                ddHabitat.SelectedValue;
+            // Validation
+            if (int.TryParse(name, out _))
+            {
+                SetStatus(
+                    "Please enter a valid name",
+                    Color.FromArgb(255, 107, 107)
+                );
 
-            // =====================================================
-            // VALIDATION
-            // =====================================================
+                return;
+            }
+
+            if (int.TryParse(species, out _))
+            {
+                SetStatus(
+                    "Please enter a valid species",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
+            }
 
             if (string.IsNullOrEmpty(name))
             {
-                lblOutput.Text =
-                    "Animal name is required.";
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
+                SetStatus(
+                    "Animal name is required.",
+                    Color.FromArgb(255, 107, 107)
+                );
 
                 return;
             }
 
             if (string.IsNullOrEmpty(species))
             {
-                lblOutput.Text =
-                    "Species is required.";
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
+                SetStatus(
+                    "Animal species is required.",
+                    Color.FromArgb(255, 107, 107)
+                );
 
                 return;
             }
 
-            if (string.IsNullOrEmpty(dateOfBirth))
+            if (string.IsNullOrEmpty(dobInput))
             {
-                lblOutput.Text =
-                    "Date of birth is required.";
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
+                SetStatus(
+                    "Date of birth is required.",
+                    Color.FromArgb(255, 107, 107)
+                );
 
                 return;
             }
 
-            DateTime parsedDOB;
+            DateTime dob;
 
             if (!DateTime.TryParse(
-                dateOfBirth,
-                out parsedDOB))
+                dobInput,
+                out dob))
             {
-                lblOutput.Text =
-                    "Please enter a valid date of birth.";
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
+                SetStatus(
+                    "Please enter a valid date of birth.",
+                    Color.FromArgb(255, 107, 107)
+                );
 
                 return;
             }
 
             if (string.IsNullOrEmpty(gender))
             {
-                lblOutput.Text =
-                    "Please select a gender.";
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
-
+                lblGender.Text = "Animal Gender cannot be left out!";
                 return;
             }
 
             if (string.IsNullOrEmpty(habitat))
             {
-                lblOutput.Text =
-                    "Please select a habitat.";
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
+                SetStatus(
+                    "Please select a habitat.",
+                    Color.FromArgb(255, 107, 107)
+                );
 
                 return;
             }
 
-            // =====================================================
-            // CONNECTION
-            // =====================================================
-
+            // Update database
             string connStr =
                 GetConnectionString();
-
-            if (string.IsNullOrEmpty(connStr))
-            {
-                lblOutput.Text =
-                    "Database connection string is missing.";
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
-
-                return;
-            }
-
-            // =====================================================
-            // UPDATE DATABASE
-            // =====================================================
 
             try
             {
@@ -453,6 +372,11 @@ namespace AQUACORE_CMPG223
                         new SQLiteCommand(sql, con))
                     {
                         cmd.Parameters.AddWithValue(
+                            "@AnimalID",
+                            animalID
+                        );
+
+                        cmd.Parameters.AddWithValue(
                             "@Name",
                             name
                         );
@@ -464,7 +388,7 @@ namespace AQUACORE_CMPG223
 
                         cmd.Parameters.AddWithValue(
                             "@DateOfBirth",
-                            parsedDOB.ToString("yyyy-MM-dd")
+                            dob
                         );
 
                         cmd.Parameters.AddWithValue(
@@ -477,11 +401,6 @@ namespace AQUACORE_CMPG223
                             habitat
                         );
 
-                        cmd.Parameters.AddWithValue(
-                            "@AnimalID",
-                            animalID
-                        );
-
                         con.Open();
 
                         int rowsAffected =
@@ -489,54 +408,43 @@ namespace AQUACORE_CMPG223
 
                         if (rowsAffected > 0)
                         {
-                            lblOutput.Text =
-                                "Animal #" +
-                                animalID +
-                                " updated successfully!";
+                            SetStatus(
+                                "Animal details updated successfully!",
+                                Color.FromArgb(128, 255, 219)
+                            );
 
-                            lblOutput.ForeColor =
-                                Color.FromArgb(128, 255, 219);
+                            // Refresh dropdown
+                            LoadAnimalDropdown();
 
-                            string selectedID =
+                            // Select the same animal again
+                            ddlSelectAnimal.SelectedValue =
                                 animalID.ToString();
 
-                            LoadAnimals();
-
-                            if (ddlSelectAnimal.Items.FindByValue(
-                                selectedID) != null)
-                            {
-                                ddlSelectAnimal.SelectedValue =
-                                    selectedID;
-                            }
-
                             pnlEditForm.Visible = true;
+
+                            lblGender.Text = "";
                         }
                         else
                         {
-                            lblOutput.Text =
-                                "Animal could not be updated.";
-
-                            lblOutput.ForeColor =
-                                Color.FromArgb(255, 107, 122);
+                            SetStatus(
+                                "Animal could not be updated.",
+                                Color.FromArgb(255, 107, 107)
+                            );
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                lblOutput.Text =
-                    "Database error while updating animal: " +
-                    ex.Message;
-
-                lblOutput.ForeColor =
-                    Color.FromArgb(255, 107, 122);
+                SetStatus(
+                    "Database error during update: " +
+                    ex.Message,
+                    Color.FromArgb(255, 107, 107)
+                );
             }
         }
 
-        // =========================================================
-        // BACK / CANCEL
-        // GOES TO ANIMAL MANAGEMENT DASHBOARD
-        // =========================================================
+        // 5. Menu button
         protected void btnMenu_Click(
             object sender,
             EventArgs e)
@@ -545,8 +453,15 @@ namespace AQUACORE_CMPG223
                 "Animals_DashBoard.aspx",
                 false
             );
+        }
 
-            Context.ApplicationInstance.CompleteRequest();
+        // 6. Display messages
+        private void SetStatus(
+            string message,
+            Color color)
+        {
+            lblOutput.Text = message;
+            lblOutput.ForeColor = color;
         }
     }
 }

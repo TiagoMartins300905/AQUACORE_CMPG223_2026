@@ -209,7 +209,7 @@ namespace AQUACORE_CMPG223
             EventArgs e)
         {
             Response.Redirect(
-                "VisitorsDashboard.aspx"
+                "AdminDashBoard.aspx"
             );
         }
     }

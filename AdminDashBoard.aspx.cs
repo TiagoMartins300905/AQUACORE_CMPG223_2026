@@ -9,7 +9,7 @@ namespace AQUACORE_CMPG223
         {
             if (!IsPostBack)
             {
-                // Dashboard initialization code goes here.
+                
             }
         }
 
@@ -19,10 +19,8 @@ namespace AQUACORE_CMPG223
 
         protected void btnVisitors_Click(object sender, EventArgs e)
         {
-            // Add your Visitors dashboard redirect here.
 
-            // Example:
-            // Response.Redirect("VisitorsDashboard.aspx");
+            Response.Redirect("ViewVisitors.aspx");
         }
 
 
@@ -34,8 +32,7 @@ namespace AQUACORE_CMPG223
         {
             // Add your Employees dashboard redirect here.
             Response.Redirect("EmployeeManagement.aspx");
-            // Example:
-            // Response.Redirect("EmployeesDashboard.aspx");
+            
         }
 
 
@@ -47,8 +44,7 @@ namespace AQUACORE_CMPG223
         {
             // Add your Animals dashboard redirect here.
             Response.Redirect("AnimalManagementDashboard.aspx");
-            // Example:
-            // Response.Redirect("AnimalsDashboard.aspx");
+            
         }
 
 
@@ -60,8 +56,7 @@ namespace AQUACORE_CMPG223
         {
             // Add your Restaurant dashboard redirect here.
             Response.Redirect("RestaurantOrders_Dashboard.aspx");
-            // Example:
-            // Response.Redirect("RestaurantDashboard.aspx");
+            
         }
 
 
@@ -73,10 +68,7 @@ namespace AQUACORE_CMPG223
         {
             // Add your logout redirect here.
             Response.Redirect("EmployeeLogin.aspx");
-            // Example:
-            // Session.Clear();
-            // Session.Abandon();
-            // Response.Redirect("Login.aspx");
+            
         }
     }
 }

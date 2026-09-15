@@ -1092,7 +1092,7 @@
                 <asp:Button
                     ID="btnDashboard"
                     runat="server"
-                    Text="← Visitors Dashboard"
+                    Text="← Admin Dashboard"
                     CssClass="dashboard-button"
                     OnClick="btnDashboard_Click"
                     CausesValidation="false" />

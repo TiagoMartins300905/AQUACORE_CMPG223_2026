@@ -1,5 +1,4 @@
-﻿
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EmployeeLogin.aspx.cs" Inherits="AQUACORE_CMPG223.EmployeeLogin" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EmployeeLogin.aspx.cs" Inherits="AQUACORE_CMPG223.EmployeeLogin" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -102,6 +101,26 @@
             box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.18);
         }
 
+        .contact-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-top: -0.5rem;
+            margin-bottom: 0.25rem;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: rgba(0, 240, 255, 0.04);
+            border: 1px solid rgba(0, 240, 255, 0.12);
+            color: var(--text-sub);
+            font-size: 0.78rem;
+            line-height: 1.5;
+        }
+
+        .contact-note .icon {
+            color: var(--accent-cyan);
+            flex-shrink: 0;
+        }
+
         .actions-wrapper { margin-top: 1.75rem; display: flex; flex-direction: column; gap: 12px; }
         .btn-submit {
             width: 100%; padding: 13px; border: none; border-radius: 12px;
@@ -140,6 +159,11 @@
             <div class="form-field">
                 <label>Password</label>
                 <asp:TextBox ID="TxtPassword" runat="server" CssClass="input-box" TextMode="Password" placeholder="Enter your password" />
+            </div>
+
+            <div class="contact-note">
+                <span class="icon">🔒</span>
+                <span>Forgot your password? Please contact your system administrator to have it reset.</span>
             </div>
 
             <div class="actions-wrapper">

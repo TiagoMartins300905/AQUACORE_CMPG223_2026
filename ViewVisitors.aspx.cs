@@ -6,7 +6,7 @@ using System.Web.UI;
 
 namespace AQUACORE_CMPG223
 {
-    public partial class Display_Orders : System.Web.UI.Page
+    public partial class ViewVisitors : System.Web.UI.Page
     {
         // ============================================================
         // DATABASE CONNECTION
@@ -14,8 +14,8 @@ namespace AQUACORE_CMPG223
 
         private readonly string connStr =
             ConfigurationManager
-            .ConnectionStrings["AquaCoreConnectionString"]
-            .ConnectionString;
+                .ConnectionStrings["AquaCoreConnectionString"]
+                .ConnectionString;
 
 
         // ============================================================
@@ -26,56 +26,37 @@ namespace AQUACORE_CMPG223
         {
             if (!IsPostBack)
             {
-                LoadOrders();
+                LoadVisitors();
             }
         }
 
 
         // ============================================================
-        // LOAD ORDERS
+        // LOAD VISITORS
         // ============================================================
 
-        private void LoadOrders()
+        private void LoadVisitors()
         {
             try
             {
                 DataTable dt = new DataTable();
-
-
-                // ====================================================
-                // DATABASE CONNECTION
-                // ====================================================
 
                 using (SQLiteConnection con =
                        new SQLiteConnection(connStr))
                 {
                     con.Open();
 
-
-                    // =================================================
-                    // SQL QUERY
-                    //
-                    // CAST OrderDate AS TEXT prevents SQLite/.NET
-                    // from trying to automatically convert an invalid
-                    // date value into DateTime.
-                    // =================================================
-
                     string sql = @"
                         SELECT
-                            OrderID,
-                            CustomerName,
-                            TableNumber,
-                            FoodItems,
-                            Quantity,
-                            TotalPrice,
-                            CAST(OrderDate AS TEXT) AS OrderDate,
-                            Status
-
-                        FROM Restaurant_Order
-
-                        ORDER BY OrderID ASC;
+                            VisitorID,
+                            Name,
+                            Surname,
+                            Email,
+                            PhoneNumber,
+                            CreatedDate
+                        FROM Visitors
+                        ORDER BY VisitorID ASC;
                     ";
-
 
                     using (SQLiteCommand cmd =
                            new SQLiteCommand(sql, con))
@@ -90,44 +71,18 @@ namespace AQUACORE_CMPG223
 
 
                 // ====================================================
-                // DISPLAY DATA IN GRIDVIEW
+                // DISPLAY VISITORS
                 // ====================================================
 
-                gvOrders.DataSource = dt;
-
-                gvOrders.DataBind();
-
-
-                // ====================================================
-                // CALCULATE TOTAL REVENUE
-                // ====================================================
-
-                decimal totalRevenue = 0;
-
-
-                foreach (DataRow row in dt.Rows)
-                {
-                    if (row["TotalPrice"] != DBNull.Value)
-                    {
-                        decimal orderTotal;
-
-
-                        if (decimal.TryParse(
-                            row["TotalPrice"].ToString(),
-                            out orderTotal))
-                        {
-                            totalRevenue += orderTotal;
-                        }
-                    }
-                }
+                gvVisitors.DataSource = dt;
+                gvVisitors.DataBind();
 
 
                 // ====================================================
-                // DISPLAY TOTAL REVENUE
+                // LOAD TOTAL REVENUE
                 // ====================================================
 
-                lblTotalRevenue.Text =
-                    "R " + totalRevenue.ToString("N2");
+                LoadTotalRevenue();
 
 
                 // ====================================================
@@ -136,21 +91,17 @@ namespace AQUACORE_CMPG223
 
                 if (dt.Rows.Count == 0)
                 {
-                    lblTotalRevenue.Text = "R 0.00";
-
                     ShowMessage(
-                        "No restaurant orders were found."
+                        "No visitors were found."
                     );
                 }
             }
             catch (SQLiteException ex)
             {
-                gvOrders.DataSource = null;
-
-                gvOrders.DataBind();
+                gvVisitors.DataSource = null;
+                gvVisitors.DataBind();
 
                 lblTotalRevenue.Text = "R 0.00";
-
 
                 ShowMessage(
                     "SQLite database error: " +
@@ -159,16 +110,69 @@ namespace AQUACORE_CMPG223
             }
             catch (Exception ex)
             {
-                gvOrders.DataSource = null;
-
-                gvOrders.DataBind();
+                gvVisitors.DataSource = null;
+                gvVisitors.DataBind();
 
                 lblTotalRevenue.Text = "R 0.00";
 
-
                 ShowMessage(
-                    "Could not load orders: " +
+                    "Could not load visitors: " +
                     ex.Message
+                );
+            }
+        }
+
+
+        // ============================================================
+        // LOAD TOTAL TICKET REVENUE
+        // ============================================================
+
+        private void LoadTotalRevenue()
+        {
+            try
+            {
+                decimal totalRevenue = 0;
+
+                using (SQLiteConnection con =
+                       new SQLiteConnection(connStr))
+                {
+                    con.Open();
+
+                    string sql = @"
+                        SELECT
+                            COALESCE(SUM(TotalCost), 0)
+                        FROM Reservations;
+                    ";
+
+                    using (SQLiteCommand cmd =
+                           new SQLiteCommand(sql, con))
+                    {
+                        object result =
+                            cmd.ExecuteScalar();
+
+                        if (result != null &&
+                            result != DBNull.Value)
+                        {
+                            totalRevenue =
+                                Convert.ToDecimal(result);
+                        }
+                    }
+                }
+
+
+                // ====================================================
+                // DISPLAY REVENUE
+                // ====================================================
+
+                lblTotalRevenue.Text =
+                    "R " + totalRevenue.ToString("N2");
+            }
+            catch (Exception ex)
+            {
+                lblTotalRevenue.Text = "R 0.00";
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Revenue error: " + ex.Message
                 );
             }
         }
@@ -187,10 +191,9 @@ namespace AQUACORE_CMPG223
                     .Replace("\r", "")
                     .Replace("\n", "\\n");
 
-
             ClientScript.RegisterStartupScript(
                 this.GetType(),
-                "OrderMessage",
+                "VisitorMessage",
                 "alert('" + safeMessage + "');",
                 true
             );
@@ -206,7 +209,7 @@ namespace AQUACORE_CMPG223
             EventArgs e)
         {
             Response.Redirect(
-                "RestaurantOrders_Dashboard.aspx"
+                "VisitorsDashboard.aspx"
             );
         }
     }

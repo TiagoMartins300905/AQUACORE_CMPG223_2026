@@ -107,6 +107,7 @@
     <Content Include="AdminDashBoard.aspx" />
     <Content Include="AnimalManagementDashboard.aspx" />
     <Content Include="Animals_DashBoard.aspx" />
+    <Content Include="Contact.aspx" />
     <Content Include="DeleteEmployee.aspx" />
     <Content Include="DeleteOrder.aspx" />
     <Content Include="Delete_feeding.aspx" />
@@ -130,9 +131,11 @@
     <Content Include="VisitorDashboard.aspx" />
     <Content Include="VisitorForgotPassword.aspx" />
     <Content Include="VisitorLogin.aspx" />
+    <Content Include="VisitorMyOrders.aspx" />
     <Content Include="VisitorMyReservations.aspx" />
     <Content Include="VisitorReservations.aspx" />
     <Content Include="VisitorResetPassword.aspx" />
+    <Content Include="VisitorRestaurantOrder.aspx" />
     <Content Include="VisitorSignUp.aspx" />
     <Content Include="VisitorTicket.aspx" />
     <Content Include="VisitorWelcomePage.aspx" />
@@ -188,6 +191,13 @@
     </Compile>
     <Compile Include="Animals_DashBoard.aspx.designer.cs">
       <DependentUpon>Animals_DashBoard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="DeleteEmployee.aspx.cs">
       <DependentUpon>DeleteEmployee.aspx</DependentUpon>
@@ -347,6 +357,13 @@
     <Compile Include="VisitorLogin.aspx.designer.cs">
       <DependentUpon>VisitorLogin.aspx</DependentUpon>
     </Compile>
+    <Compile Include="VisitorMyOrders.aspx.cs">
+      <DependentUpon>VisitorMyOrders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VisitorMyOrders.aspx.designer.cs">
+      <DependentUpon>VisitorMyOrders.aspx</DependentUpon>
+    </Compile>
     <Compile Include="VisitorMyReservations.aspx.cs">
       <DependentUpon>VisitorMyReservations.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -367,6 +384,13 @@
     </Compile>
     <Compile Include="VisitorResetPassword.aspx.designer.cs">
       <DependentUpon>VisitorResetPassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VisitorRestaurantOrder.aspx.cs">
+      <DependentUpon>VisitorRestaurantOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VisitorRestaurantOrder.aspx.designer.cs">
+      <DependentUpon>VisitorRestaurantOrder.aspx</DependentUpon>
     </Compile>
     <Compile Include="VisitorSignUp.aspx.cs">
       <DependentUpon>VisitorSignUp.aspx</DependentUpon>

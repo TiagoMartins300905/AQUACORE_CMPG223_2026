@@ -319,7 +319,7 @@
     }
 
 
-    .menu a:first-child::before {
+    .menu a:nth-child(1)::before {
 
         content: "🎟️";
 
@@ -327,9 +327,25 @@
     }
 
 
-    .menu a:last-child::before {
+    .menu a:nth-child(2)::before {
 
         content: "📋";
+
+        margin-right: 10px;
+    }
+
+
+    .menu a:nth-child(3)::before {
+
+        content: "🍽️";
+
+        margin-right: 10px;
+    }
+
+
+    .menu a:nth-child(4)::before {
+
+        content: "📖";
 
         margin-right: 10px;
     }
@@ -725,6 +741,20 @@
             <a href="VisitorMyReservations.aspx">
 
                 My Reservations
+
+            </a>
+
+
+            <a href="VisitorRestaurantOrder.aspx">
+
+                Restaurant Order
+
+            </a>
+
+
+            <a href="VisitorMyOrders.aspx">
+
+                My Orders
 
             </a>
 

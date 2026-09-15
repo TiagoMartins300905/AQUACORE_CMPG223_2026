@@ -39,9 +39,30 @@ namespace AQUACORE_CMPG223
                 // Clear search box
                 txtFilter.Text = "";
 
+                // Generate current date and time
+                SetPrintDateTime();
+
                 // Load all animals
                 LoadAnimals();
             }
+            else
+            {
+                // Keep the print date/time updated
+                SetPrintDateTime();
+            }
+        }
+
+
+        // ==========================================
+        // GENERATE PRINT DATE AND TIME
+        // ==========================================
+
+        private void SetPrintDateTime()
+        {
+            lblPrintDate.Text =
+                DateTime.Now.ToString(
+                    "dd MMMM yyyy, HH:mm:ss"
+                );
         }
 
 
@@ -59,17 +80,26 @@ namespace AQUACORE_CMPG223
                     con.Open();
 
 
-                    // Get filter column
+                    // ==========================================
+                    // GET FILTER COLUMN
+                    // ==========================================
+
                     string filterColumn =
                         GetFilterColumn();
 
 
-                    // Get sort column
+                    // ==========================================
+                    // GET SORT COLUMN
+                    // ==========================================
+
                     string sortColumn =
                         GetSortColumn();
 
 
-                    // Get sort direction
+                    // ==========================================
+                    // GET SORT DIRECTION
+                    // ==========================================
+
                     string sortDirection =
                         GetSortDirection();
 
@@ -79,13 +109,13 @@ namespace AQUACORE_CMPG223
                     // ==========================================
 
                     string sql = @"
-                        SELECT *
-                        FROM Animal
-                    ";
+                    SELECT *
+                    FROM Animal
+                ";
 
 
                     // ==========================================
-                    // FILTER
+                    // CHECK IF FILTER IS BEING USED
                     // ==========================================
 
                     bool hasFilter =
@@ -98,18 +128,18 @@ namespace AQUACORE_CMPG223
                         );
 
 
+                    // ==========================================
+                    // ADD FILTER
+                    // ==========================================
+
                     if (hasFilter)
                     {
                         /*
-                         * Age is normally a number.
+                         * Age is a number, so it uses
+                         * an exact comparison.
                          *
-                         * Therefore:
-                         *
-                         * Name / Species / Gender
+                         * Name, Species and Gender
                          * use LIKE.
-                         *
-                         * Age
-                         * uses an exact number comparison.
                          */
 
                         if (ddlFilter.SelectedValue == "Age")
@@ -130,7 +160,7 @@ namespace AQUACORE_CMPG223
 
 
                     // ==========================================
-                    // SORTING
+                    // ADD SORTING
                     // ==========================================
 
                     sql +=
@@ -141,14 +171,14 @@ namespace AQUACORE_CMPG223
 
 
                     // ==========================================
-                    // SQL COMMAND
+                    // CREATE SQL COMMAND
                     // ==========================================
 
                     using (SQLiteCommand cmd =
                            new SQLiteCommand(sql, con))
                     {
                         // ==========================================
-                        // FILTER PARAMETER
+                        // ADD FILTER PARAMETER
                         // ==========================================
 
                         if (hasFilter)
@@ -168,8 +198,7 @@ namespace AQUACORE_CMPG223
                                     );
 
 
-                                // If the user entered
-                                // something that isn't a number
+                                // Invalid age entered
                                 if (!validAge)
                                 {
                                     GridView1.DataSource = null;
@@ -217,7 +246,7 @@ namespace AQUACORE_CMPG223
                             adapter.Fill(dt);
 
 
-                            // Put data into GridView
+                            // Bind data to GridView
                             GridView1.DataSource = dt;
 
                             GridView1.DataBind();
@@ -334,6 +363,8 @@ namespace AQUACORE_CMPG223
             EventArgs e)
         {
             LoadAnimals();
+
+            SetPrintDateTime();
         }
 
 
@@ -350,6 +381,8 @@ namespace AQUACORE_CMPG223
             rdoDESC.Checked = false;
 
             LoadAnimals();
+
+            SetPrintDateTime();
         }
 
 
@@ -366,6 +399,8 @@ namespace AQUACORE_CMPG223
             rdoASC.Checked = false;
 
             LoadAnimals();
+
+            SetPrintDateTime();
         }
 
 
@@ -382,4 +417,6 @@ namespace AQUACORE_CMPG223
             );
         }
     }
+
+
 }

@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true"
-    CodeBehind="Display Orders.aspx.cs"
-    Inherits="AQUACORE_CMPG223.Display_Orders" %>
+    CodeBehind="ViewVisitors.aspx.cs"
+    Inherits="AQUACORE_CMPG223.ViewVisitors" %>
 
 <!DOCTYPE html>
 
@@ -11,21 +11,32 @@
     <style>
 
         :root {
-            --abyss-deep: #041c20;
-            --ocean-deep: #063b40;
+            --coral: #ff7f6e;
+            --coral-light: #ff9b8c;
+            --coral-dark: #e86657;
 
-            --teal-dark: #087f82;
-            --teal: #00bfa6;
-            --teal-glow: #19e6cc;
-            --teal-soft: #70f2df;
+            --turquoise: #2dd4bf;
+            --turquoise-dark: #14b8a6;
 
-            --card-glass: rgba(6, 59, 64, 0.72);
-            --card-border: rgba(0, 191, 166, 0.25);
+            --cream: #fff8f2;
+            --sand: #f7e7d7;
 
-            --text-primary: #eefcfb;
-            --text-muted: #91b8b5;
+            --text-dark: #263238;
+            --text-muted: #6b7280;
+
+            --white: #ffffff;
+
+            --card-shadow:
+                0 12px 30px rgba(0, 0, 0, 0.10);
+
+            --soft-shadow:
+                0 6px 18px rgba(0, 0, 0, 0.08);
         }
 
+
+        /* ============================================================
+           RESET
+        ============================================================ */
 
         * {
             box-sizing: border-box;
@@ -40,74 +51,24 @@
         }
 
 
-        body {
-            background:
-                radial-gradient(
-                    circle at 50% 10%,
-                    #0b5558 0%,
-                    var(--ocean-deep) 38%,
-                    var(--abyss-deep) 100%
-                );
-
-            color: var(--text-primary);
-
-            min-height: 100vh;
-
-            display: flex;
-
-            justify-content: center;
-
-            padding: 40px 20px;
-
-            position: relative;
-
-            overflow-x: hidden;
-        }
-
-
         /* ============================================================
-           BACKGROUND GLOW
+           BODY
         ============================================================ */
 
-        body::before {
-            content: "";
+        body {
+            min-height: 100vh;
 
-            position: fixed;
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff8f2 0%,
+                    #fff1eb 45%,
+                    #e9faf7 100%
+                );
 
-            width: 500px;
-            height: 500px;
+            color: var(--text-dark);
 
-            border-radius: 50%;
-
-            background: rgba(0, 191, 166, 0.06);
-
-            filter: blur(80px);
-
-            top: 5%;
-            left: -150px;
-
-            pointer-events: none;
-        }
-
-
-        body::after {
-            content: "";
-
-            position: fixed;
-
-            width: 450px;
-            height: 450px;
-
-            border-radius: 50%;
-
-            background: rgba(25, 230, 204, 0.04);
-
-            filter: blur(80px);
-
-            bottom: -150px;
-            right: -100px;
-
-            pointer-events: none;
+            padding: 30px 50px;
         }
 
 
@@ -117,31 +78,28 @@
 
         .page-container {
             width: 100%;
-            max-width: 1100px;
-
-            position: relative;
-
-            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
 
         /* ============================================================
-           GLASS PANEL
+           MAIN CARD
         ============================================================ */
 
         .glass-panel {
-            background: var(--card-glass);
+            background:
+                rgba(255, 255, 255, 0.92);
 
-            border: 1px solid var(--card-border);
-
-            border-radius: 16px;
+            border-radius: 18px;
 
             padding: 32px;
 
             box-shadow:
-                0 10px 30px rgba(0, 0, 0, 0.35);
+                var(--card-shadow);
 
-            backdrop-filter: blur(8px);
+            border:
+                1px solid rgba(255, 255, 255, 0.8);
         }
 
 
@@ -154,20 +112,20 @@
 
             align-items: center;
 
-            gap: 16px;
+            gap: 15px;
 
             padding-bottom: 25px;
 
             margin-bottom: 25px;
 
             border-bottom:
-                1px solid rgba(0, 191, 166, 0.15);
+                1px solid rgba(255, 127, 110, 0.15);
         }
 
 
         .header-icon {
-            width: 60px;
-            height: 60px;
+            width: 58px;
+            height: 58px;
 
             display: flex;
 
@@ -177,20 +135,23 @@
             border-radius: 15px;
 
             background:
-                rgba(0, 191, 166, 0.09);
+                linear-gradient(
+                    135deg,
+                    var(--coral),
+                    var(--coral-light)
+                );
 
-            border:
-                1px solid rgba(0, 191, 166, 0.25);
+            color: white;
 
-            font-size: 1.9rem;
+            font-size: 27px;
 
             box-shadow:
-                0 0 20px rgba(0, 191, 166, 0.08);
+                0 6px 15px rgba(255, 127, 110, 0.25);
         }
 
 
         .page-header h1 {
-            color: #ffffff;
+            color: var(--text-dark);
 
             font-size: 1.9rem;
 
@@ -206,10 +167,10 @@
 
 
         /* ============================================================
-           RESTAURANT BADGE
+           VISITOR BADGE
         ============================================================ */
 
-        .restaurant-badge {
+        .visitor-badge {
             display: inline-flex;
 
             align-items: center;
@@ -223,12 +184,12 @@
             border-radius: 20px;
 
             background:
-                rgba(0, 191, 166, 0.08);
+                rgba(45, 212, 191, 0.12);
 
             border:
-                1px solid rgba(0, 191, 166, 0.2);
+                1px solid rgba(45, 212, 191, 0.25);
 
-            color: var(--teal-soft);
+            color: var(--turquoise-dark);
 
             font-size: 0.75rem;
 
@@ -254,10 +215,10 @@
             border-radius: 10px;
 
             background:
-                rgba(0, 191, 166, 0.05);
+                rgba(45, 212, 191, 0.08);
 
             border:
-                1px solid rgba(0, 191, 166, 0.13);
+                1px solid rgba(45, 212, 191, 0.18);
 
             color: var(--text-muted);
 
@@ -268,9 +229,20 @@
 
 
         .info-icon {
-            font-size: 1.2rem;
+            width: 32px;
+            height: 32px;
 
-            color: var(--teal-soft);
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background:
+                rgba(45, 212, 191, 0.15);
+
+            color: var(--turquoise-dark);
 
             flex-shrink: 0;
         }
@@ -294,7 +266,7 @@
 
 
         .table-heading h2 {
-            color: var(--teal-glow);
+            color: var(--text-dark);
 
             font-size: 1.2rem;
         }
@@ -319,13 +291,13 @@
             border-radius: 12px;
 
             border:
-                1px solid rgba(0, 191, 166, 0.18);
+                1px solid rgba(255, 127, 110, 0.15);
 
             background:
-                rgba(4, 28, 32, 0.5);
+                rgba(255, 255, 255, 0.75);
 
             box-shadow:
-                0 8px 25px rgba(0, 0, 0, 0.2);
+                var(--soft-shadow);
         }
 
 
@@ -333,12 +305,12 @@
            GRIDVIEW
         ============================================================ */
 
-        .orders-table {
+        .visitors-table {
             width: 100%;
 
             border-collapse: collapse;
 
-            color: var(--text-primary);
+            color: var(--text-dark);
 
             font-size: 0.88rem;
         }
@@ -348,14 +320,14 @@
            TABLE HEADER
         ============================================================ */
 
-        .orders-table th {
+        .visitors-table th {
             padding: 15px 14px;
 
             background:
                 linear-gradient(
                     135deg,
-                    var(--teal-dark),
-                    #075e61
+                    var(--coral),
+                    var(--coral-light)
                 );
 
             color: #ffffff;
@@ -365,7 +337,7 @@
             text-align: left;
 
             border-bottom:
-                1px solid rgba(25, 230, 204, 0.35);
+                1px solid rgba(255, 127, 110, 0.25);
 
             white-space: nowrap;
         }
@@ -375,16 +347,16 @@
            TABLE CELLS
         ============================================================ */
 
-        .orders-table td {
+        .visitors-table td {
             padding: 13px 14px;
 
-            color: #cde7e4;
+            color: #4b5563;
 
             border-bottom:
-                1px solid rgba(0, 191, 166, 0.10);
+                1px solid rgba(255, 127, 110, 0.10);
 
             background:
-                rgba(4, 28, 32, 0.35);
+                rgba(255, 255, 255, 0.65);
         }
 
 
@@ -392,9 +364,9 @@
            ALTERNATING ROWS
         ============================================================ */
 
-        .orders-table tr:nth-child(even) td {
+        .visitors-table tr:nth-child(even) td {
             background:
-                rgba(0, 191, 166, 0.035);
+                rgba(45, 212, 191, 0.035);
         }
 
 
@@ -402,11 +374,11 @@
            HOVER
         ============================================================ */
 
-        .orders-table tr:hover td {
+        .visitors-table tr:hover td {
             background:
-                rgba(0, 191, 166, 0.09);
+                rgba(255, 127, 110, 0.07);
 
-            color: #ffffff;
+            color: var(--text-dark);
         }
 
 
@@ -414,7 +386,7 @@
            LAST ROW
         ============================================================ */
 
-        .orders-table tr:last-child td {
+        .visitors-table tr:last-child td {
             border-bottom: none;
         }
 
@@ -423,7 +395,7 @@
            EMPTY DATA
         ============================================================ */
 
-        .orders-table td:only-child {
+        .visitors-table td:only-child {
             text-align: center;
 
             padding: 30px;
@@ -433,7 +405,7 @@
 
 
         /* ============================================================
-           TOTAL REVENUE
+           REVENUE
         ============================================================ */
 
         .revenue-row {
@@ -452,13 +424,13 @@
             border-radius: 10px;
 
             background:
-                rgba(0, 191, 166, 0.06);
+                rgba(45, 212, 191, 0.08);
 
             border:
-                1px solid rgba(0, 191, 166, 0.18);
+                1px solid rgba(45, 212, 191, 0.20);
 
             box-shadow:
-                0 5px 15px rgba(0, 0, 0, 0.12);
+                var(--soft-shadow);
         }
 
 
@@ -472,14 +444,11 @@
 
 
         .revenue-value {
-            color: var(--teal-glow);
+            color: var(--turquoise-dark);
 
             font-size: 1.25rem;
 
             font-weight: 700;
-
-            text-shadow:
-                0 0 10px rgba(25, 230, 204, 0.2);
         }
 
 
@@ -503,7 +472,7 @@
             padding-top: 25px;
 
             border-top:
-                1px solid rgba(0, 191, 166, 0.12);
+                1px solid rgba(255, 127, 110, 0.12);
         }
 
 
@@ -516,13 +485,13 @@
 
             padding: 11px 20px;
 
-            border-radius: 8px;
+            border-radius: 10px;
 
             background:
                 linear-gradient(
                     135deg,
-                    #19e6cc,
-                    #087f82
+                    var(--coral),
+                    var(--coral-dark)
                 );
 
             color: #ffffff;
@@ -540,12 +509,10 @@
 
 
         .print-button:hover {
-            transform: translateY(-1px);
-
-            opacity: 0.93;
+            transform: translateY(-2px);
 
             box-shadow:
-                0 5px 15px rgba(0, 191, 166, 0.22);
+                0 6px 15px rgba(255, 127, 110, 0.25);
         }
 
 
@@ -558,10 +525,14 @@
 
             padding: 11px 20px;
 
-            border-radius: 8px;
+            border-radius: 10px;
 
             background:
-                rgba(6, 59, 64, 0.9);
+                linear-gradient(
+                    135deg,
+                    var(--turquoise),
+                    var(--turquoise-dark)
+                );
 
             color: #ffffff;
 
@@ -569,8 +540,7 @@
 
             font-weight: 600;
 
-            border:
-                1px solid rgba(0, 191, 166, 0.35);
+            border: none;
 
             cursor: pointer;
 
@@ -579,12 +549,10 @@
 
 
         .dashboard-button:hover {
-            transform: translateY(-1px);
-
-            opacity: 0.93;
+            transform: translateY(-2px);
 
             box-shadow:
-                0 5px 15px rgba(0, 191, 166, 0.22);
+                0 6px 15px rgba(45, 212, 191, 0.25);
         }
 
 
@@ -593,15 +561,66 @@
         ============================================================ */
 
         .footer-note {
+            background:
+                rgba(255, 255, 255, 0.75);
+
+            border-radius: 15px;
+
+            padding: 18px 22px;
+
             text-align: center;
 
             color: var(--text-muted);
 
-            font-size: 0.78rem;
+            font-size: 0.85rem;
 
             margin-top: 18px;
 
-            opacity: 0.8;
+            border:
+                1px solid rgba(255, 127, 110, 0.12);
+        }
+
+
+        /* ============================================================
+           PRINT
+        ============================================================ */
+
+        @media print {
+
+            body {
+                background: white !important;
+
+                padding: 0 !important;
+            }
+
+
+            .page-container {
+                max-width: 100% !important;
+            }
+
+
+            .glass-panel {
+                box-shadow: none !important;
+
+                border: none !important;
+
+                padding: 0 !important;
+            }
+
+
+            .button-row {
+                display: none !important;
+            }
+
+
+            .info-note {
+                display: none !important;
+            }
+
+
+            .footer-note {
+                display: none !important;
+            }
         }
 
 
@@ -612,12 +631,17 @@
         @media (max-width: 700px) {
 
             body {
-                padding: 20px 10px;
+                padding: 20px;
             }
 
 
             .glass-panel {
                 padding: 22px;
+            }
+
+
+            .page-header {
+                align-items: flex-start;
             }
 
 
@@ -633,7 +657,7 @@
             }
 
 
-            .orders-table {
+            .visitors-table {
                 min-width: 700px;
             }
 
@@ -649,102 +673,6 @@
 
                 padding: 14px 16px;
             }
-
-        }
-
-
-        /* ============================================================
-           PRINT PAGE
-        ============================================================ */
-
-        @media print {
-
-            body {
-                background: white !important;
-
-                color: #000000 !important;
-
-                padding: 0 !important;
-            }
-
-
-            .glass-panel {
-                background: white !important;
-
-                border: none !important;
-
-                box-shadow: none !important;
-
-                padding: 0 !important;
-            }
-
-
-            .page-header h1,
-            .page-header p,
-            .table-heading h2,
-            .table-heading span {
-                color: #000000 !important;
-            }
-
-
-            .header-icon,
-            .restaurant-badge,
-            .info-note,
-            .button-row,
-            .footer-note {
-                display: none !important;
-            }
-
-
-            .table-wrapper {
-                border: 1px solid #cccccc !important;
-
-                box-shadow: none !important;
-
-                overflow: visible !important;
-            }
-
-
-            .orders-table {
-                color: #000000 !important;
-
-                width: 100% !important;
-            }
-
-
-            .orders-table th {
-                background: #087f82 !important;
-
-                color: white !important;
-            }
-
-
-            .orders-table td {
-                color: #222222 !important;
-
-                background: white !important;
-
-                border-color: #cccccc !important;
-            }
-
-
-            .revenue-row {
-                background: #e9faf7 !important;
-
-                border: 1px solid #087f82 !important;
-
-                box-shadow: none !important;
-            }
-
-
-            .revenue-label {
-                color: #333333 !important;
-            }
-
-
-            .revenue-value {
-                color: #087f82 !important;
-            }
         }
 
     </style>
@@ -756,13 +684,12 @@
 
     <script type="text/javascript">
 
-        function printOrders() {
+        function printVisitors() {
 
             var table =
                 document.getElementById(
-                    '<%= gvOrders.ClientID %>'
+                    '<%= gvVisitors.ClientID %>'
                 );
-
 
             var revenue =
                 document.getElementById(
@@ -770,23 +697,15 @@
                 );
 
 
-            /* ========================================================
-               CHECK TABLE
-            ======================================================== */
-
             if (!table) {
 
                 alert(
-                    "No restaurant orders are available to print."
+                    "No visitor records are available to print."
                 );
 
                 return false;
             }
 
-
-            /* ========================================================
-               GET REVENUE
-            ======================================================== */
 
             var revenueText = "R 0.00";
 
@@ -800,10 +719,6 @@
             }
 
 
-            /* ========================================================
-               OPEN PRINT WINDOW
-            ======================================================== */
-
             var printWindow =
                 window.open(
                     "",
@@ -815,16 +730,12 @@
             if (!printWindow) {
 
                 alert(
-                    "Please allow pop-ups in your browser to print the orders."
+                    "Please allow pop-ups in your browser to print the records."
                 );
 
                 return false;
             }
 
-
-            /* ========================================================
-               CREATE PRINT DOCUMENT
-            ======================================================== */
 
             printWindow.document.write(`
 
@@ -834,10 +745,7 @@
 
                 <head>
 
-                    <title>
-                        AquaCore - Restaurant Orders
-                    </title>
-
+                    <title>AquaCore - Visitor Records</title>
 
                     <style>
 
@@ -845,9 +753,7 @@
                             box-sizing: border-box;
                         }
 
-
                         body {
-
                             font-family:
                                 Arial,
                                 Helvetica,
@@ -860,32 +766,26 @@
                             background: white;
                         }
 
-
                         .print-header {
-
                             text-align: center;
 
                             margin-bottom: 25px;
 
                             border-bottom:
-                                3px solid #00bfa6;
+                                3px solid #ff7f6e;
 
                             padding-bottom: 20px;
                         }
 
-
                         .print-header h1 {
-
-                            color: #087f82;
+                            color: #e86657;
 
                             font-size: 28px;
 
                             margin-bottom: 6px;
                         }
 
-
                         .print-header h2 {
-
                             color: #263238;
 
                             font-size: 20px;
@@ -893,17 +793,13 @@
                             margin-bottom: 8px;
                         }
 
-
                         .print-header p {
-
                             color: #6b7280;
 
                             font-size: 13px;
                         }
 
-
                         table {
-
                             width: 100%;
 
                             border-collapse: collapse;
@@ -913,24 +809,20 @@
                             font-size: 12px;
                         }
 
-
                         th {
-
-                            background: #087f82;
+                            background: #ff7f6e;
 
                             color: white;
 
                             padding: 11px;
 
                             border:
-                                1px solid #075e61;
+                                1px solid #e86657;
 
                             text-align: left;
                         }
 
-
                         td {
-
                             padding: 10px;
 
                             border:
@@ -939,15 +831,11 @@
                             color: #374151;
                         }
 
-
                         tr:nth-child(even) td {
-
-                            background: #f3faf9;
+                            background: #f7faf9;
                         }
 
-
                         .revenue {
-
                             margin-top: 25px;
 
                             padding: 15px 20px;
@@ -955,7 +843,7 @@
                             text-align: right;
 
                             border:
-                                1px solid #00bfa6;
+                                1px solid #2dd4bf;
 
                             background: #e9faf7;
 
@@ -968,17 +856,13 @@
                             font-weight: bold;
                         }
 
-
                         .revenue-value {
-
-                            color: #087f82;
+                            color: #14b8a6;
 
                             margin-left: 8px;
                         }
 
-
                         .print-footer {
-
                             text-align: center;
 
                             margin-top: 40px;
@@ -993,34 +877,28 @@
                             font-size: 11px;
                         }
 
-
                         @media print {
 
                             body {
                                 padding: 10px;
                             }
 
-
                             table {
                                 page-break-inside: auto;
                             }
-
 
                             tr {
                                 page-break-inside: avoid;
 
                                 page-break-after: auto;
                             }
-
                         }
 
                     </style>
 
                 </head>
 
-
                 <body>
-
 
                     <div class="print-header">
 
@@ -1028,11 +906,9 @@
                             AquaCore Aquarium
                         </h1>
 
-
                         <h2>
-                            Restaurant Orders
+                            Visitor Records
                         </h2>
-
 
                         <p>
                             Generated on:
@@ -1041,29 +917,23 @@
 
                     </div>
 
-
                     ${table.outerHTML}
-
 
                     <div class="revenue">
 
-                        Total Revenue:
+                        Total Revenue From Ticket Sales:
 
                         <span class="revenue-value">
-
                             ${revenueText}
-
                         </span>
 
                     </div>
 
-
                     <div class="print-footer">
 
-                        AquaCore • Restaurant Orders Management
+                        AquaCore • Visitor Management
 
                     </div>
-
 
                 </body>
 
@@ -1072,18 +942,10 @@
             `);
 
 
-            /* ========================================================
-               FINISH PRINT DOCUMENT
-            ======================================================== */
-
             printWindow.document.close();
 
             printWindow.focus();
 
-
-            /* ========================================================
-               START PRINT
-            ======================================================== */
 
             setTimeout(function () {
 
@@ -1104,9 +966,7 @@
 
 <form id="form1" runat="server">
 
-
     <div class="page-container">
-
 
         <div class="glass-panel">
 
@@ -1118,26 +978,22 @@
             <div class="page-header">
 
                 <div class="header-icon">
-                    📋
+                    👥
                 </div>
-
 
                 <div>
 
                     <h1>
-                        Restaurant Orders
+                        AquaCore Visitors
                     </h1>
 
-
                     <p>
-                        View and manage orders recorded within AquaCore.
+                        View visitors registered within the
+                        AquaCore system.
                     </p>
 
-
-                    <div class="restaurant-badge">
-
-                        🍴 Restaurant Order Records
-
+                    <div class="visitor-badge">
+                        👤 Visitor Records
                     </div>
 
                 </div>
@@ -1155,13 +1011,10 @@
                     💡
                 </div>
 
-
                 <div>
-
-                    Review the restaurant orders currently stored
+                    Review the visitors currently registered
                     in the AquaCore system. Scroll horizontally
-                    on smaller screens to view all order details.
-
+                    on smaller screens to view all visitor details.
                 </div>
 
             </div>
@@ -1174,27 +1027,26 @@
             <div class="table-heading">
 
                 <h2>
-                    📊 Order Records
+                    📊 Visitor Records
                 </h2>
 
-
                 <span>
-                    AquaCore Restaurant Management
+                    AquaCore Visitor Management
                 </span>
 
             </div>
 
 
             <!-- =====================================================
-                 ORDERS TABLE
+                 VISITORS TABLE
             ====================================================== -->
 
             <div class="table-wrapper">
 
                 <asp:GridView
-                    ID="gvOrders"
+                    ID="gvVisitors"
                     runat="server"
-                    CssClass="orders-table"
+                    CssClass="visitors-table"
                     AutoGenerateColumns="true">
 
                 </asp:GridView>
@@ -1209,9 +1061,8 @@
             <div class="revenue-row">
 
                 <span class="revenue-label">
-                    💰 Total Revenue:
+                    💰 Total Revenue From Ticket Sales:
                 </span>
-
 
                 <asp:Label
                     ID="lblTotalRevenue"
@@ -1230,31 +1081,23 @@
 
             <div class="button-row">
 
-
-                <!-- PRINT ORDERS -->
-
                 <asp:Button
                     ID="btnPrint"
                     runat="server"
-                    Text="🖨 Print Orders"
+                    Text="🖨 Print Visitor Records"
                     CssClass="print-button"
-                    OnClientClick="return printOrders();"
+                    OnClientClick="return printVisitors();"
                     CausesValidation="false" />
-
-
-                <!-- DASHBOARD -->
 
                 <asp:Button
                     ID="btnDashboard"
                     runat="server"
-                    Text="← Orders Dashboard"
+                    Text="← Visitors Dashboard"
                     CssClass="dashboard-button"
                     OnClick="btnDashboard_Click"
                     CausesValidation="false" />
 
-
             </div>
-
 
         </div>
 
@@ -1265,13 +1108,11 @@
 
         <div class="footer-note">
 
-            AquaCore • Restaurant Orders Management
+            AquaCore • Visitor Management
 
         </div>
 
-
     </div>
-
 
 </form>
 

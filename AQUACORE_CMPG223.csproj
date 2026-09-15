@@ -134,6 +134,7 @@
     <Content Include="Update_Animal.aspx" />
     <Content Include="Update_Orders.aspx" />
     <Content Include="ViewMedical.aspx" />
+    <Content Include="ViewVisitors.aspx" />
     <Content Include="View_Feeding.aspx" />
     <Content Include="VisitorDashboard.aspx" />
     <Content Include="VisitorForgotPassword.aspx" />
@@ -349,6 +350,13 @@
     </Compile>
     <Compile Include="ViewMedical.aspx.designer.cs">
       <DependentUpon>ViewMedical.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewVisitors.aspx.cs">
+      <DependentUpon>ViewVisitors.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewVisitors.aspx.designer.cs">
+      <DependentUpon>ViewVisitors.aspx</DependentUpon>
     </Compile>
     <Compile Include="View_Feeding.aspx.cs">
       <DependentUpon>View_Feeding.aspx</DependentUpon>

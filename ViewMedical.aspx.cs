@@ -2,13 +2,16 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
-using System.Drawing;
 using System.Web.UI.WebControls;
 
 namespace AQUACORE_CMPG223
 {
     public partial class ViewMedical : System.Web.UI.Page
     {
+        // ============================================================
+        // CONNECTION STRING
+        // ============================================================
+
         private string GetConnectionString()
         {
             return ConfigurationManager
@@ -16,54 +19,90 @@ namespace AQUACORE_CMPG223
                 ?.ConnectionString;
         }
 
+
+        // ============================================================
+        // PAGE LOAD
+        // ============================================================
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                // Load the sorting options
                 LoadSortOptions();
 
-                // Default sort order
+                // Default sorting
                 rdoASC.Checked = true;
 
+                // Load medical records
                 LoadMedicalRecords();
             }
         }
 
-        // Populate the Sort By dropdown
+
+        // ============================================================
+        // LOAD SORT OPTIONS
+        // ============================================================
+
         private void LoadSortOptions()
         {
             DropDownList1.Items.Clear();
 
             DropDownList1.Items.Add(
-                new ListItem("-- Select Sort --", "")
+                new ListItem(
+                    "-- Select Sort --",
+                    ""
+                )
             );
 
             DropDownList1.Items.Add(
-                new ListItem("Record ID", "RecordID")
+                new ListItem(
+                    "Record ID",
+                    "RecordID"
+                )
             );
 
             DropDownList1.Items.Add(
-                new ListItem("Animal Name", "AnimalName")
+                new ListItem(
+                    "Animal Name",
+                    "AnimalName"
+                )
             );
 
             DropDownList1.Items.Add(
-                new ListItem("Species", "Species")
+                new ListItem(
+                    "Species",
+                    "Species"
+                )
             );
 
             DropDownList1.Items.Add(
-                new ListItem("Veterinarian", "VetName")
+                new ListItem(
+                    "Veterinarian",
+                    "VetName"
+                )
             );
 
             DropDownList1.Items.Add(
-                new ListItem("Check-Up Date", "DateOfCheckup")
+                new ListItem(
+                    "Check-Up Date",
+                    "DateOfCheckup"
+                )
             );
 
             DropDownList1.Items.Add(
-                new ListItem("Follow-Up Required", "IsFollowUpRequired")
+                new ListItem(
+                    "Follow-Up Required",
+                    "IsFollowUpRequired"
+                )
             );
         }
 
-        // Load the medical records
+
+        // ============================================================
+        // LOAD MEDICAL RECORDS
+        // ============================================================
+
         private void LoadMedicalRecords()
         {
             string connStr = GetConnectionString();
@@ -78,8 +117,12 @@ namespace AQUACORE_CMPG223
                 using (SQLiteConnection con =
                        new SQLiteConnection(connStr))
                 {
-                    string sortColumn = GetSortColumn();
-                    string sortDirection = GetSortDirection();
+                    string sortColumn =
+                        GetSortColumn();
+
+                    string sortDirection =
+                        GetSortDirection();
+
 
                     string sql = @"
                         SELECT
@@ -89,25 +132,37 @@ namespace AQUACORE_CMPG223
                             mr.VetName,
                             mr.DateOfCheckup,
                             mr.IsFollowUpRequired
+
                         FROM Medical_Record mr
+
                         INNER JOIN Animal a
                             ON mr.AnimalID = a.AnimalID
+
                         ORDER BY "
-                        + sortColumn + " " + sortDirection;
+                        + sortColumn
+                        + " "
+                        + sortDirection;
+
 
                     using (SQLiteCommand cmd =
                            new SQLiteCommand(sql, con))
                     {
                         con.Open();
 
+
                         using (SQLiteDataAdapter adapter =
                                new SQLiteDataAdapter(cmd))
                         {
-                            DataTable dt = new DataTable();
+                            DataTable dt =
+                                new DataTable();
+
 
                             adapter.Fill(dt);
 
-                            GridView1.DataSource = dt;
+
+                            GridView1.DataSource =
+                                dt;
+
                             GridView1.DataBind();
                         }
                     }
@@ -115,44 +170,63 @@ namespace AQUACORE_CMPG223
             }
             catch (Exception ex)
             {
-                // You can add a status label later if you want
-                // to display this error to the user.
                 System.Diagnostics.Debug.WriteLine(
-                    "Error loading medical records: " + ex.Message
+                    "Error loading medical records: "
+                    + ex.Message
                 );
             }
         }
 
-        // Determine which database column can safely be sorted
+
+        // ============================================================
+        // GET SORT COLUMN
+        // ============================================================
+
         private string GetSortColumn()
         {
             switch (DropDownList1.SelectedValue)
             {
                 case "RecordID":
+
                     return "mr.RecordID";
 
+
                 case "AnimalName":
+
                     return "a.Name";
 
+
                 case "Species":
+
                     return "a.Species";
 
+
                 case "VetName":
+
                     return "mr.VetName";
 
+
                 case "DateOfCheckup":
+
                     return "mr.DateOfCheckup";
 
+
                 case "IsFollowUpRequired":
+
                     return "mr.IsFollowUpRequired";
 
+
                 default:
-                    // Default sorting
+
                     return "mr.RecordID";
             }
         }
 
-        // Determine ascending or descending order
+
+        // ============================================================
+        // GET SORT DIRECTION
+        // ============================================================
+
         private string GetSortDirection()
         {
             if (rdoDESC.Checked)
@@ -163,7 +237,11 @@ namespace AQUACORE_CMPG223
             return "ASC";
         }
 
-        // When the Sort By dropdown changes
+
+        // ============================================================
+        // SORT DROPDOWN CHANGED
+        // ============================================================
+
         protected void DropDownList1_SelectedIndexChanged(
             object sender,
             EventArgs e)
@@ -171,30 +249,48 @@ namespace AQUACORE_CMPG223
             LoadMedicalRecords();
         }
 
-        // When Ascending/Descending changes
+
+        // ============================================================
+        // ASCENDING CHANGED
+        // ============================================================
+
         protected void rdoASC_CheckedChanged(
             object sender,
             EventArgs e)
         {
-            LoadMedicalRecords();
+            if (rdoASC.Checked)
+            {
+                LoadMedicalRecords();
+            }
         }
+
+
+        // ============================================================
+        // DESCENDING CHANGED
+        // ============================================================
 
         protected void rdoDESC_CheckedChanged(
             object sender,
             EventArgs e)
         {
-            LoadMedicalRecords();
+            if (rdoDESC.Checked)
+            {
+                LoadMedicalRecords();
+            }
         }
 
-        protected void btnBack_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Medicals_Dashboard.aspx");
-        }
 
-        protected void GridView1_SelectedIndexChanged(
+        // ============================================================
+        // BACK BUTTON
+        // ============================================================
+
+        protected void btnBack_Click(
             object sender,
             EventArgs e)
         {
+            Response.Redirect(
+                "Medicals_Dashboard.aspx"
+            );
         }
     }
 }

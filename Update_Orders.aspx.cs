@@ -19,7 +19,6 @@ namespace AQUACORE_CMPG223
                 ?.ConnectionString;
         }
 
-
         // =========================================================
         // PAGE LOAD
         // =========================================================
@@ -28,13 +27,13 @@ namespace AQUACORE_CMPG223
         {
             if (!IsPostBack)
             {
+                pnlEditForm.Visible = false;
                 LoadOrderDropdown();
             }
         }
 
-
         // =========================================================
-        // LOAD ORDERS
+        // LOAD ORDER DROPDOWN
         // =========================================================
 
         private void LoadOrderDropdown()
@@ -44,7 +43,7 @@ namespace AQUACORE_CMPG223
             if (string.IsNullOrEmpty(connStr))
             {
                 SetStatus(
-                    "Database connection string is missing.",
+                    "Database connection string missing in Web.config.",
                     Color.FromArgb(255, 107, 107)
                 );
 
@@ -57,12 +56,14 @@ namespace AQUACORE_CMPG223
                     new SQLiteConnection(connStr))
                 {
                     string sql = @"
-                        SELECT
-                            OrderID,
-                            'Order #' || OrderID ||
-                            ' - ' || CustomerName AS OrderDisplay
-                        FROM Orders
-                        ORDER BY OrderID DESC";
+                    SELECT
+                        OrderID,
+                        'Order #' || OrderID ||
+                        ' - ' ||
+                        COALESCE(CustomerName, 'Unknown Customer')
+                        AS OrderDisplay
+                    FROM Restaurant_Order
+                    ORDER BY OrderID DESC";
 
                     using (SQLiteCommand cmd =
                         new SQLiteCommand(sql, con))
@@ -102,9 +103,8 @@ namespace AQUACORE_CMPG223
             }
         }
 
-
         // =========================================================
-        // LOAD SELECTED ORDER
+        // SELECT ORDER
         // =========================================================
 
         protected void ddlSelectOrder_SelectedIndexChanged(
@@ -117,7 +117,6 @@ namespace AQUACORE_CMPG223
                 ddlSelectOrder.SelectedValue))
             {
                 pnlEditForm.Visible = false;
-
                 return;
             }
 
@@ -127,26 +126,35 @@ namespace AQUACORE_CMPG223
                 ddlSelectOrder.SelectedValue,
                 out orderID))
             {
+                pnlEditForm.Visible = false;
+
                 SetStatus(
                     "Invalid order selected.",
                     Color.FromArgb(255, 107, 107)
                 );
 
-                pnlEditForm.Visible = false;
-
                 return;
             }
 
-            string connStr =
-                GetConnectionString();
+            LoadOrder(orderID);
+        }
+
+        // =========================================================
+        // LOAD SELECTED ORDER
+        // =========================================================
+
+        private void LoadOrder(int orderID)
+        {
+            string connStr = GetConnectionString();
 
             if (string.IsNullOrEmpty(connStr))
             {
                 SetStatus(
-                    "Database connection string is missing.",
+                    "Database connection string missing in Web.config.",
                     Color.FromArgb(255, 107, 107)
                 );
 
+                pnlEditForm.Visible = false;
                 return;
             }
 
@@ -156,16 +164,16 @@ namespace AQUACORE_CMPG223
                     new SQLiteConnection(connStr))
                 {
                     string sql = @"
-                        SELECT
-                            CustomerName,
-                            TableNumber,
-                            Quantity,
-                            OrderDate,
-                            FoodItems,
-                            Status,
-                            TotalPrice
-                        FROM Orders
-                        WHERE OrderID = @OrderID";
+                    SELECT
+                        CustomerName,
+                        TableNumber,
+                        FoodItems,
+                        Quantity,
+                        TotalPrice,
+                        OrderDate,
+                        Status
+                    FROM Restaurant_Order
+                    WHERE OrderID = @OrderID";
 
                     using (SQLiteCommand cmd =
                         new SQLiteCommand(sql, con))
@@ -182,102 +190,85 @@ namespace AQUACORE_CMPG223
                         {
                             if (reader.Read())
                             {
-                                // Customer
+                                // Customer name
                                 txtCustomerName.Text =
-                                    reader["CustomerName"]
-                                    .ToString();
+                                    reader["CustomerName"] == DBNull.Value
+                                        ? ""
+                                        : reader["CustomerName"].ToString();
 
-
-                                // Table
+                                // Table number
                                 txtTable.Text =
-                                    reader["TableNumber"]
-                                    .ToString();
-
+                                    reader["TableNumber"] == DBNull.Value
+                                        ? ""
+                                        : reader["TableNumber"].ToString();
 
                                 // Quantity
                                 txtQuantity.Text =
-                                    reader["Quantity"]
-                                    .ToString();
+                                    reader["Quantity"] == DBNull.Value
+                                        ? "1"
+                                        : reader["Quantity"].ToString();
 
-
-                                // Date
+                                // Order date
                                 if (reader["OrderDate"] != DBNull.Value)
                                 {
-                                    DateTime orderDate =
-                                        Convert.ToDateTime(
-                                            reader["OrderDate"]
-                                        );
+                                    DateTime orderDate;
 
-                                    txtDate.Text =
-                                        orderDate.ToString(
-                                            "yyyy-MM-dd"
-                                        );
+                                    if (DateTime.TryParse(
+                                        reader["OrderDate"].ToString(),
+                                        out orderDate))
+                                    {
+                                        txtDate.Text =
+                                            orderDate.ToString("yyyy-MM-dd");
+                                    }
+                                    else
+                                    {
+                                        txtDate.Text = "";
+                                    }
                                 }
                                 else
                                 {
                                     txtDate.Text = "";
                                 }
 
-
                                 // Status
                                 string status =
-                                    reader["Status"]
-                                    .ToString();
+                                    reader["Status"] == DBNull.Value
+                                        ? ""
+                                        : reader["Status"].ToString();
 
-                                if (ddlStatus.Items
-                                    .FindByValue(status) != null)
+                                ListItem statusItem =
+                                    ddlStatus.Items.FindByValue(status);
+
+                                if (statusItem != null)
                                 {
-                                    ddlStatus.SelectedValue =
-                                        status;
+                                    ddlStatus.SelectedValue = status;
                                 }
                                 else
                                 {
                                     ddlStatus.SelectedIndex = 0;
                                 }
 
-
                                 // Food items
-                                string foodItems = "";
-
-                                if (reader["FoodItems"] != DBNull.Value)
-                                {
-                                    foodItems =
-                                        reader["FoodItems"]
-                                        .ToString();
-                                }
+                                string foodItems =
+                                    reader["FoodItems"] == DBNull.Value
+                                        ? ""
+                                        : reader["FoodItems"].ToString();
 
                                 LoadFoodItems(foodItems);
 
+                                // Calculate total
+                                CalculateTotal();
 
-                                // Total
-                                if (reader["TotalPrice"] != DBNull.Value)
-                                {
-                                    decimal total =
-                                        Convert.ToDecimal(
-                                            reader["TotalPrice"]
-                                        );
-
-                                    lblPrize.Text =
-                                        "R" +
-                                        total.ToString("0.00");
-                                }
-                                else
-                                {
-                                    CalculateTotal();
-                                }
-
-
-                                // Show form
                                 pnlEditForm.Visible = true;
                             }
                             else
                             {
+                                pnlEditForm.Visible = false;
+
                                 SetStatus(
                                     "Order could not be found.",
                                     Color.FromArgb(255, 107, 107)
                                 );
-
-                                pnlEditForm.Visible = false;
                             }
                         }
                     }
@@ -285,16 +276,14 @@ namespace AQUACORE_CMPG223
             }
             catch (Exception ex)
             {
+                pnlEditForm.Visible = false;
+
                 SetStatus(
-                    "Error retrieving order: " +
-                    ex.Message,
+                    "Error retrieving order: " + ex.Message,
                     Color.FromArgb(255, 107, 107)
                 );
-
-                pnlEditForm.Visible = false;
             }
         }
-
 
         // =========================================================
         // LOAD FOOD ITEMS
@@ -302,59 +291,40 @@ namespace AQUACORE_CMPG223
 
         private void LoadFoodItems(string foodItems)
         {
+            // Clear all existing selections first
             foreach (ListItem item in cblFooditems.Items)
             {
                 item.Selected = false;
             }
 
-            if (string.IsNullOrEmpty(foodItems))
+            if (string.IsNullOrWhiteSpace(foodItems))
             {
                 CalculateTotal();
-
                 return;
             }
 
-            string[] selectedFoods =
+            string[] selectedItems =
                 foodItems.Split(',');
 
-            foreach (string food in selectedFoods)
+            foreach (string selectedFood in selectedItems)
             {
-                string trimmedFood =
-                    food.Trim();
+                string food =
+                    selectedFood.Trim();
 
                 foreach (ListItem item in cblFooditems.Items)
                 {
-                    if (item.Text.Contains("Burger") &&
-                        trimmedFood.Equals(
-                            "Burger",
-                            StringComparison.OrdinalIgnoreCase))
-                    {
-                        item.Selected = true;
-                    }
+                    /*
+                     * The database stores the Value.
+                     *
+                     * Burger = 55
+                     * Pizza = 85
+                     * Pasta = 65
+                     * Drink = 25
+                     */
 
-                    else if (
-                        item.Text.Contains("Pizza") &&
-                        trimmedFood.Equals(
-                            "Pizza",
-                            StringComparison.OrdinalIgnoreCase))
-                    {
-                        item.Selected = true;
-                    }
-
-                    else if (
-                        item.Text.Contains("Pasta") &&
-                        trimmedFood.Equals(
-                            "Pasta",
-                            StringComparison.OrdinalIgnoreCase))
-                    {
-                        item.Selected = true;
-                    }
-
-                    else if (
-                        item.Text.Contains("Drink") &&
-                        trimmedFood.Equals(
-                            "Drink",
-                            StringComparison.OrdinalIgnoreCase))
+                    if (item.Value.Equals(
+                        food,
+                        StringComparison.OrdinalIgnoreCase))
                     {
                         item.Selected = true;
                     }
@@ -363,7 +333,6 @@ namespace AQUACORE_CMPG223
 
             CalculateTotal();
         }
-
 
         // =========================================================
         // CALCULATE TOTAL
@@ -375,10 +344,12 @@ namespace AQUACORE_CMPG223
 
             int quantity = 1;
 
-            int.TryParse(
+            if (!int.TryParse(
                 txtQuantity.Text.Trim(),
-                out quantity
-            );
+                out quantity))
+            {
+                quantity = 1;
+            }
 
             if (quantity <= 0)
             {
@@ -400,14 +371,13 @@ namespace AQUACORE_CMPG223
                 }
             }
 
-            total *= quantity;
+            total = total * quantity;
 
             lblPrize.Text =
                 "R" + total.ToString("0.00");
 
             return total;
         }
-
 
         // =========================================================
         // GET SELECTED FOOD ITEMS
@@ -421,40 +391,29 @@ namespace AQUACORE_CMPG223
             {
                 if (item.Selected)
                 {
-                    string foodName = "";
-
-                    if (item.Text.Contains("Burger"))
+                    if (!string.IsNullOrEmpty(foodItems))
                     {
-                        foodName = "Burger";
-                    }
-                    else if (item.Text.Contains("Pizza"))
-                    {
-                        foodName = "Pizza";
-                    }
-                    else if (item.Text.Contains("Pasta"))
-                    {
-                        foodName = "Pasta";
-                    }
-                    else if (item.Text.Contains("Drink"))
-                    {
-                        foodName = "Drink";
+                        foodItems += ",";
                     }
 
-                    if (!string.IsNullOrEmpty(foodName))
-                    {
-                        if (!string.IsNullOrEmpty(foodItems))
-                        {
-                            foodItems += ",";
-                        }
+                    /*
+                     * Store the Value rather than the display text.
+                     *
+                     * Example:
+                     *
+                     * 55,85
+                     *
+                     * instead of:
+                     *
+                     * Burger — R55,Pizza — R85
+                     */
 
-                        foodItems += foodName;
-                    }
+                    foodItems += item.Value;
                 }
             }
 
             return foodItems;
         }
-
 
         // =========================================================
         // UPDATE ORDER
@@ -464,21 +423,22 @@ namespace AQUACORE_CMPG223
             object sender,
             EventArgs e)
         {
+            lblStatus.Text = "";
+
+            // -----------------------------------------------------
+            // Check selected order
+            // -----------------------------------------------------
+
             if (string.IsNullOrEmpty(
                 ddlSelectOrder.SelectedValue))
             {
                 SetStatus(
-                    "Please select an order.",
+                    "Please select an order first.",
                     Color.FromArgb(255, 107, 107)
                 );
 
                 return;
             }
-
-
-            // -----------------------------------------------------
-            // Order ID
-            // -----------------------------------------------------
 
             int orderID;
 
@@ -494,9 +454,8 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
-
             // -----------------------------------------------------
-            // Values
+            // Get form values
             // -----------------------------------------------------
 
             string customerName =
@@ -505,15 +464,14 @@ namespace AQUACORE_CMPG223
             string tableNumber =
                 txtTable.Text.Trim();
 
-            string quantityInput =
+            string quantityText =
                 txtQuantity.Text.Trim();
 
-            string dateInput =
+            string dateText =
                 txtDate.Text.Trim();
 
             string status =
                 ddlStatus.SelectedValue;
-
 
             // -----------------------------------------------------
             // Validate customer
@@ -529,7 +487,6 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
-
             // -----------------------------------------------------
             // Validate table
             // -----------------------------------------------------
@@ -544,7 +501,6 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
-
             // -----------------------------------------------------
             // Validate quantity
             // -----------------------------------------------------
@@ -552,7 +508,7 @@ namespace AQUACORE_CMPG223
             int quantity;
 
             if (!int.TryParse(
-                quantityInput,
+                quantityText,
                 out quantity) ||
                 quantity <= 0)
             {
@@ -564,7 +520,6 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
-
             // -----------------------------------------------------
             // Validate date
             // -----------------------------------------------------
@@ -572,7 +527,7 @@ namespace AQUACORE_CMPG223
             DateTime orderDate;
 
             if (!DateTime.TryParse(
-                dateInput,
+                dateText,
                 out orderDate))
             {
                 SetStatus(
@@ -582,7 +537,6 @@ namespace AQUACORE_CMPG223
 
                 return;
             }
-
 
             // -----------------------------------------------------
             // Validate status
@@ -598,9 +552,8 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
-
             // -----------------------------------------------------
-            // Validate food
+            // Validate food selection
             // -----------------------------------------------------
 
             bool foodSelected = false;
@@ -610,7 +563,6 @@ namespace AQUACORE_CMPG223
                 if (item.Selected)
                 {
                     foodSelected = true;
-
                     break;
                 }
             }
@@ -625,25 +577,22 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
-
             // -----------------------------------------------------
-            // Total
-            // -----------------------------------------------------
-
-            decimal totalPrice =
-                CalculateTotal();
-
-
-            // -----------------------------------------------------
-            // Food items
+            // Get selected food items
             // -----------------------------------------------------
 
             string foodItems =
                 GetSelectedFoodItems();
 
+            // -----------------------------------------------------
+            // Calculate total
+            // -----------------------------------------------------
+
+            decimal totalPrice =
+                CalculateTotal();
 
             // -----------------------------------------------------
-            // Connection
+            // Database connection
             // -----------------------------------------------------
 
             string connStr =
@@ -652,16 +601,15 @@ namespace AQUACORE_CMPG223
             if (string.IsNullOrEmpty(connStr))
             {
                 SetStatus(
-                    "Database connection string is missing.",
+                    "Database connection string missing in Web.config.",
                     Color.FromArgb(255, 107, 107)
                 );
 
                 return;
             }
 
-
             // -----------------------------------------------------
-            // Database update
+            // Update database
             // -----------------------------------------------------
 
             try
@@ -670,26 +618,20 @@ namespace AQUACORE_CMPG223
                     new SQLiteConnection(connStr))
                 {
                     string sql = @"
-                        UPDATE Orders
-                        SET
-                            CustomerName = @CustomerName,
-                            TableNumber = @TableNumber,
-                            Quantity = @Quantity,
-                            OrderDate = @OrderDate,
-                            FoodItems = @FoodItems,
-                            Status = @Status,
-                            TotalPrice = @TotalPrice
-                        WHERE OrderID = @OrderID";
-
+                    UPDATE Restaurant_Order
+                    SET
+                        CustomerName = @CustomerName,
+                        TableNumber = @TableNumber,
+                        FoodItems = @FoodItems,
+                        Quantity = @Quantity,
+                        TotalPrice = @TotalPrice,
+                        OrderDate = @OrderDate,
+                        Status = @Status
+                    WHERE OrderID = @OrderID";
 
                     using (SQLiteCommand cmd =
                         new SQLiteCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue(
-                            "@OrderID",
-                            orderID
-                        );
-
                         cmd.Parameters.AddWithValue(
                             "@CustomerName",
                             customerName
@@ -701,18 +643,23 @@ namespace AQUACORE_CMPG223
                         );
 
                         cmd.Parameters.AddWithValue(
+                            "@FoodItems",
+                            foodItems
+                        );
+
+                        cmd.Parameters.AddWithValue(
                             "@Quantity",
                             quantity
                         );
 
                         cmd.Parameters.AddWithValue(
-                            "@OrderDate",
-                            orderDate
+                            "@TotalPrice",
+                            totalPrice
                         );
 
                         cmd.Parameters.AddWithValue(
-                            "@FoodItems",
-                            foodItems
+                            "@OrderDate",
+                            orderDate.ToString("yyyy-MM-dd")
                         );
 
                         cmd.Parameters.AddWithValue(
@@ -721,15 +668,14 @@ namespace AQUACORE_CMPG223
                         );
 
                         cmd.Parameters.AddWithValue(
-                            "@TotalPrice",
-                            totalPrice
+                            "@OrderID",
+                            orderID
                         );
 
                         con.Open();
 
                         int rowsAffected =
                             cmd.ExecuteNonQuery();
-
 
                         if (rowsAffected > 0)
                         {
@@ -738,21 +684,16 @@ namespace AQUACORE_CMPG223
                                 Color.FromArgb(128, 255, 219)
                             );
 
-
-                            // Refresh dropdown
+                            // Refresh order dropdown
                             LoadOrderDropdown();
 
-
-                            // Select same order
-                            if (ddlSelectOrder.Items
-                                .FindByValue(
-                                    orderID.ToString())
-                                != null)
+                            // Select the updated order
+                            if (ddlSelectOrder.Items.FindByValue(
+                                orderID.ToString()) != null)
                             {
                                 ddlSelectOrder.SelectedValue =
                                     orderID.ToString();
                             }
-
 
                             // Keep edit form visible
                             pnlEditForm.Visible = true;
@@ -760,7 +701,7 @@ namespace AQUACORE_CMPG223
                         else
                         {
                             SetStatus(
-                                "Order could not be updated.",
+                                "No order was updated.",
                                 Color.FromArgb(255, 107, 107)
                             );
                         }
@@ -777,9 +718,8 @@ namespace AQUACORE_CMPG223
             }
         }
 
-
         // =========================================================
-        // DASHBOARD BUTTON
+        // BACK TO RESTAURANT ORDERS DASHBOARD
         // =========================================================
 
         protected void btnDashboard_Click(
@@ -787,14 +727,9 @@ namespace AQUACORE_CMPG223
             EventArgs e)
         {
             Response.Redirect(
-                "Orders_Dashboard.aspx",
-                false
+                "RestaurantOrders_Dashboard.aspx"
             );
-
-            Context.ApplicationInstance
-                .CompleteRequest();
         }
-
 
         // =========================================================
         // STATUS MESSAGE
@@ -804,11 +739,9 @@ namespace AQUACORE_CMPG223
             string message,
             Color color)
         {
-            lblStatus.Text =
-                message;
-
-            lblStatus.ForeColor =
-                color;
+            lblStatus.Text = message;
+            lblStatus.ForeColor = color;
         }
     }
+
 }

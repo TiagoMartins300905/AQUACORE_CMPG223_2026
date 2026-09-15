@@ -128,7 +128,7 @@ namespace AQUACORE_CMPG223
 
                 using (SQLiteCommand cmd = new SQLiteCommand(createTables, conn))
                 {
-                    cmd.ExecuteNonQuery();
+                    //cmd.ExecuteNonQuery();
                 }
             }
         }

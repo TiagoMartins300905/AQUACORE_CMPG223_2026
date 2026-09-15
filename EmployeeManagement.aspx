@@ -4,9 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>AquaCore - Employee Management</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
     <style>
         :root {
             --bg-base: #030a16;
@@ -27,7 +29,7 @@
 
         body {
             background-color: var(--bg-base);
-            background-image: 
+            background-image:
                 radial-gradient(circle at 15% 20%, rgba(2, 132, 199, 0.15) 0%, transparent 40%),
                 radial-gradient(circle at 85% 80%, rgba(13, 148, 136, 0.12) 0%, transparent 45%);
             color: var(--text-primary);
@@ -48,8 +50,22 @@
             opacity: 0.25;
             z-index: 0;
         }
-        .orb-1 { width: 500px; height: 500px; background: #0284c7; top: -100px; left: -100px; }
-        .orb-2 { width: 600px; height: 600px; background: #0d9488; bottom: -150px; right: -100px; }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: #0284c7;
+            top: -100px;
+            left: -100px;
+        }
+
+        .orb-2 {
+            width: 600px;
+            height: 600px;
+            background: #0d9488;
+            bottom: -150px;
+            right: -100px;
+        }
 
         .dashboard-container {
             position: relative;
@@ -96,6 +112,7 @@
         .nav-buttons {
             display: flex;
             gap: 12px;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -115,13 +132,17 @@
             color: #030a16;
             font-weight: 700;
         }
-        .btn-add:hover { filter: brightness(1.1); }
+
+        .btn-add:hover {
+            filter: brightness(1.1);
+        }
 
         .btn-outline {
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-primary);
             border: 1px solid rgba(148, 163, 184, 0.2);
         }
+
         .btn-outline:hover {
             background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
@@ -157,6 +178,7 @@
             font-size: 0.95rem;
             outline: none;
         }
+
         .input-control:focus {
             border-color: var(--aqua-glow);
             box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.15);
@@ -202,70 +224,185 @@
             text-align: center;
             color: var(--text-muted);
         }
-        
+
         .status-msg {
             display: block;
             margin-top: 15px;
             font-weight: 600;
             text-align: center;
         }
+
+        @media (max-width: 768px) {
+
+            body {
+                padding: 20px 12px;
+            }
+
+            .glass-panel {
+                padding: 22px;
+            }
+
+            .header-panel {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-buttons {
+                width: 100%;
+            }
+
+            .nav-buttons .btn {
+                flex: 1;
+            }
+
+            .tools-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-group {
+                width: 100%;
+            }
+
+            .input-control {
+                width: 100%;
+            }
+        }
     </style>
 </head>
+
 <body>
+
     <div class="ambient-orb orb-1"></div>
     <div class="ambient-orb orb-2"></div>
 
     <form id="form1" runat="server">
+
         <div class="dashboard-container">
-            
+
             <div class="glass-panel header-panel">
+
                 <div class="header-title">
                     <h1>AquaCore Operations</h1>
                     <p>Staff Directory and Management Dashboard</p>
                 </div>
+
                 <div class="nav-buttons">
-                    <a href="AddEmployee.aspx" class="btn btn-add">➕ Add Employee</a>
-                    <a href="UpdateEmployee.aspx" class="btn btn-outline">✏️ Update</a>
-                    <a href="DeleteEmployee.aspx" class="btn btn-outline">🗑️ Delete</a>
+
+                    <asp:Button
+                        ID="btnReturn"
+                        runat="server"
+                        Text="↩️ Return"
+                        CssClass="btn btn-outline"
+                        OnClick="btnReturn_Click" />
+
+                    <a href="AddEmployee.aspx" class="btn btn-add">
+                        ➕ Add Employee
+                    </a>
+
+                    <a href="UpdateEmployee.aspx" class="btn btn-outline">
+                        ✏️ Update
+                    </a>
+
+                    <a href="DeleteEmployee.aspx" class="btn btn-outline">
+                        🗑️ Delete
+                    </a>
+
                 </div>
+
             </div>
 
             <div class="glass-panel">
+
                 <div class="tools-row">
+
                     <h2>Personnel Directory</h2>
+
                     <div class="search-group">
-                        <asp:TextBox ID="txtSearch" runat="server" CssClass="input-control" placeholder="Search name or role..." />
-                        <asp:Button ID="btnSearch" runat="server" Text="Filter" CssClass="btn btn-add" OnClick="btnSearch_Click" />
+
+                        <asp:TextBox
+                            ID="txtSearch"
+                            runat="server"
+                            CssClass="input-control"
+                            placeholder="Search name or role..." />
+
+                        <asp:Button
+                            ID="btnSearch"
+                            runat="server"
+                            Text="Filter"
+                            CssClass="btn btn-add"
+                            OnClick="btnSearch_Click" />
+
                     </div>
+
                 </div>
 
                 <div class="table-responsive">
-                    <asp:GridView ID="gvEmployees" runat="server" AutoGenerateColumns="False" 
-                        CssClass="aqua-grid" GridLines="None">
+
+                    <asp:GridView
+                        ID="gvEmployees"
+                        runat="server"
+                        AutoGenerateColumns="False"
+                        CssClass="aqua-grid"
+                        GridLines="None">
+
                         <Columns>
-                            <asp:BoundField DataField="StaffID" HeaderText="ID" ItemStyle-Width="50px" />
+
+                            <asp:BoundField
+                                DataField="StaffID"
+                                HeaderText="ID"
+                                ItemStyle-Width="50px" />
+
                             <asp:TemplateField HeaderText="Full Name">
                                 <ItemTemplate>
-                                    <strong><%# Eval("Name") %> <%# Eval("Surname") %></strong>
+                                    <strong>
+                                        <%# Eval("Name") %>
+                                        <%# Eval("Surname") %>
+                                    </strong>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="Username" HeaderText="Username" />
-                            <asp:BoundField DataField="Role" HeaderText="Role" />
-                            <asp:BoundField DataField="ContactDetails" HeaderText="Contact Info" />
-                            <asp:BoundField DataField="CreatedDate" HeaderText="Enrolled" DataFormatString="{0:MMM dd, yyyy}" />
+
+                            <asp:BoundField
+                                DataField="Username"
+                                HeaderText="Username" />
+
+                            <asp:BoundField
+                                DataField="Role"
+                                HeaderText="Role" />
+
+                            <asp:BoundField
+                                DataField="ContactDetails"
+                                HeaderText="Contact Info" />
+
+                            <asp:BoundField
+                                DataField="CreatedDate"
+                                HeaderText="Enrolled"
+                                DataFormatString="{0:MMM dd, yyyy}" />
+
                         </Columns>
+
                         <EmptyDataTemplate>
+
                             <div class="empty-data">
                                 No personnel records match your search criteria.
                             </div>
+
                         </EmptyDataTemplate>
+
                     </asp:GridView>
+
                 </div>
 
-                <asp:Label ID="lblStatus" runat="server" CssClass="status-msg" />
+                <asp:Label
+                    ID="lblStatus"
+                    runat="server"
+                    CssClass="status-msg" />
+
             </div>
 
         </div>
+
     </form>
+
 </body>
 </html>

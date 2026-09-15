@@ -21,15 +21,25 @@ namespace AQUACORE_CMPG223
             LoadDirectory(txtSearch.Text.Trim());
         }
 
+        protected void btnReturn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AdminDashBoard.aspx");
+        }
+
         private void LoadDirectory(string searchTerm = "")
         {
-            // Update to match the exact connection string name used in your Global.asax.cs
-            string connStr = ConfigurationManager.ConnectionStrings["AquaCoreConnectionString"]?.ConnectionString;
+            string connStr = ConfigurationManager
+                .ConnectionStrings["AquaCoreConnectionString"]?
+                .ConnectionString;
 
             if (string.IsNullOrEmpty(connStr))
             {
-                lblStatus.Text = "Database connection string 'AquaCoreConnectionString' is missing from Web.config.";
-                lblStatus.ForeColor = Color.FromArgb(255, 107, 107);
+                lblStatus.Text =
+                    "Database connection string 'AquaCoreConnectionString' is missing from Web.config.";
+
+                lblStatus.ForeColor =
+                    Color.FromArgb(255, 107, 107);
+
                 return;
             }
 
@@ -37,12 +47,23 @@ namespace AQUACORE_CMPG223
             {
                 using (SQLiteConnection con = new SQLiteConnection(connStr))
                 {
-                    string sql = @"SELECT StaffID, Name, Surname, Role, ContactDetails, Username, CreatedDate 
-                                   FROM Staff";
+                    string sql = @"
+                        SELECT 
+                            StaffID,
+                            Name,
+                            Surname,
+                            Role,
+                            ContactDetails,
+                            Username,
+                            CreatedDate 
+                        FROM Staff";
 
                     if (!string.IsNullOrEmpty(searchTerm))
                     {
-                        sql += " WHERE Name LIKE @Search OR Surname LIKE @Search OR Role LIKE @Search";
+                        sql += @"
+                            WHERE Name LIKE @Search
+                            OR Surname LIKE @Search
+                            OR Role LIKE @Search";
                     }
 
                     sql += " ORDER BY StaffID DESC";
@@ -51,24 +72,34 @@ namespace AQUACORE_CMPG223
                     {
                         if (!string.IsNullOrEmpty(searchTerm))
                         {
-                            cmd.Parameters.AddWithValue("@Search", "%" + searchTerm + "%");
+                            cmd.Parameters.AddWithValue(
+                                "@Search",
+                                "%" + searchTerm + "%"
+                            );
                         }
 
-                        using (SQLiteDataAdapter sda = new SQLiteDataAdapter(cmd))
+                        using (SQLiteDataAdapter sda =
+                               new SQLiteDataAdapter(cmd))
                         {
                             DataTable dt = new DataTable();
+
                             sda.Fill(dt);
+
                             gvEmployees.DataSource = dt;
                             gvEmployees.DataBind();
                         }
                     }
                 }
+
                 lblStatus.Text = string.Empty;
             }
             catch (Exception ex)
             {
-                lblStatus.Text = "Error loading directory: " + ex.Message;
-                lblStatus.ForeColor = Color.FromArgb(255, 107, 107);
+                lblStatus.Text =
+                    "Error loading directory: " + ex.Message;
+
+                lblStatus.ForeColor =
+                    Color.FromArgb(255, 107, 107);
             }
         }
     }

@@ -78,6 +78,15 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.TextBox txtCustomerName;
 
         /// <summary>
+        /// rfvCustomerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCustomerName;
+
+        /// <summary>
         /// lblTable control.
         /// </summary>
         /// <remarks>
@@ -94,6 +103,15 @@ namespace AQUACORE_CMPG223
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTable;
+
+        /// <summary>
+        /// rfvTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvTable;
 
         /// <summary>
         /// lblQuantity control.
@@ -114,6 +132,15 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.TextBox txtQuantity;
 
         /// <summary>
+        /// rfvQuantity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvQuantity;
+
+        /// <summary>
         /// lblDate control.
         /// </summary>
         /// <remarks>
@@ -132,6 +159,15 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.TextBox txtDate;
 
         /// <summary>
+        /// rfvDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDate;
+
+        /// <summary>
         /// cblFooditems control.
         /// </summary>
         /// <remarks>
@@ -139,6 +175,15 @@ namespace AQUACORE_CMPG223
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBoxList cblFooditems;
+
+        /// <summary>
+        /// lblFoodError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFoodError;
 
         /// <summary>
         /// lblOrderStatus control.
@@ -157,6 +202,15 @@ namespace AQUACORE_CMPG223
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlStatus;
+
+        /// <summary>
+        /// rfvStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvStatus;
 
         /// <summary>
         /// lblTotalLabel control.

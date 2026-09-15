@@ -87,6 +87,15 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.DropDownList ddlAnimal;
 
         /// <summary>
+        /// rfvAnimal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAnimal;
+
+        /// <summary>
         /// lblKeeper control.
         /// </summary>
         /// <remarks>
@@ -103,6 +112,15 @@ namespace AQUACORE_CMPG223
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlKeeper;
+
+        /// <summary>
+        /// rfvKeeper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvKeeper;
 
         /// <summary>
         /// lblTime control.
@@ -123,6 +141,15 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.DropDownList ddlTime;
 
         /// <summary>
+        /// rfvTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvTime;
+
+        /// <summary>
         /// lblFoodType control.
         /// </summary>
         /// <remarks>
@@ -139,6 +166,15 @@ namespace AQUACORE_CMPG223
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlFoodType;
+
+        /// <summary>
+        /// rfvFoodType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFoodType;
 
         /// <summary>
         /// btnUpdate control.

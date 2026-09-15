@@ -110,7 +110,7 @@ namespace AQUACORE_CMPG223
                     );
 
 
-                CREATE TABLE Restaurant_Order (
+                CREATE TABLE IF NOT EXISTS Restaurant_Order (
                     OrderID INTEGER PRIMARY KEY AUTOINCREMENT,
                     VisitorID INTEGER,
                     CustomerName VARCHAR(100),

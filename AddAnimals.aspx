@@ -649,36 +649,7 @@
 
                 <!-- Animal ID -->
 
-                <div class="form-group">
-
-                    <asp:Label
-                        ID="Label1"
-                        runat="server"
-                        Text="Animal ID"
-                        CssClass="field-label">
-                    </asp:Label>
-
-                    <span class="field-description">
-                        Enter a unique ID for the animal.
-                    </span>
-
-                    <asp:TextBox
-                        ID="txtID"
-                        runat="server"
-                        CssClass="input-control"
-                        placeholder="Animal ID">
-                    </asp:TextBox>
-
-                    <asp:RequiredFieldValidator
-                        ID="RequiredFieldValidator1"
-                        runat="server"
-                        ControlToValidate="txtID"
-                        ErrorMessage="Animal ID cannot be empty!"
-                        CssClass="validator"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
-
-                </div>
+                
 
 
                 <!-- Name -->
@@ -710,8 +681,7 @@
                         ControlToValidate="txtName"
                         ErrorMessage="Name cannot be empty!"
                         CssClass="validator"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
+                        Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
 
                 </div>
 
@@ -744,8 +714,7 @@
                         ControlToValidate="txtSpecies"
                         ErrorMessage="Animal species is required!"
                         CssClass="validator"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
+                        Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
 
                 </div>
 
@@ -778,8 +747,7 @@
                         ControlToValidate="txtDOB"
                         ErrorMessage="Enter animal's DOB!"
                         CssClass="validator"
-                        Display="Dynamic">
-                    </asp:RequiredFieldValidator>
+                        Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
 
                 </div>
 

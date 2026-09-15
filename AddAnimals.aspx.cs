@@ -14,7 +14,10 @@ namespace AQUACORE_CMPG223
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            lblGender.Visible = false;
+            if (!IsPostBack)
+            {
+                lblGender.Text = "";
+            }
         }
 
         string connStr = ConfigurationManager.ConnectionStrings["AquaCoreConnectionString"].ConnectionString;
@@ -31,25 +34,24 @@ namespace AQUACORE_CMPG223
 
         protected void rdbMale_CheckedChanged1(object sender, EventArgs e)
         {
-            
+
         }
 
-        
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
             string name = txtName.Text;
             string species = txtSpecies.Text;
             string gender = "";
+            
 
-
-            if(int.TryParse(name, out _))
+            if (int.TryParse(name, out _))
             {
                 lblOutput.Text = "Please enter a valid name";
                 return;
             }
 
-            if(int.TryParse(species, out _))
+            if (int.TryParse(species, out _))
             {
                 lblOutput.Text = "Please enter a valid species";
                 return;
@@ -67,16 +69,21 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
+            if (!rdbMale.Checked && !rdbFemale.Checked)
+            {
+                lblGender.Text = "Animal Gender cannot be left out!";
+                return;
+            }
+
             if (rdbMale.Checked)
             {
                 gender = "Male";
             }
 
-            if(rdbFemale.Checked)
+            if (rdbFemale.Checked)
             {
                 gender = "Female";
             }
-
 
             SQLiteCommand cmd;
             SQLiteConnection con = new SQLiteConnection(connStr);
@@ -92,9 +99,16 @@ namespace AQUACORE_CMPG223
             cmd.ExecuteNonQuery();
             cmd.Dispose();
             con.Close();
+
+            txtName.Text = "";
+            txtSpecies.Text = "";
+            txtDOB.Text = "";
+            rdbMale.Checked = false;
+            rdbFemale.Checked = false;
+            ddHabitat.SelectedIndex = 0;
+            lblGender.Text = "";
         }
 
-        
 
         protected void txtName_TextChanged(object sender, EventArgs e)
         {

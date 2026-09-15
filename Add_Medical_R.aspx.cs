@@ -10,8 +10,8 @@ namespace AQUACORE_CMPG223
         private string GetConnectionString()
         {
             return ConfigurationManager
-            .ConnectionStrings["AquaCoreConnectionString"]
-            ?.ConnectionString;
+                .ConnectionStrings["AquaCoreConnectionString"]
+                ?.ConnectionString;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -19,6 +19,11 @@ namespace AQUACORE_CMPG223
             if (!IsPostBack)
             {
                 lblValidate.Visible = false;
+
+                string today =
+                    DateTime.Now.ToString("yyyy-MM-dd");
+
+                txtCheckUp.Attributes["min"] = today;
             }
         }
 
@@ -29,21 +34,21 @@ namespace AQUACORE_CMPG223
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Medicals_Dashboard.aspx");
+            Response.Redirect(
+                "Medicals_Dashboard.aspx",
+                false
+            );
         }
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
-            // Hide previous validation message
             lblValidate.Visible = false;
-
-            // -----------------------------
-            // Validate Animal ID
-            // -----------------------------
 
             int animalID;
 
-            if (!int.TryParse(txtAnimalID.Text.Trim(), out animalID))
+            if (!int.TryParse(
+                txtAnimalID.Text.Trim(),
+                out animalID))
             {
                 ShowMessage(
                     "Please enter a valid Animal ID.",
@@ -53,11 +58,8 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
-            // -----------------------------
-            // Validate Veterinarian
-            // -----------------------------
-
-            string vetName = txtVet.Text.Trim();
+            string vetName =
+                txtVet.Text.Trim();
 
             if (string.IsNullOrEmpty(vetName))
             {
@@ -68,10 +70,6 @@ namespace AQUACORE_CMPG223
 
                 return;
             }
-
-            // -----------------------------
-            // Validate Check-Up Date
-            // -----------------------------
 
             DateTime checkUpDate;
 
@@ -87,9 +85,16 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
-            // -----------------------------
-            // Validate Follow-Up
-            // -----------------------------
+            // Check-up date must be today or a future date
+            if (checkUpDate.Date < DateTime.Now.Date)
+            {
+                ShowMessage(
+                    "Check-up date cannot be before today.",
+                    Color.FromArgb(255, 107, 122)
+                );
+
+                return;
+            }
 
             string followUpRequired;
 
@@ -111,11 +116,8 @@ namespace AQUACORE_CMPG223
                 return;
             }
 
-            // -----------------------------
-            // Get database connection
-            // -----------------------------
-
-            string connStr = GetConnectionString();
+            string connStr =
+                GetConnectionString();
 
             if (string.IsNullOrEmpty(connStr))
             {
@@ -130,18 +132,20 @@ namespace AQUACORE_CMPG223
             try
             {
                 using (SQLiteConnection con =
-                       new SQLiteConnection(connStr))
+                    new SQLiteConnection(connStr))
                 {
                     con.Open();
 
-                    // Check that the Animal exists
+                    // Check that the Animal ID exists
                     string checkAnimalSql = @"
-                    SELECT COUNT(*)
-                    FROM Animal
-                    WHERE AnimalID = @AnimalID";
+                        SELECT COUNT(*)
+                        FROM Animal
+                        WHERE AnimalID = @AnimalID";
 
                     using (SQLiteCommand checkAnimalCmd =
-                           new SQLiteCommand(checkAnimalSql, con))
+                        new SQLiteCommand(
+                            checkAnimalSql,
+                            con))
                     {
                         checkAnimalCmd.Parameters.AddWithValue(
                             "@AnimalID",
@@ -149,7 +153,9 @@ namespace AQUACORE_CMPG223
                         );
 
                         long animalExists =
-                            (long)checkAnimalCmd.ExecuteScalar();
+                            Convert.ToInt64(
+                                checkAnimalCmd.ExecuteScalar()
+                            );
 
                         if (animalExists == 0)
                         {
@@ -162,28 +168,27 @@ namespace AQUACORE_CMPG223
                         }
                     }
 
-                    // -----------------------------
-                    // Insert Medical Record
-                    // -----------------------------
-
+                    // Insert medical record
                     string insertSql = @"
-                    INSERT INTO Medical_Record
-                    (
-                        AnimalID,
-                        VetName,
-                        DateOfCheckup,
-                        IsFollowUpRequired
-                    )
-                    VALUES
-                    (
-                        @AnimalID,
-                        @VetName,
-                        @DateOfCheckup,
-                        @IsFollowUpRequired
-                    )";
+                        INSERT INTO Medical_Record
+                        (
+                            AnimalID,
+                            VetName,
+                            DateOfCheckup,
+                            IsFollowUpRequired
+                        )
+                        VALUES
+                        (
+                            @AnimalID,
+                            @VetName,
+                            @DateOfCheckup,
+                            @IsFollowUpRequired
+                        )";
 
                     using (SQLiteCommand cmd =
-                           new SQLiteCommand(insertSql, con))
+                        new SQLiteCommand(
+                            insertSql,
+                            con))
                     {
                         cmd.Parameters.AddWithValue(
                             "@AnimalID",
@@ -209,16 +214,12 @@ namespace AQUACORE_CMPG223
                     }
                 }
 
-                // -----------------------------
-                // Success
-                // -----------------------------
-
                 ShowMessage(
                     "Medical record successfully added.",
                     Color.FromArgb(128, 255, 219)
                 );
 
-                // Clear the form
+                // Clear form
                 txtRecordID.Text = "";
                 txtAnimalID.Text = "";
                 txtVet.Text = "";
@@ -226,23 +227,30 @@ namespace AQUACORE_CMPG223
 
                 rdbYes.Checked = false;
                 rdbNo.Checked = false;
+
+                // Keep the date restriction after clearing
+                string today =
+                    DateTime.Now.ToString("yyyy-MM-dd");
+
+                txtCheckUp.Attributes["min"] = today;
             }
             catch (Exception ex)
             {
                 ShowMessage(
-                    "Error adding medical record: " + ex.Message,
+                    "Error adding medical record: " +
+                    ex.Message,
                     Color.FromArgb(255, 107, 122)
                 );
             }
         }
 
-        private void ShowMessage(string message, Color color)
+        private void ShowMessage(
+            string message,
+            Color color)
         {
             lblValidate.Text = message;
             lblValidate.ForeColor = color;
             lblValidate.Visible = true;
         }
     }
-
-
 }

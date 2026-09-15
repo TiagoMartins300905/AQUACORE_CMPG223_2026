@@ -26,16 +26,19 @@ namespace AQUACORE_CMPG223
                 string role = Session["LoggedInRole"] != null ? Session["LoggedInRole"].ToString().Trim().ToLower() : "";
                 bool isAdminOrManager = (role == "admin" || role == "manager");
 
+                // Dynamically route the return button based on role
                 if (isAdminOrManager)
                 {
                     DivSelectStaff.Visible = true;
                     LoadEmployeeDropdown();
+                    lnkReturn.NavigateUrl = "EmployeeManagement.aspx"; // Admins go back to staff directory
                 }
                 else
                 {
                     DivSelectStaff.Visible = false;
                     int currentUserId = Convert.ToInt32(Session["LoggedInStaffID"]);
                     LoadEmployeeDetails(currentUserId);
+                    lnkReturn.NavigateUrl = "EmployeeDashboard.aspx"; // Regular staff go back to their dashboard
                 }
             }
         }

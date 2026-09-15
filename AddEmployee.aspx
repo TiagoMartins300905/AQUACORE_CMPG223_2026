@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
-        /* CSS styles omitted for brevity, keep your exact existing CSS block from AddEmployee here */
         :root { --bg-base: #030a16; --surface: rgba(8, 22, 44, 0.65); --border-glow: rgba(0, 210, 255, 0.22); --text-main: #f8fafc; --text-sub: #94a3b8; --accent-cyan: #00f0ff; --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-family); }
         body { background-color: var(--bg-base); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; position: relative; overflow-x: hidden; color: var(--text-main); }
@@ -79,10 +78,8 @@
                     <asp:DropDownList ID="DdlRole" runat="server" CssClass="input-box">
                         <asp:ListItem Text="-- Select Role --" Value="" />
                         <asp:ListItem Text="Manager" Value="Manager" />
-                        <asp:ListItem Text="Aquarist" Value="Aquarist" />
                         <asp:ListItem Text="Marine Keeper" Value="Marine Keeper" />
                         <asp:ListItem Text="Restaurant Employee" Value="RestaurantEmployee" />
-                        <asp:ListItem Text="Maintenance" Value="Maintenance" />
                         <asp:ListItem Text="Admin" Value="Admin" />
                     </asp:DropDownList>
                 </div>

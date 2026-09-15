@@ -108,6 +108,14 @@
             color: #030a16; font-size: 0.95rem; font-weight: 700; cursor: pointer;
         }
         .btn-submit:hover { filter: brightness(1.08); }
+        
+        .btn-secondary {
+            display: inline-block; text-align: center; width: 100%; padding: 11px;
+            border-radius: 12px; background: transparent; border: 1px solid rgba(148, 163, 184, 0.2);
+            color: var(--text-sub); font-size: 0.88rem; font-weight: 600; text-decoration: none;
+        }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.05); color: #ffffff; }
+
         .status-alert { display: block; margin-top: 1.25rem; font-size: 0.85rem; font-weight: 600; text-align: center; }
     </style>
 </head>
@@ -135,6 +143,7 @@
 
             <div class="actions-wrapper">
                 <asp:Button ID="BtnLogin" runat="server" Text="Sign In" CssClass="btn-submit" OnClick="BtnLogin_Click" />
+                <a href="MainScreen.aspx" class="btn-secondary">🏠 Return to Main Screen</a>
             </div>
 
             <asp:Label ID="LblStatus" runat="server" CssClass="status-alert" />

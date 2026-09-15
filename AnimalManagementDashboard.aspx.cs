@@ -11,7 +11,12 @@ namespace AQUACORE_CMPG223
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            // Security check: If someone tries to access this page via URL without logging in, boot them to login
+            if (Session["LoggedInStaffID"] == null)
+            {
+                Response.Redirect("EmployeeLogin.aspx");
+                return;
+            }
         }
 
         protected void btnFeeding_Click(object sender, EventArgs e)
@@ -31,7 +36,19 @@ namespace AQUACORE_CMPG223
 
         protected void btnReturn_Click(object sender, EventArgs e)
         {
-            Response.Redirect("MainScreen.aspx");
+            // Fetch the logged-in role from the session
+            string role = Session["LoggedInRole"] != null ? Session["LoggedInRole"].ToString().Trim().ToLower() : "";
+
+            // Route based on role
+            if (role == "admin" || role == "manager")
+            {
+                Response.Redirect("AdminDashBoard.aspx");
+            }
+            else
+            {
+                // Send Marine Keepers, Restaurant Employees, and any other staff back to the standard dashboard
+                Response.Redirect("EmployeeDashboard.aspx");
+            }
         }
     }
 }

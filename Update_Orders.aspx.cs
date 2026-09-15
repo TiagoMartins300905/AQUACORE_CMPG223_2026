@@ -28,6 +28,7 @@ namespace AQUACORE_CMPG223
             if (!IsPostBack)
             {
                 pnlEditForm.Visible = false;
+                lblFoodError.Text = "";
                 LoadOrderDropdown();
             }
         }
@@ -112,6 +113,7 @@ namespace AQUACORE_CMPG223
             EventArgs e)
         {
             lblStatus.Text = "";
+            lblFoodError.Text = "";
 
             if (string.IsNullOrEmpty(
                 ddlSelectOrder.SelectedValue))
@@ -258,6 +260,8 @@ namespace AQUACORE_CMPG223
 
                                 // Calculate total
                                 CalculateTotal();
+
+                                lblFoodError.Text = "";
 
                                 pnlEditForm.Visible = true;
                             }
@@ -424,6 +428,7 @@ namespace AQUACORE_CMPG223
             EventArgs e)
         {
             lblStatus.Text = "";
+            lblFoodError.Text = "";
 
             // -----------------------------------------------------
             // Check selected order
@@ -569,11 +574,8 @@ namespace AQUACORE_CMPG223
 
             if (!foodSelected)
             {
-                SetStatus(
-                    "Please select at least one food item.",
-                    Color.FromArgb(255, 107, 107)
-                );
-
+                lblFoodError.Text =
+                    "Please select at least one food item.";
                 return;
             }
 
@@ -727,7 +729,8 @@ namespace AQUACORE_CMPG223
             EventArgs e)
         {
             Response.Redirect(
-                "RestaurantOrders_Dashboard.aspx"
+                "RestaurantOrders_Dashboard.aspx",
+                false
             );
         }
 

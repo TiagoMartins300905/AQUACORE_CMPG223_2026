@@ -34,10 +34,10 @@ namespace AQUACORE_CMPG223
 
             if (string.IsNullOrEmpty(connStr))
             {
-                lblStatus.Text =
+                LblStatus.Text =
                     "Database connection string 'AquaCoreConnectionString' is missing from Web.config.";
 
-                lblStatus.ForeColor =
+                LblStatus.ForeColor =
                     Color.FromArgb(255, 107, 107);
 
                 return;
@@ -85,20 +85,20 @@ namespace AQUACORE_CMPG223
 
                             sda.Fill(dt);
 
-                            gvEmployees.DataSource = dt;
-                            gvEmployees.DataBind();
+                            GvEmployees.DataSource = dt;
+                            GvEmployees.DataBind();
                         }
                     }
                 }
 
-                lblStatus.Text = string.Empty;
+                LblStatus.Text = string.Empty;
             }
             catch (Exception ex)
             {
-                lblStatus.Text =
+                LblStatus.Text =
                     "Error loading directory: " + ex.Message;
 
-                lblStatus.ForeColor =
+                LblStatus.ForeColor =
                     Color.FromArgb(255, 107, 107);
             }
         }

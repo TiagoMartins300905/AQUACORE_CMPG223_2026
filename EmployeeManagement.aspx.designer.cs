@@ -15,13 +15,13 @@ namespace AQUACORE_CMPG223
     {
 
         /// <summary>
-        /// Form1 control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm Form1;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
         /// btnReturn control.
@@ -33,7 +33,7 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.Button btnReturn;
 
         /// <summary>
-        /// txtSearch control.
+        /// TxtSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -42,13 +42,13 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.TextBox TxtSearch;
 
         /// <summary>
-        /// BtnSearch control.
+        /// btnSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnSearch;
+        protected global::System.Web.UI.WebControls.Button btnSearch;
 
         /// <summary>
         /// GvEmployees control.

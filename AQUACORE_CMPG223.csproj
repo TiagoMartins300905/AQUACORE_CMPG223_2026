@@ -114,6 +114,8 @@
     <Content Include="Delete_Animal.aspx" />
     <Content Include="Display Orders.aspx" />
     <Content Include="Display_Animals.aspx" />
+    <Content Include="EmployeeDashboard.aspx" />
+    <Content Include="EmployeeLogin.aspx" />
     <Content Include="Global.asax" />
     <Content Include="EmployeeManagement.aspx" />
     <Content Include="MainScreen.aspx" />
@@ -230,6 +232,20 @@
     </Compile>
     <Compile Include="Display_Animals.aspx.designer.cs">
       <DependentUpon>Display_Animals.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeDashboard.aspx.cs">
+      <DependentUpon>EmployeeDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmployeeDashboard.aspx.designer.cs">
+      <DependentUpon>EmployeeDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeLogin.aspx.cs">
+      <DependentUpon>EmployeeLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmployeeLogin.aspx.designer.cs">
+      <DependentUpon>EmployeeLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

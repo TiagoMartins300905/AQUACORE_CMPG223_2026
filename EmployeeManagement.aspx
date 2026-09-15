@@ -96,6 +96,8 @@
         .nav-buttons {
             display: flex;
             gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
         }
 
         .btn {
@@ -215,7 +217,7 @@
     <div class="ambient-orb orb-1"></div>
     <div class="ambient-orb orb-2"></div>
 
-    <form id="form1" runat="server">
+    <form id="Form1" runat="server">
         <div class="dashboard-container">
             
             <div class="glass-panel header-panel">
@@ -224,6 +226,7 @@
                     <p>Staff Directory and Management Dashboard</p>
                 </div>
                 <div class="nav-buttons">
+                    <a href="EmployeeDashboard.aspx" class="btn btn-outline">🏠 Return to Dashboard</a>
                     <a href="AddEmployee.aspx" class="btn btn-add">➕ Add Employee</a>
                     <a href="UpdateEmployee.aspx" class="btn btn-outline">✏️ Update</a>
                     <a href="DeleteEmployee.aspx" class="btn btn-outline">🗑️ Delete</a>
@@ -234,13 +237,13 @@
                 <div class="tools-row">
                     <h2>Personnel Directory</h2>
                     <div class="search-group">
-                        <asp:TextBox ID="txtSearch" runat="server" CssClass="input-control" placeholder="Search name or role..." />
-                        <asp:Button ID="btnSearch" runat="server" Text="Filter" CssClass="btn btn-add" OnClick="btnSearch_Click" />
+                        <asp:TextBox ID="TxtSearch" runat="server" CssClass="input-control" placeholder="Search name or role..." />
+                        <asp:Button ID="BtnSearch" runat="server" Text="Filter" CssClass="btn btn-add" OnClick="BtnSearch_Click" />
                     </div>
                 </div>
 
                 <div class="table-responsive">
-                    <asp:GridView ID="gvEmployees" runat="server" AutoGenerateColumns="False" 
+                    <asp:GridView ID="GvEmployees" runat="server" AutoGenerateColumns="False" 
                         CssClass="aqua-grid" GridLines="None">
                         <Columns>
                             <asp:BoundField DataField="StaffID" HeaderText="ID" ItemStyle-Width="50px" />
@@ -262,7 +265,7 @@
                     </asp:GridView>
                 </div>
 
-                <asp:Label ID="lblStatus" runat="server" CssClass="status-msg" />
+                <asp:Label ID="LblStatus" runat="server" CssClass="status-msg" />
             </div>
 
         </div>

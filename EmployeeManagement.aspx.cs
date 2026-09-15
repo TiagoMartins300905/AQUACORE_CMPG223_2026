@@ -18,7 +18,9 @@ namespace AQUACORE_CMPG223
 
         protected void BtnSearch_Click(object sender, EventArgs e)
         {
-            LoadDirectory(TxtSearch.Text.Trim());
+            string searchTerm = TxtSearch.Text.Trim();
+
+            LoadDirectory(searchTerm);
         }
 
         protected void btnReturn_Click(object sender, EventArgs e)
@@ -28,49 +30,68 @@ namespace AQUACORE_CMPG223
 
         private void LoadDirectory(string searchTerm = "")
         {
-            string connStr = ConfigurationManager
-                .ConnectionStrings["AquaCoreConnectionString"]?
-                .ConnectionString;
+            string connStr =
+                ConfigurationManager
+                    .ConnectionStrings["AquaCoreConnectionString"]?
+                    .ConnectionString;
 
             if (string.IsNullOrEmpty(connStr))
             {
+                GvEmployees.DataSource = null;
+                GvEmployees.DataBind();
+
                 LblStatus.Text =
-                    "Database connection string 'AquaCoreConnectionString' is missing from Web.config.";
+                    "Database connection string " +
+                    "'AquaCoreConnectionString' is missing " +
+                    "from Web.config.";
 
                 LblStatus.ForeColor =
-                    Color.FromArgb(255, 107, 107);
+                    Color.FromArgb(
+                        255,
+                        107,
+                        107
+                    );
 
                 return;
             }
 
             try
             {
-                using (SQLiteConnection con = new SQLiteConnection(connStr))
+                using (SQLiteConnection con =
+                       new SQLiteConnection(connStr))
                 {
-                    string sql = @"
-                        SELECT 
-                            StaffID,
-                            Name,
-                            Surname,
-                            Role,
-                            ContactDetails,
-                            Username,
-                            CreatedDate 
-                        FROM Staff";
+                    con.Open();
 
-                    if (!string.IsNullOrEmpty(searchTerm))
+                    string sql = @"
+                    SELECT
+                        StaffID,
+                        Name,
+                        Surname,
+                        Role,
+                        ContactDetails,
+                        Username,
+                        CreatedDate
+                    FROM Staff
+                ";
+
+                    if (!string.IsNullOrWhiteSpace(searchTerm))
                     {
                         sql += @"
-                            WHERE Name LIKE @Search
+                        WHERE
+                            Name LIKE @Search
                             OR Surname LIKE @Search
-                            OR Role LIKE @Search";
+                            OR Role LIKE @Search
+                            OR Username LIKE @Search
+                            OR ContactDetails LIKE @Search
+                    ";
                     }
 
                     sql += " ORDER BY StaffID DESC";
 
-                    using (SQLiteCommand cmd = new SQLiteCommand(sql, con))
+                    using (SQLiteCommand cmd =
+                           new SQLiteCommand(sql, con))
                     {
-                        if (!string.IsNullOrEmpty(searchTerm))
+                        if (!string.IsNullOrWhiteSpace(searchTerm))
                         {
                             cmd.Parameters.AddWithValue(
                                 "@Search",
@@ -78,29 +99,81 @@ namespace AQUACORE_CMPG223
                             );
                         }
 
-                        using (SQLiteDataAdapter sda =
+                        using (SQLiteDataAdapter adapter =
                                new SQLiteDataAdapter(cmd))
                         {
-                            DataTable dt = new DataTable();
+                            DataTable dt =
+                                new DataTable();
 
-                            sda.Fill(dt);
+                            adapter.Fill(dt);
 
                             GvEmployees.DataSource = dt;
+
                             GvEmployees.DataBind();
+
+                            if (dt.Rows.Count == 0)
+                            {
+                                LblStatus.Text =
+                                    "No employee records were found.";
+
+                                LblStatus.ForeColor =
+                                    Color.FromArgb(
+                                        255,
+                                        193,
+                                        7
+                                    );
+                            }
+                            else
+                            {
+                                LblStatus.Text =
+                                    dt.Rows.Count +
+                                    " employee record(s) found.";
+
+                                LblStatus.ForeColor =
+                                    Color.FromArgb(
+                                        0,
+                                        210,
+                                        255
+                                    );
+                            }
                         }
                     }
                 }
+            }
+            catch (SQLiteException ex)
+            {
+                GvEmployees.DataSource = null;
+                GvEmployees.DataBind();
 
-                LblStatus.Text = string.Empty;
+                LblStatus.Text =
+                    "SQLite database error: " +
+                    ex.Message;
+
+                LblStatus.ForeColor =
+                    Color.FromArgb(
+                        255,
+                        107,
+                        107
+                    );
             }
             catch (Exception ex)
             {
+                GvEmployees.DataSource = null;
+                GvEmployees.DataBind();
+
                 LblStatus.Text =
-                    "Error loading directory: " + ex.Message;
+                    "Error loading employee directory: " +
+                    ex.Message;
 
                 LblStatus.ForeColor =
-                    Color.FromArgb(255, 107, 107);
+                    Color.FromArgb(
+                        255,
+                        107,
+                        107
+                    );
             }
         }
     }
+
+
 }

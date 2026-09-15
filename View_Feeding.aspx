@@ -69,7 +69,9 @@
             gap: 24px;
         }
 
-        /* Glass Panels */
+        /* ============================================================
+           GLASS PANELS
+        ============================================================ */
 
         .glass-panel {
 
@@ -85,7 +87,9 @@
                 0 10px 30px rgba(0, 0, 0, 0.35);
         }
 
-        /* Header */
+        /* ============================================================
+           HEADER
+        ============================================================ */
 
         .header-panel {
 
@@ -116,7 +120,9 @@
             font-size: 0.95rem;
         }
 
-        /* Buttons */
+        /* ============================================================
+           BUTTONS
+        ============================================================ */
 
         .btn {
 
@@ -155,7 +161,35 @@
             color: #ffffff;
         }
 
-        /* Page Heading */
+        .btn-print {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00f0ff,
+                    #0284c7
+                );
+
+            color: #051329;
+
+            font-weight: 700;
+
+            min-width: 220px;
+        }
+
+        .btn-print:hover {
+
+            filter: brightness(1.1);
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 6px 18px rgba(0, 210, 255, 0.25);
+        }
+
+        /* ============================================================
+           PAGE HEADING
+        ============================================================ */
 
         .page-heading {
 
@@ -178,7 +212,9 @@
             font-size: 0.9rem;
         }
 
-        /* Sorting Controls */
+        /* ============================================================
+           CONTROLS
+        ============================================================ */
 
         .controls-panel {
 
@@ -211,7 +247,9 @@
             font-weight: 600;
         }
 
-        /* Dropdown */
+        /* ============================================================
+           DROPDOWN
+        ============================================================ */
 
         .input-control {
 
@@ -247,7 +285,9 @@
             color: white;
         }
 
-        /* Radio Buttons */
+        /* ============================================================
+           RADIO BUTTONS
+        ============================================================ */
 
         .radio-group {
 
@@ -274,7 +314,9 @@
             accent-color: var(--aqua-glow);
         }
 
-        /* Table */
+        /* ============================================================
+           TABLE
+        ============================================================ */
 
         .table-responsive {
 
@@ -333,7 +375,9 @@
             background: rgba(255, 255, 255, 0.03);
         }
 
-        /* Bottom Button */
+        /* ============================================================
+           BOTTOM BUTTONS
+        ============================================================ */
 
         .bottom-row {
 
@@ -341,10 +385,225 @@
 
             justify-content: flex-end;
 
+            align-items: center;
+
+            gap: 12px;
+
             margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid rgba(0, 210, 255, 0.12);
         }
 
-        /* Mobile */
+        /* ============================================================
+           PRINT TITLE
+        ============================================================ */
+
+        .print-title {
+
+            display: none;
+        }
+
+        /* ============================================================
+           PRINT STYLES
+        ============================================================ */
+
+        @media print {
+
+            @page {
+
+                size: A4 landscape;
+
+                margin: 12mm;
+            }
+
+            body {
+
+                background: #ffffff !important;
+
+                color: #000000 !important;
+
+                padding: 0 !important;
+
+                display: block !important;
+            }
+
+            .dashboard-container {
+
+                max-width: 100% !important;
+
+                width: 100% !important;
+            }
+
+            .glass-panel {
+
+                background: #ffffff !important;
+
+                border: none !important;
+
+                box-shadow: none !important;
+
+                padding: 5px !important;
+            }
+
+            .header-panel {
+
+                display: block !important;
+
+                text-align: center !important;
+
+                margin-bottom: 10px !important;
+            }
+
+            .header-title h1 {
+
+                color: #0284c7 !important;
+
+                font-size: 26px !important;
+            }
+
+            .header-title p {
+
+                color: #555555 !important;
+            }
+
+            .btn,
+            .controls-panel,
+            .bottom-row {
+
+                display: none !important;
+            }
+
+            .page-heading {
+
+                text-align: center !important;
+
+                margin-bottom: 10px !important;
+            }
+
+            .page-heading h2 {
+
+                color: #333333 !important;
+
+                font-size: 20px !important;
+            }
+
+            .page-heading p {
+
+                color: #666666 !important;
+            }
+
+            .print-title {
+
+                display: block !important;
+
+                text-align: center !important;
+
+                color: #0284c7 !important;
+
+                margin: 10px 0 20px 0 !important;
+
+                border-bottom:
+                    3px solid #0284c7;
+
+                padding-bottom: 12px;
+            }
+
+            .print-title h1 {
+
+                color: #0284c7 !important;
+
+                font-size: 26px !important;
+
+                margin-bottom: 5px !important;
+            }
+
+            .print-title h2 {
+
+                color: #333333 !important;
+
+                font-size: 20px !important;
+
+                margin-bottom: 5px !important;
+            }
+
+            .print-title p {
+
+                color: #666666 !important;
+
+                font-size: 12px !important;
+            }
+
+            .table-responsive {
+
+                overflow: visible !important;
+
+                border:
+                    1px solid #999999 !important;
+            }
+
+            .aqua-grid {
+
+                width: 100% !important;
+
+                color: #000000 !important;
+
+                font-size: 10px !important;
+            }
+
+            .aqua-grid th {
+
+                background: #0284c7 !important;
+
+                color: #ffffff !important;
+
+                border:
+                    1px solid #777777 !important;
+
+                padding: 7px !important;
+            }
+
+            .aqua-grid td {
+
+                color: #000000 !important;
+
+                background: #ffffff !important;
+
+                border:
+                    1px solid #aaaaaa !important;
+
+                padding: 7px !important;
+            }
+
+            .aqua-grid tr:hover td {
+
+                background: #ffffff !important;
+            }
+
+            .print-footer {
+
+                display: block !important;
+
+                text-align: center;
+
+                margin-top: 20px;
+
+                padding-top: 10px;
+
+                border-top:
+                    1px solid #cccccc;
+
+                color: #777777 !important;
+
+                font-size: 10px;
+            }
+        }
+
+        /* ============================================================
+           MOBILE
+        ============================================================ */
 
         @media (max-width: 700px) {
 
@@ -380,15 +639,67 @@
             .bottom-row {
 
                 justify-content: stretch;
+
+                flex-direction: column;
             }
 
-            .bottom-row input {
+            .bottom-row .btn {
+
+                width: 100%;
+            }
+
+            .btn-print {
 
                 width: 100%;
             }
         }
 
     </style>
+
+    <script type="text/javascript">
+
+        function printFeedingSchedules() {
+
+            var currentDate = new Date();
+
+            var formattedDate =
+                currentDate.toLocaleDateString(
+                    'en-ZA',
+                    {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric'
+                    }
+                );
+
+            var formattedTime =
+                currentDate.toLocaleTimeString(
+                    'en-ZA',
+                    {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    }
+                );
+
+            var generatedElement =
+                document.getElementById('printGeneratedDate');
+
+            if (generatedElement) {
+
+                generatedElement.innerHTML =
+                    'Generated on: ' +
+                    formattedDate +
+                    ' at ' +
+                    formattedTime;
+            }
+
+            window.print();
+
+            return false;
+        }
+
+    </script>
 
 </head>
 
@@ -398,8 +709,9 @@
 
         <div class="dashboard-container">
 
-
-            <!-- Header -->
+            <!-- =====================================================
+                 HEADER
+            ====================================================== -->
 
             <div class="glass-panel header-panel">
 
@@ -427,13 +739,17 @@
             </div>
 
 
-            <!-- View Feeding Schedules -->
+            <!-- =====================================================
+                 FEEDING SCHEDULES
+            ====================================================== -->
 
             <div class="glass-panel">
 
                 <div class="page-heading">
 
-                    <h2>View Feeding Schedules</h2>
+                    <h2>
+                        View Feeding Schedules
+                    </h2>
 
                     <p>
                         View, sort and filter all existing feeding schedules.
@@ -442,12 +758,34 @@
                 </div>
 
 
-                <!-- Controls -->
+                <!-- =================================================
+                     PRINT TITLE
+                ================================================== -->
+
+                <div class="print-title">
+
+                    <h1>
+                        AquaCore Operations
+                    </h1>
+
+                    <h2>
+                        Feeding Schedule Records
+                    </h2>
+
+                    <p>
+                        <span id="printGeneratedDate">
+                            Generated on:
+                        </span>
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     CONTROLS
+                ================================================== -->
 
                 <div class="controls-panel">
-
-
-                    <!-- Sort -->
 
                     <div class="control-group">
 
@@ -470,8 +808,6 @@
 
                     </div>
 
-
-                    <!-- Filter -->
 
                     <div class="control-group">
 
@@ -499,11 +835,12 @@
 
                     </div>
 
-
                 </div>
 
 
-                <!-- Feeding Table -->
+                <!-- =================================================
+                     FEEDING TABLE
+                ================================================== -->
 
                 <div class="table-responsive">
 
@@ -518,9 +855,30 @@
                 </div>
 
 
-                <!-- Bottom Back Button -->
+                <!-- =================================================
+                     PRINT FOOTER
+                ================================================== -->
+
+                <div class="print-footer">
+
+                    AquaCore • Feeding Schedule Management
+
+                </div>
+
+
+                <!-- =================================================
+                     BOTTOM BUTTONS
+                ================================================== -->
 
                 <div class="bottom-row">
+
+                    <asp:Button
+                        ID="btnPrint"
+                        runat="server"
+                        Text="🖨️ Print Feeding Schedules"
+                        CssClass="btn btn-print"
+                        OnClientClick="return printFeedingSchedules();"
+                        CausesValidation="false" />
 
                     <asp:Button
                         ID="btnBackBottom"

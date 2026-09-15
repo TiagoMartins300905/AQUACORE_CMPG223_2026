@@ -2,12 +2,11 @@
 using System.Configuration;
 using System.Data.SQLite;
 using System.Drawing;
-using System.Text;
 using System.Web.UI.WebControls;
 
 namespace AQUACORE_CMPG223
 {
-    public partial class UpdateOrder : System.Web.UI.Page
+    public partial class Update_Animal : System.Web.UI.Page
     {
         private string GetConnectionString()
         {
@@ -18,24 +17,16 @@ namespace AQUACORE_CMPG223
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                LoadAnimalDropdown();
+                lblGender.Text = "";
+            }
         }
 
-        // 1. Load the selected order
-        protected void txtOrderID_TextChanged(object sender, EventArgs e)
+        // 1. Load all animals into the dropdown
+        private void LoadAnimalDropdown()
         {
-            int orderID;
-
-            if (!int.TryParse(txtOrderID.Text.Trim(), out orderID))
-            {
-                SetStatus(
-                    "Please enter a valid numeric Order ID.",
-                    Color.FromArgb(255, 107, 107)
-                );
-
-                return;
-            }
-
             string connStr = GetConnectionString();
 
             if (string.IsNullOrEmpty(connStr))
@@ -54,23 +45,86 @@ namespace AQUACORE_CMPG223
                     new SQLiteConnection(connStr))
                 {
                     string sql = @"
+                        SELECT AnimalID, Name
+                        FROM Animal
+                        ORDER BY Name";
+
+                    using (SQLiteCommand cmd =
+                        new SQLiteCommand(sql, con))
+                    {
+                        con.Open();
+
+                        using (SQLiteDataReader reader =
+                            cmd.ExecuteReader())
+                        {
+                            ddlSelectAnimal.DataSource = reader;
+                            ddlSelectAnimal.DataTextField = "Name";
+                            ddlSelectAnimal.DataValueField = "AnimalID";
+                            ddlSelectAnimal.DataBind();
+                        }
+                    }
+                }
+
+                ddlSelectAnimal.Items.Insert(
+                    0,
+                    new ListItem(
+                        "-- Select an Animal --",
+                        ""
+                    )
+                );
+            }
+            catch (Exception ex)
+            {
+                SetStatus(
+                    "Error loading animals: " + ex.Message,
+                    Color.FromArgb(255, 107, 107)
+                );
+            }
+        }
+
+        // 2. Load the selected animal's information
+        protected void ddlSelectAnimal_SelectedIndexChanged(
+            object sender,
+            EventArgs e)
+        {
+            lblOutput.Text = "";
+            lblGender.Text = "";
+
+            if (string.IsNullOrEmpty(
+                ddlSelectAnimal.SelectedValue))
+            {
+                pnlEditForm.Visible = false;
+                return;
+            }
+
+            string connStr = GetConnectionString();
+
+            int animalID =
+                Convert.ToInt32(
+                    ddlSelectAnimal.SelectedValue
+                );
+
+            try
+            {
+                using (SQLiteConnection con =
+                    new SQLiteConnection(connStr))
+                {
+                    string sql = @"
                         SELECT
-                            CustomerName,
-                            TableNumber,
-                            FoodItems,
-                            Quantity,
-                            TotalPrice,
-                            OrderDate,
-                            Status
-                        FROM Restaurant_Order
-                        WHERE OrderID = @OrderID";
+                            Name,
+                            Species,
+                            DateOfBirth,
+                            Gender,
+                            HabitatLocation
+                        FROM Animal
+                        WHERE AnimalID = @AnimalID";
 
                     using (SQLiteCommand cmd =
                         new SQLiteCommand(sql, con))
                     {
                         cmd.Parameters.AddWithValue(
-                            "@OrderID",
-                            orderID
+                            "@AnimalID",
+                            animalID
                         );
 
                         con.Open();
@@ -80,89 +134,72 @@ namespace AQUACORE_CMPG223
                         {
                             if (reader.Read())
                             {
-                                // Customer name
-                                txtCustomerName.Text =
-                                    reader["CustomerName"].ToString();
+                                // Name
+                                txtName.Text =
+                                    reader["Name"].ToString();
 
-                                // Table number
-                                txtTable.Text =
-                                    reader["TableNumber"].ToString();
+                                // Species
+                                txtSpecies.Text =
+                                    reader["Species"].ToString();
 
-                                // Quantity
-                                txtQuantity.Text =
-                                    reader["Quantity"].ToString();
-
-                                // Order date
-                                txtDate.Text =
-                                    reader["OrderDate"].ToString();
-
-                                // Food items
-                                string savedFoodItems =
-                                    reader["FoodItems"].ToString();
-
-                                string[] savedNames =
-                                    savedFoodItems.Split(
-                                        new[] { ", " },
-                                        StringSplitOptions.RemoveEmptyEntries
-                                    );
-
-                                // Clear all food selections first
-                                foreach (ListItem item in cblFooditems.Items)
+                                // Date of Birth
+                                if (reader["DateOfBirth"] != DBNull.Value)
                                 {
-                                    item.Selected = false;
-                                }
-
-                                // Select saved food items
-                                foreach (string savedName in savedNames)
-                                {
-                                    foreach (ListItem item in cblFooditems.Items)
-                                    {
-                                        if (item.Text.Trim().Equals(
-                                            savedName.Trim(),
-                                            StringComparison.OrdinalIgnoreCase))
-                                        {
-                                            item.Selected = true;
-                                        }
-                                    }
-                                }
-
-                                // Status
-                                string status =
-                                    reader["Status"].ToString();
-
-                                if (DropDownList1.Items.FindByValue(status) != null)
-                                {
-                                    DropDownList1.SelectedValue = status;
-                                }
-                                else if (DropDownList1.Items.FindByText(status) != null)
-                                {
-                                    DropDownList1.SelectedValue =
-                                        DropDownList1.Items.FindByText(status).Value;
-                                }
-
-                                // Total price
-                                if (reader["TotalPrice"] != DBNull.Value)
-                                {
-                                    decimal totalPrice =
-                                        Convert.ToDecimal(
-                                            reader["TotalPrice"]
+                                    DateTime dob =
+                                        Convert.ToDateTime(
+                                            reader["DateOfBirth"]
                                         );
 
-                                    lblPrize.Text =
-                                        "R" + totalPrice.ToString("0.00");
+                                    txtDOB.Text =
+                                        dob.ToString("yyyy-MM-dd");
+                                }
+                                else
+                                {
+                                    txtDOB.Text = "";
                                 }
 
-                                SetStatus(
-                                    "Order loaded. Make your changes and click Update Order.",
-                                    Color.FromArgb(128, 255, 219)
-                                );
+                                // Gender
+                                rdbMale.Checked = false;
+                                rdbFemale.Checked = false;
+
+                                string gender =
+                                    reader["Gender"].ToString();
+
+                                if (gender == "Male")
+                                {
+                                    rdbMale.Checked = true;
+                                }
+                                else if (gender == "Female")
+                                {
+                                    rdbFemale.Checked = true;
+                                }
+
+                                // Habitat
+                                string habitat =
+                                    reader["HabitatLocation"].ToString();
+
+                                if (ddHabitat.Items.FindByValue(habitat)
+                                    != null)
+                                {
+                                    ddHabitat.SelectedValue =
+                                        habitat;
+                                }
+                                else
+                                {
+                                    ddHabitat.SelectedIndex = 0;
+                                }
+
+                                // Show edit form
+                                pnlEditForm.Visible = true;
                             }
                             else
                             {
                                 SetStatus(
-                                    "No order found with that ID.",
+                                    "Animal could not be found.",
                                     Color.FromArgb(255, 107, 107)
                                 );
+
+                                pnlEditForm.Visible = false;
                             }
                         }
                     }
@@ -171,113 +208,150 @@ namespace AQUACORE_CMPG223
             catch (Exception ex)
             {
                 SetStatus(
-                    "Error retrieving order: " + ex.Message,
+                    "Error retrieving animal: " +
+                    ex.Message,
                     Color.FromArgb(255, 107, 107)
                 );
             }
         }
 
-        // 2. Update the order
-        protected void btnUpdate_Click(object sender, EventArgs e)
+        // 3. Clear the gender error label when a radio is picked
+        protected void rdbGender_CheckedChanged(object sender, EventArgs e)
         {
-            int orderID;
+            if (rdbMale.Checked || rdbFemale.Checked)
+            {
+                lblGender.Text = "";
+            }
+        }
 
-            if (!int.TryParse(
-                txtOrderID.Text.Trim(),
-                out orderID))
+        // 4. Update the animal
+        protected void btnUpdate_Click(
+            object sender,
+            EventArgs e)
+        {
+            if (string.IsNullOrEmpty(
+                ddlSelectAnimal.SelectedValue))
             {
                 SetStatus(
-                    "Please enter a valid numeric Order ID.",
+                    "Please select an animal.",
                     Color.FromArgb(255, 107, 107)
                 );
 
                 return;
             }
 
-            string customerName =
-                txtCustomerName.Text.Trim();
-
-            string tableNumber =
-                txtTable.Text.Trim();
-
-            string date =
-                txtDate.Text.Trim();
-
-            int quantity;
-
-            if (!int.TryParse(
-                txtQuantity.Text.Trim(),
-                out quantity) || quantity <= 0)
-            {
-                SetStatus(
-                    "Please enter a valid quantity.",
-                    Color.FromArgb(255, 107, 107)
+            int animalID =
+                Convert.ToInt32(
+                    ddlSelectAnimal.SelectedValue
                 );
 
-                return;
+            string name =
+                txtName.Text.Trim();
+
+            string species =
+                txtSpecies.Text.Trim();
+
+            string dobInput =
+                txtDOB.Text.Trim();
+
+            string habitat =
+                ddHabitat.SelectedValue;
+
+            string gender = "";
+
+            if (rdbMale.Checked)
+            {
+                gender = "Male";
+            }
+            else if (rdbFemale.Checked)
+            {
+                gender = "Female";
             }
 
             // Validation
-            if (string.IsNullOrEmpty(customerName))
+            if (int.TryParse(name, out _))
             {
                 SetStatus(
-                    "Customer name is required.",
+                    "Please enter a valid name",
                     Color.FromArgb(255, 107, 107)
                 );
 
                 return;
             }
 
-            // Get selected food items
-            StringBuilder foodItems =
-                new StringBuilder();
-
-            decimal itemsTotal = 0;
-
-            foreach (ListItem item in cblFooditems.Items)
-            {
-                if (item.Selected)
-                {
-                    if (foodItems.Length > 0)
-                    {
-                        foodItems.Append(", ");
-                    }
-
-                    foodItems.Append(
-                        item.Text.Trim()
-                    );
-
-                    itemsTotal +=
-                        decimal.Parse(item.Value);
-                }
-            }
-
-            if (foodItems.Length == 0)
+            if (int.TryParse(species, out _))
             {
                 SetStatus(
-                    "Please select at least one food item.",
+                    "Please enter a valid species",
                     Color.FromArgb(255, 107, 107)
                 );
 
                 return;
             }
 
-            // Calculate total
-            decimal total =
-                itemsTotal * quantity;
+            if (string.IsNullOrEmpty(name))
+            {
+                SetStatus(
+                    "Animal name is required.",
+                    Color.FromArgb(255, 107, 107)
+                );
 
+                return;
+            }
+
+            if (string.IsNullOrEmpty(species))
+            {
+                SetStatus(
+                    "Animal species is required.",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
+            }
+
+            if (string.IsNullOrEmpty(dobInput))
+            {
+                SetStatus(
+                    "Date of birth is required.",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
+            }
+
+            DateTime dob;
+
+            if (!DateTime.TryParse(
+                dobInput,
+                out dob))
+            {
+                SetStatus(
+                    "Please enter a valid date of birth.",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
+            }
+
+            if (string.IsNullOrEmpty(gender))
+            {
+                lblGender.Text = "Animal Gender cannot be left out!";
+                return;
+            }
+
+            if (string.IsNullOrEmpty(habitat))
+            {
+                SetStatus(
+                    "Please select a habitat.",
+                    Color.FromArgb(255, 107, 107)
+                );
+
+                return;
+            }
+
+            // Update database
             string connStr =
                 GetConnectionString();
-
-            if (string.IsNullOrEmpty(connStr))
-            {
-                SetStatus(
-                    "Database connection string is missing.",
-                    Color.FromArgb(255, 107, 107)
-                );
-
-                return;
-            }
 
             try
             {
@@ -285,66 +359,46 @@ namespace AQUACORE_CMPG223
                     new SQLiteConnection(connStr))
                 {
                     string sql = @"
-                        UPDATE Restaurant_Order
+                        UPDATE Animal
                         SET
-                            CustomerName = @CustomerName,
-                            TableNumber = @TableNumber,
-                            FoodItems = @FoodItems,
-                            Quantity = @Quantity,
-                            TotalPrice = @TotalPrice,
-                            OrderDate = @OrderDate,
-                            Status = @Status
-                        WHERE OrderID = @OrderID";
+                            Name = @Name,
+                            Species = @Species,
+                            DateOfBirth = @DateOfBirth,
+                            Gender = @Gender,
+                            HabitatLocation = @HabitatLocation
+                        WHERE AnimalID = @AnimalID";
 
                     using (SQLiteCommand cmd =
                         new SQLiteCommand(sql, con))
                     {
                         cmd.Parameters.AddWithValue(
-                            "@CustomerName",
-                            customerName
+                            "@AnimalID",
+                            animalID
                         );
 
                         cmd.Parameters.AddWithValue(
-                            "@TableNumber",
-                            tableNumber
+                            "@Name",
+                            name
                         );
 
                         cmd.Parameters.AddWithValue(
-                            "@FoodItems",
-                            foodItems.ToString()
+                            "@Species",
+                            species
                         );
 
                         cmd.Parameters.AddWithValue(
-                            "@Quantity",
-                            quantity
+                            "@DateOfBirth",
+                            dob
                         );
 
                         cmd.Parameters.AddWithValue(
-                            "@TotalPrice",
-                            total
+                            "@Gender",
+                            gender
                         );
 
                         cmd.Parameters.AddWithValue(
-                            "@OrderDate",
-                            date
-                        );
-
-                        string status =
-                            DropDownList1.SelectedValue;
-
-                        if (status == "0")
-                        {
-                            status = "Pending";
-                        }
-
-                        cmd.Parameters.AddWithValue(
-                            "@Status",
-                            status
-                        );
-
-                        cmd.Parameters.AddWithValue(
-                            "@OrderID",
-                            orderID
+                            "@HabitatLocation",
+                            habitat
                         );
 
                         con.Open();
@@ -354,19 +408,26 @@ namespace AQUACORE_CMPG223
 
                         if (rowsAffected > 0)
                         {
-                            lblPrize.Text =
-                                "R" + total.ToString("0.00");
-
                             SetStatus(
-                                "Order #" + orderID +
-                                " updated successfully!",
+                                "Animal details updated successfully!",
                                 Color.FromArgb(128, 255, 219)
                             );
+
+                            // Refresh dropdown
+                            LoadAnimalDropdown();
+
+                            // Select the same animal again
+                            ddlSelectAnimal.SelectedValue =
+                                animalID.ToString();
+
+                            pnlEditForm.Visible = true;
+
+                            lblGender.Text = "";
                         }
                         else
                         {
                             SetStatus(
-                                "Order could not be updated.",
+                                "Animal could not be updated.",
                                 Color.FromArgb(255, 107, 107)
                             );
                         }
@@ -383,24 +444,24 @@ namespace AQUACORE_CMPG223
             }
         }
 
-        // 3. Dashboard button
-        protected void btnDashboard_Click(
+        // 5. Menu button
+        protected void btnMenu_Click(
             object sender,
             EventArgs e)
         {
             Response.Redirect(
-                "RestaurantOrders_Dashboard.aspx",
+                "Animals_DashBoard.aspx",
                 false
             );
         }
 
-        // 4. Display messages
+        // 6. Display messages
         private void SetStatus(
             string message,
             Color color)
         {
-            lblStatus.Text = message;
-            lblStatus.ForeColor = color;
+            lblOutput.Text = message;
+            lblOutput.ForeColor = color;
         }
     }
 }

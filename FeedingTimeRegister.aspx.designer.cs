@@ -11,7 +11,7 @@ namespace AQUACORE_CMPG223
 {
 
 
-    public partial class WebForm1
+    public partial class FeedingTimeRegister
     {
 
         /// <summary>

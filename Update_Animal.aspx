@@ -358,6 +358,28 @@
             color: var(--aqua-glow);
         }
 
+        /* Validators */
+
+        .validator {
+
+            color: var(--danger) !important;
+
+            font-size: 0.78rem;
+
+            line-height: 1.3;
+
+            margin-top: 4px;
+        }
+
+        .gender-validator {
+
+            margin-top: 5px;
+
+            color: var(--danger) !important;
+
+            font-size: 0.78rem;
+        }
+
         @media (max-width: 600px) {
 
             .form-card {
@@ -468,6 +490,16 @@
                     CssClass="input-control">
                 </asp:TextBox>
 
+                <asp:RequiredFieldValidator
+                    ID="rfvName"
+                    runat="server"
+                    ControlToValidate="txtName"
+                    ErrorMessage="Name cannot be empty!"
+                    CssClass="validator"
+                    Display="Dynamic"
+                    ForeColor="Red"
+                    ValidationGroup="EditAnimalGroup" />
+
             </div>
 
 
@@ -487,6 +519,16 @@
                     runat="server"
                     CssClass="input-control">
                 </asp:TextBox>
+
+                <asp:RequiredFieldValidator
+                    ID="rfvSpecies"
+                    runat="server"
+                    ControlToValidate="txtSpecies"
+                    ErrorMessage="Animal species is required!"
+                    CssClass="validator"
+                    Display="Dynamic"
+                    ForeColor="Red"
+                    ValidationGroup="EditAnimalGroup" />
 
             </div>
 
@@ -508,6 +550,16 @@
                     CssClass="input-control"
                     TextMode="Date">
                 </asp:TextBox>
+
+                <asp:RequiredFieldValidator
+                    ID="rfvDOB"
+                    runat="server"
+                    ControlToValidate="txtDOB"
+                    ErrorMessage="Enter animal's DOB!"
+                    CssClass="validator"
+                    Display="Dynamic"
+                    ForeColor="Red"
+                    ValidationGroup="EditAnimalGroup" />
 
             </div>
 
@@ -531,7 +583,9 @@
                             ID="rdbMale"
                             runat="server"
                             GroupName="Gender"
-                            Text="Male" />
+                            Text="Male"
+                            AutoPostBack="True"
+                            OnCheckedChanged="rdbGender_CheckedChanged" />
 
                     </label>
 
@@ -541,11 +595,20 @@
                             ID="rdbFemale"
                             runat="server"
                             GroupName="Gender"
-                            Text="Female" />
+                            Text="Female"
+                            AutoPostBack="True"
+                            OnCheckedChanged="rdbGender_CheckedChanged" />
 
                     </label>
 
                 </div>
+
+                <asp:Label
+                    ID="lblGender"
+                    runat="server"
+                    ForeColor="Red"
+                    Text="Animal Gender cannot be left out!"
+                    CssClass="gender-validator" />
 
             </div>
 
@@ -598,6 +661,17 @@
 
                 </asp:DropDownList>
 
+                <asp:RequiredFieldValidator
+                    ID="rfvHabitat"
+                    runat="server"
+                    ControlToValidate="ddHabitat"
+                    ErrorMessage="Animal Habitat is required!"
+                    ForeColor="Red"
+                    InitialValue=""
+                    CssClass="validator"
+                    Display="Dynamic"
+                    ValidationGroup="EditAnimalGroup" />
+
             </div>
 
 
@@ -610,7 +684,8 @@
                     runat="server"
                     Text="Save Changes"
                     CssClass="btn btn-submit"
-                    OnClick="btnUpdate_Click" />
+                    OnClick="btnUpdate_Click"
+                    ValidationGroup="EditAnimalGroup" />
 
                 <asp:Button
                     ID="btnMenu"

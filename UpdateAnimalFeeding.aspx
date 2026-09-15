@@ -224,7 +224,6 @@
 
         .btn-back:hover {
             background: rgba(255, 255, 255, 0.15);
-
             color: #ffffff;
         }
 
@@ -240,6 +239,14 @@
             text-align: center;
 
             color: var(--aqua-glow);
+        }
+
+        .validator {
+            color: var(--danger) !important;
+
+            font-size: 0.8rem;
+
+            margin-top: 4px;
         }
 
         @media (max-width: 600px) {
@@ -340,6 +347,16 @@
                     CssClass="input-control">
                 </asp:DropDownList>
 
+                <asp:RequiredFieldValidator
+                    ID="rfvAnimal"
+                    runat="server"
+                    ControlToValidate="ddlAnimal"
+                    ErrorMessage="Please select an animal!"
+                    InitialValue=""
+                    ValidationGroup="ScheduleValidation"
+                    CssClass="validator"
+                    Display="Dynamic" ForeColor="Red" />
+
             </div>
 
             <!-- MARINE KEEPER -->
@@ -357,6 +374,16 @@
                     runat="server"
                     CssClass="input-control">
                 </asp:DropDownList>
+
+                <asp:RequiredFieldValidator
+                    ID="rfvKeeper"
+                    runat="server"
+                    ControlToValidate="ddlKeeper"
+                    ErrorMessage="Please select a marine keeper!"
+                    InitialValue=""
+                    ValidationGroup="ScheduleValidation"
+                    CssClass="validator"
+                    Display="Dynamic" ForeColor="Red" />
 
             </div>
 
@@ -445,6 +472,16 @@
 
                 </asp:DropDownList>
 
+                <asp:RequiredFieldValidator
+                    ID="rfvTime"
+                    runat="server"
+                    ControlToValidate="ddlTime"
+                    ErrorMessage="Please select a feeding time!"
+                    InitialValue=""
+                    ValidationGroup="ScheduleValidation"
+                    CssClass="validator"
+                    Display="Dynamic" ForeColor="Red" />
+
             </div>
 
             <!-- FOOD TYPE -->
@@ -492,6 +529,16 @@
 
                 </asp:DropDownList>
 
+                <asp:RequiredFieldValidator
+                    ID="rfvFoodType"
+                    runat="server"
+                    ControlToValidate="ddlFoodType"
+                    ErrorMessage="Please select a food type!"
+                    InitialValue=""
+                    ValidationGroup="ScheduleValidation"
+                    CssClass="validator"
+                    Display="Dynamic" ForeColor="Red" />
+
             </div>
 
             <!-- BUTTONS -->
@@ -503,7 +550,8 @@
                     runat="server"
                     Text="Save Changes"
                     CssClass="btn btn-submit"
-                    OnClick="btnUpdate_Click" />
+                    OnClick="btnUpdate_Click"
+                    ValidationGroup="ScheduleValidation" />
 
                 <asp:Button
                     ID="btnBack"

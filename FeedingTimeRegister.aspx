@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FeedingTimeRegister.aspx.cs" Inherits="AQUACORE_CMPG223.WebForm1" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FeedingTimeRegister.aspx.cs" Inherits="AQUACORE_CMPG223.FeedingTimeRegister" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -501,85 +501,22 @@
                             Value="">
                         </asp:ListItem>
 
-                        <asp:ListItem
-                            Text="06:00 AM"
-                            Value="06:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="07:00 AM"
-                            Value="07:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="08:00 AM"
-                            Value="08:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="09:00 AM"
-                            Value="09:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="10:00 AM"
-                            Value="10:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="11:00 AM"
-                            Value="11:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="12:00 PM"
-                            Value="12:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="01:00 PM"
-                            Value="13:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="02:00 PM"
-                            Value="14:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="03:00 PM"
-                            Value="15:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="04:00 PM"
-                            Value="16:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="05:00 PM"
-                            Value="17:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="06:00 PM"
-                            Value="18:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="07:00 PM"
-                            Value="19:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="08:00 PM"
-                            Value="20:00">
-                        </asp:ListItem>
-
-                        <asp:ListItem
-                            Text="09:00 PM"
-                            Value="21:00">
-                        </asp:ListItem>
+                        <asp:ListItem Text="06:00 AM" Value="06:00"></asp:ListItem>
+                        <asp:ListItem Text="07:00 AM" Value="07:00"></asp:ListItem>
+                        <asp:ListItem Text="08:00 AM" Value="08:00"></asp:ListItem>
+                        <asp:ListItem Text="09:00 AM" Value="09:00"></asp:ListItem>
+                        <asp:ListItem Text="10:00 AM" Value="10:00"></asp:ListItem>
+                        <asp:ListItem Text="11:00 AM" Value="11:00"></asp:ListItem>
+                        <asp:ListItem Text="12:00 PM" Value="12:00"></asp:ListItem>
+                        <asp:ListItem Text="01:00 PM" Value="13:00"></asp:ListItem>
+                        <asp:ListItem Text="02:00 PM" Value="14:00"></asp:ListItem>
+                        <asp:ListItem Text="03:00 PM" Value="15:00"></asp:ListItem>
+                        <asp:ListItem Text="04:00 PM" Value="16:00"></asp:ListItem>
+                        <asp:ListItem Text="05:00 PM" Value="17:00"></asp:ListItem>
+                        <asp:ListItem Text="06:00 PM" Value="18:00"></asp:ListItem>
+                        <asp:ListItem Text="07:00 PM" Value="19:00"></asp:ListItem>
+                        <asp:ListItem Text="08:00 PM" Value="20:00"></asp:ListItem>
+                        <asp:ListItem Text="09:00 PM" Value="21:00"></asp:ListItem>
 
                     </asp:DropDownList>
 
@@ -616,6 +553,13 @@
                             Value="">
                         </asp:ListItem>
 
+                        <asp:ListItem Text="Fish" Value="Fish"></asp:ListItem>
+                        <asp:ListItem Text="Squid" Value="Squid"></asp:ListItem>
+                        <asp:ListItem Text="Krill" Value="Krill"></asp:ListItem>
+                        <asp:ListItem Text="Pellets" Value="Pellets"></asp:ListItem>
+                        <asp:ListItem Text="Vegetables" Value="Vegetables"></asp:ListItem>
+                        <asp:ListItem Text="Live Feed" Value="Live Feed"></asp:ListItem>
+
                     </asp:DropDownList>
 
                     <asp:RequiredFieldValidator
@@ -651,7 +595,8 @@
                     runat="server"
                     Text="Add Schedule"
                     CssClass="btn btn-add"
-                    ValidationGroup="ScheduleValidation" OnClick="btnAdd_Click" />
+                    ValidationGroup="ScheduleValidation"
+                    OnClick="btnAdd_Click" />
 
                 <asp:Button
                     ID="btnClear"

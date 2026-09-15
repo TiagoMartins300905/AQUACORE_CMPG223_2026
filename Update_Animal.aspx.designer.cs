@@ -87,6 +87,15 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.TextBox txtName;
 
         /// <summary>
+        /// rfvName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvName;
+
+        /// <summary>
         /// lblSpecies control.
         /// </summary>
         /// <remarks>
@@ -105,6 +114,15 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.TextBox txtSpecies;
 
         /// <summary>
+        /// rfvSpecies control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvSpecies;
+
+        /// <summary>
         /// lblDOB control.
         /// </summary>
         /// <remarks>
@@ -121,6 +139,15 @@ namespace AQUACORE_CMPG223
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDOB;
+
+        /// <summary>
+        /// rfvDOB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDOB;
 
         /// <summary>
         /// lblGenderTitle control.
@@ -150,6 +177,15 @@ namespace AQUACORE_CMPG223
         protected global::System.Web.UI.WebControls.RadioButton rdbFemale;
 
         /// <summary>
+        /// lblGender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblGender;
+
+        /// <summary>
         /// lblHabitat control.
         /// </summary>
         /// <remarks>
@@ -166,6 +202,15 @@ namespace AQUACORE_CMPG223
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddHabitat;
+
+        /// <summary>
+        /// rfvHabitat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvHabitat;
 
         /// <summary>
         /// btnUpdate control.

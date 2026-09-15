@@ -54,10 +54,6 @@ namespace AQUACORE_CMPG223
 
                     // =================================================
                     // SQL QUERY
-                    //
-                    // CAST OrderDate AS TEXT prevents SQLite/.NET
-                    // from trying to automatically convert an invalid
-                    // date value into DateTime.
                     // =================================================
 
                     string sql = @"
@@ -90,7 +86,7 @@ namespace AQUACORE_CMPG223
 
 
                 // ====================================================
-                // DISPLAY DATA IN GRIDVIEW
+                // DISPLAY DATA
                 // ====================================================
 
                 gvOrders.DataSource = dt;

@@ -11,14 +11,14 @@ namespace AQUACORE_CMPG223
         {
         }
 
-        protected void btnSubmit_Click(object sender, EventArgs e)
+        protected void BtnSubmit_Click(object sender, EventArgs e)
         {
-            string name = txtName.Text.Trim();
-            string surname = txtSurname.Text.Trim();
-            string username = txtUsername.Text.Trim();
-            string password = txtPassword.Text.Trim();
-            string role = ddlRole.SelectedValue;
-            string contactDetails = txtContactDetails.Text.Trim();
+            string name = TxtName.Text.Trim();
+            string surname = TxtSurname.Text.Trim();
+            string username = TxtUsername.Text.Trim();
+            string password = TxtPassword.Text.Trim();
+            string role = DdlRole.SelectedValue;
+            string contactDetails = TxtContactDetails.Text.Trim();
 
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
@@ -71,18 +71,18 @@ namespace AQUACORE_CMPG223
 
         private void ClearFields()
         {
-            txtName.Text = string.Empty;
-            txtSurname.Text = string.Empty;
-            txtUsername.Text = string.Empty;
-            txtPassword.Text = string.Empty;
-            txtContactDetails.Text = string.Empty;
-            ddlRole.SelectedIndex = 0;
+            TxtName.Text = string.Empty;
+            TxtSurname.Text = string.Empty;
+            TxtUsername.Text = string.Empty;
+            TxtPassword.Text = string.Empty;
+            TxtContactDetails.Text = string.Empty;
+            DdlRole.SelectedIndex = 0;
         }
 
         private void SetStatus(string message, Color color)
         {
-            lblStatus.Text = message;
-            lblStatus.ForeColor = color;
+            LblStatus.Text = message;
+            LblStatus.ForeColor = color;
         }
     }
 }

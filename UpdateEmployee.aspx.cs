@@ -15,9 +15,28 @@ namespace AQUACORE_CMPG223
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["LoggedInStaffID"] == null)
+            {
+                Response.Redirect("EmployeeLogin.aspx");
+                return;
+            }
+
             if (!IsPostBack)
             {
-                LoadEmployeeDropdown();
+                string role = Session["LoggedInRole"] != null ? Session["LoggedInRole"].ToString().Trim().ToLower() : "";
+                bool isAdminOrManager = (role == "admin" || role == "manager");
+
+                if (isAdminOrManager)
+                {
+                    DivSelectStaff.Visible = true;
+                    LoadEmployeeDropdown();
+                }
+                else
+                {
+                    DivSelectStaff.Visible = false;
+                    int currentUserId = Convert.ToInt32(Session["LoggedInStaffID"]);
+                    LoadEmployeeDetails(currentUserId);
+                }
             }
         }
 
@@ -40,15 +59,15 @@ namespace AQUACORE_CMPG223
                         con.Open();
                         using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
-                            ddlSelectEmployee.DataSource = reader;
-                            ddlSelectEmployee.DataTextField = "FullName";
-                            ddlSelectEmployee.DataValueField = "StaffID";
-                            ddlSelectEmployee.DataBind();
+                            DdlSelectEmployee.DataSource = reader;
+                            DdlSelectEmployee.DataTextField = "FullName";
+                            DdlSelectEmployee.DataValueField = "StaffID";
+                            DdlSelectEmployee.DataBind();
                         }
                     }
                 }
 
-                ddlSelectEmployee.Items.Insert(0, new ListItem("-- Select a Staff Member --", ""));
+                DdlSelectEmployee.Items.Insert(0, new ListItem("-- Select a Staff Member --", ""));
             }
             catch (Exception ex)
             {
@@ -56,17 +75,22 @@ namespace AQUACORE_CMPG223
             }
         }
 
-        protected void ddlSelectEmployee_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DdlSelectEmployee_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lblStatus.Text = string.Empty;
+            LblStatus.Text = string.Empty;
 
-            if (string.IsNullOrEmpty(ddlSelectEmployee.SelectedValue))
+            if (string.IsNullOrEmpty(DdlSelectEmployee.SelectedValue))
             {
-                pnlEditForm.Visible = false;
+                PnlEditForm.Visible = false;
                 return;
             }
 
-            int selectedId = Convert.ToInt32(ddlSelectEmployee.SelectedValue);
+            int selectedId = Convert.ToInt32(DdlSelectEmployee.SelectedValue);
+            LoadEmployeeDetails(selectedId);
+        }
+
+        private void LoadEmployeeDetails(int staffId)
+        {
             string connStr = GetConnectionString();
 
             try
@@ -76,26 +100,32 @@ namespace AQUACORE_CMPG223
                     string sql = "SELECT Name, Surname, Username, PasswordHash, Role, ContactDetails FROM Staff WHERE StaffID = @StaffID";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue("@StaffID", selectedId);
+                        cmd.Parameters.AddWithValue("@StaffID", staffId);
                         con.Open();
 
                         using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                txtName.Text = reader["Name"].ToString();
-                                txtSurname.Text = reader["Surname"].ToString();
-                                txtUsername.Text = reader["Username"].ToString();
-                                txtPassword.Text = reader["PasswordHash"].ToString();
-                                txtContactDetails.Text = reader["ContactDetails"].ToString();
+                                TxtName.Text = reader["Name"].ToString();
+                                TxtSurname.Text = reader["Surname"].ToString();
+                                TxtUsername.Text = reader["Username"].ToString();
+                                TxtPassword.Text = reader["PasswordHash"].ToString();
+                                TxtContactDetails.Text = reader["ContactDetails"].ToString();
 
-                                string role = reader["Role"].ToString();
-                                if (ddlRole.Items.FindByValue(role) != null)
+                                string roleVal = reader["Role"].ToString();
+                                if (DdlRole.Items.FindByValue(roleVal) != null)
                                 {
-                                    ddlRole.SelectedValue = role;
+                                    DdlRole.SelectedValue = roleVal;
                                 }
 
-                                pnlEditForm.Visible = true;
+                                string sessionRole = Session["LoggedInRole"] != null ? Session["LoggedInRole"].ToString().Trim().ToLower() : "";
+                                if (sessionRole != "admin" && sessionRole != "manager")
+                                {
+                                    DdlRole.Enabled = false;
+                                }
+
+                                PnlEditForm.Visible = true;
                             }
                         }
                     }
@@ -107,21 +137,32 @@ namespace AQUACORE_CMPG223
             }
         }
 
-        protected void btnUpdate_Click(object sender, EventArgs e)
+        protected void BtnUpdate_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(ddlSelectEmployee.SelectedValue)) return;
+            string sessionRole = Session["LoggedInRole"] != null ? Session["LoggedInRole"].ToString().Trim().ToLower() : "";
+            bool isAdminOrManager = (sessionRole == "admin" || sessionRole == "manager");
 
-            int staffId = Convert.ToInt32(ddlSelectEmployee.SelectedValue);
-            string name = txtName.Text.Trim();
-            string surname = txtSurname.Text.Trim();
-            string username = txtUsername.Text.Trim();
-            string password = txtPassword.Text.Trim();
-            string role = ddlRole.SelectedValue;
-            string contactDetails = txtContactDetails.Text.Trim();
-
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname) || string.IsNullOrEmpty(role))
+            int staffId;
+            if (isAdminOrManager)
             {
-                SetStatus("Name, Surname, and Role are required.", Color.FromArgb(255, 107, 107));
+                if (string.IsNullOrEmpty(DdlSelectEmployee.SelectedValue)) return;
+                staffId = Convert.ToInt32(DdlSelectEmployee.SelectedValue);
+            }
+            else
+            {
+                staffId = Convert.ToInt32(Session["LoggedInStaffID"]);
+            }
+
+            string name = TxtName.Text.Trim();
+            string surname = TxtSurname.Text.Trim();
+            string username = TxtUsername.Text.Trim();
+            string password = TxtPassword.Text.Trim();
+            string role = isAdminOrManager ? DdlRole.SelectedValue : (Session["LoggedInRole"] != null ? Session["LoggedInRole"].ToString() : "");
+            string contactDetails = TxtContactDetails.Text.Trim();
+
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname))
+            {
+                SetStatus("Name and Surname are required.", Color.FromArgb(255, 107, 107));
                 return;
             }
 
@@ -150,10 +191,21 @@ namespace AQUACORE_CMPG223
                     }
                 }
 
-                SetStatus("Staff details updated successfully!", Color.FromArgb(128, 255, 219));
+                if (Session["LoggedInStaffID"] != null && staffId.ToString() == Session["LoggedInStaffID"].ToString())
+                {
+                    Session["LoggedInStaffName"] = name;
+                }
 
-                LoadEmployeeDropdown();
-                ddlSelectEmployee.SelectedValue = staffId.ToString();
+                // If Admin or Manager, redirect straight back to Employee Management directory!
+                if (isAdminOrManager)
+                {
+                    Response.Redirect("EmployeeManagement.aspx", false);
+                    Context.ApplicationInstance.CompleteRequest();
+                }
+                else
+                {
+                    SetStatus("Details updated successfully!", Color.FromArgb(128, 255, 219));
+                }
             }
             catch (Exception ex)
             {
@@ -163,8 +215,8 @@ namespace AQUACORE_CMPG223
 
         private void SetStatus(string message, Color color)
         {
-            lblStatus.Text = message;
-            lblStatus.ForeColor = color;
+            LblStatus.Text = message;
+            LblStatus.ForeColor = color;
         }
     }
 }

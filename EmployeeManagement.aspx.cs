@@ -16,9 +16,9 @@ namespace AQUACORE_CMPG223
             }
         }
 
-        protected void btnSearch_Click(object sender, EventArgs e)
+        protected void BtnSearch_Click(object sender, EventArgs e)
         {
-            LoadDirectory(txtSearch.Text.Trim());
+            LoadDirectory(TxtSearch.Text.Trim());
         }
 
         private void LoadDirectory(string searchTerm = "")
@@ -28,8 +28,8 @@ namespace AQUACORE_CMPG223
 
             if (string.IsNullOrEmpty(connStr))
             {
-                lblStatus.Text = "Database connection string 'AquaCoreConnectionString' is missing from Web.config.";
-                lblStatus.ForeColor = Color.FromArgb(255, 107, 107);
+                LblStatus.Text = "Database connection string 'AquaCoreConnectionString' is missing from Web.config.";
+                LblStatus.ForeColor = Color.FromArgb(255, 107, 107);
                 return;
             }
 
@@ -58,17 +58,17 @@ namespace AQUACORE_CMPG223
                         {
                             DataTable dt = new DataTable();
                             sda.Fill(dt);
-                            gvEmployees.DataSource = dt;
-                            gvEmployees.DataBind();
+                            GvEmployees.DataSource = dt;
+                            GvEmployees.DataBind();
                         }
                     }
                 }
-                lblStatus.Text = string.Empty;
+                LblStatus.Text = string.Empty;
             }
             catch (Exception ex)
             {
-                lblStatus.Text = "Error loading directory: " + ex.Message;
-                lblStatus.ForeColor = Color.FromArgb(255, 107, 107);
+                LblStatus.Text = "Error loading directory: " + ex.Message;
+                LblStatus.ForeColor = Color.FromArgb(255, 107, 107);
             }
         }
     }
